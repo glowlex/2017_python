@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#запускать с sudo
 # в конфиге нжинх поменять путь если надо
 
 #sudo -s
@@ -16,8 +17,8 @@ pip3 install gunicorn
 apt-get install nginx
 
 
-rm /etc/nginx/sites-enabled/pestyle_nginx.conf
-cp ./pestyle_nginx.conf /etc/nginx/sites-available/
+#rm /etc/nginx/sites-enabled/pestyle_nginx.conf
+cp -f ./pestyle_nginx.conf /etc/nginx/sites-available/
 ln -s /etc/nginx/sites-available/pestyle_nginx.conf /etc/nginx/sites-enabled/
 service nginx restart
 
@@ -26,6 +27,7 @@ python ./msite/manage.py collectstatic
 cd ./msite
 gunicorn msite.wsgi:application
 
+#для запуска отладочного серва джанги
 #python manage.py createsuperuser
 #python manage.py migrate
 #python manage.py runserver
