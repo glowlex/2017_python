@@ -1,0 +1,15 @@
+black all
+white all
+beige all
+blue white_beigeb_lue_chocolate_gray_yellow_olive
+olive white_beige_blue_blue
+green chocolate_gray_black_white_beige_blue
+burgundy black_blue_green_olive_gray_white_beige_gray
+chocolate white_beige_coral_pink_yellow_blue_green
+blue white_beige_blue_olive_chocolate_pink_coral_yellow_purple_gray
+pink white_beige_chocolate_blue_coral_purple_gray
+coral white_beige_chocolate_pink_blue_blue_black
+red black_white_gray
+yellow blue_purple_blue
+purple white_beige_yellow_pink_coral_gray_blue
+gray all
