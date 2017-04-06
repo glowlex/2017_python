@@ -5,45 +5,48 @@ STYLE_LIST = (
 ('P', 'party'),
 )
 
-ITEM_TYPE_LIST =[
-'dress',
-'blouse',
-'pants',
-'footwear',
-'outerwear',
-'umbrella',
-'glasses',
-'bag',
-'skirt',
-'cap',
-'T-shirt',
-'Sneakers',
-'Shoes',
-'Boots',
-]
+ITEM_TYPE_LIST =(
+('dress', 'dress'),
+('blouse', 'blouse'),
+('pants', 'pants'),
+('footwear', 'footwear'),
+('outerwear', 'outerwear'),
+('umbrella', 'umbrella'),
+('glasses', 'glasses'),
+('bag', 'bag'),
+('skirt', 'skirt'),
+('cap', 'cap'),
+('T-shirt', 'T-shirt'),
+('Sneakers', 'Sneakers'),
+('Shoes', 'Shoes'),
+('Boots', 'Boots'),
+)
 
-COLOR_LIST = [
-'black',
-'white',
-'milk',
-'beige',
-'deep_blue',
-'olivaceous',
-'deep_green',
-'vinous',
-'chocolate',
-'blue',
-'pink',
-'coral',
-'red',
-'yellow',
-'purple',
-'gray',
-]
+COLOR_LIST = (
+('black', 'black'),
+('white','white'),
+('milk','milk'),
+('beige','beige'),
+('deep_blue','deep_blue'),
+('olivaceous','olivaceous'),
+('deep_green','deep_green'),
+('vinous','vinous'),
+('chocolate','chocolate'),
+('blue','blue'),
+('pink','pink'),
+('coral','coral'),
+('red','red'),
+('yellow','yellow'),
+('purple','purple'),
+('gray','gray'),
+)
 
-SEASON_LIST = [
-
-]
+SEASON_LIST = (
+('Wn', 'winter'),
+('Sp', 'spring'),
+('Sm', 'summer'),
+('At', 'autumn'),
+)
 
 TEMPERATURE_LIST =(
 ('all', 'all'),
@@ -53,8 +56,8 @@ TEMPERATURE_LIST =(
 ('szara', "+20_+35"),
 )
 
-SKY_LIST = [
-'Clouds',
-'Rain',
-'Clear',
-]
+SKY_LIST = (
+('Clouds', 'Clouds'),
+('Rain', 'Rain'),
+('Clear', 'Clear'),
+)

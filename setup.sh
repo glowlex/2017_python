@@ -29,5 +29,6 @@ gunicorn msite.wsgi:application
 
 #для запуска отладочного серва джанги
 #python manage.py createsuperuser
+#python manage.py makemigrations 
 #python manage.py migrate
 #python manage.py runserver
