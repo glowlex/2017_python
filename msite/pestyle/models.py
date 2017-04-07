@@ -8,10 +8,12 @@ from django.conf import settings
 
 class MyUserManager(BaseUserManager):
 	def create_user(self, name, email, sex, birthday, city, password=None, last_name=None, avatar=None):
-		if not login:
-			raise ValueError('Users must have an login')
+		#пароля нет, чтобы авторизоваться через сторонние сервисы, но тут почта уникальна. TODO:нужно поправить
+		if not email:
+			raise ValueError('Users must have an email')
 
-		user = self.model(name=name, last_name=last_name, email =email, sex =sex, birthday =birthday, city=city, password=password, avatar =avatar)
+		user = self.model(name=name, last_name=last_name, email =email,
+		 sex =sex, birthday =birthday, city=city, password=password, avatar =avatar)
 		if avatar:
 			user.avatar=avatar
 			user.set_password(password)
@@ -40,7 +42,7 @@ class User(AbstractBaseUser):
 	REQUIRED_FIELDS = ['name', 'sex', 'birthday', 'city',]
 	objects = MyUserManager()
 	def __unicode__(self):
-		return self.name + " " + self.last_name
+		return u'%s %s' % (self.name, self.last_name)
 
 	def get_avatar(self):
 		return self.avatar
@@ -68,7 +70,7 @@ class Event(models.Model):
 		return event
 
 	def __unicode__(self):
-		return self.user
+		return u'%s' % self.user
 
 
 
@@ -87,6 +89,12 @@ class Item(models.Model):
 
 	class Meta:
 		db_table = 'Items'
+		get_latest_by = 'last_date'
+		ordering = ['item_type']
+		indexes = [
+            models.Index(fields=['user', 'item_type']),
+        ]
+		
 
 	@classmethod
 	def create_item(cls, user, item_type, photo, style, color, season, temperature, sky, last_date =None):
@@ -101,7 +109,7 @@ class Item(models.Model):
 		super(Item, self).delete()
 
 	def __unicode__(self):
-		return self.item_type 
+		return u'%s' % self.item_type
 
 
 
@@ -123,3 +131,6 @@ class Look(models.Model):
 			item = Item.objects.get(pk=i)
 			look.items.add(item)
 		return look
+
+	def __unicode__(self):
+		return u'%s' % self.id

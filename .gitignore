@@ -1,2 +1,6 @@
 /msite/pestyle/static/admin/
 /pestyle/
+*.log
+*.pot
+__pycache__/
+*.py[cod]
