@@ -7,4 +7,6 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 
 def main_page(request):
-    return render(request, 'base.html', {'data': "lolol"})
+    image = User.objects.get(pk=User.objects.count()).avatar
+    image1 = User.objects.get(pk=2).avatar
+    return render(request, 'base.html', {'data': "lolol", 'image':image, 'image1':image1})

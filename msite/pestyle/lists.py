@@ -16,10 +16,10 @@ ITEM_TYPE_LIST =(
 ('bag', 'bag'),
 ('skirt', 'skirt'),
 ('cap', 'cap'),
-('T-shirt', 'T-shirt'),
-('Sneakers', 'Sneakers'),
-('Shoes', 'Shoes'),
-('Boots', 'Boots'),
+('tshirt', 'Tshirt'),
+('sneakers', 'Sneakers'),
+('shoes', 'Shoes'),
+('boots', 'Boots'),
 )
 
 COLOR_LIST = (
@@ -46,6 +46,8 @@ SEASON_LIST = (
 ('Sp', 'spring'),
 ('Sm', 'summer'),
 ('At', 'autumn'),
+('SS', 'spring-summer'),
+('AW', 'autumn-winter'),
 )
 
 TEMPERATURE_LIST =(
@@ -57,7 +59,7 @@ TEMPERATURE_LIST =(
 )
 
 SKY_LIST = (
-('Clouds', 'Clouds'),
-('Rain', 'Rain'),
-('Clear', 'Clear'),
+('clouds', 'Clouds'),
+('rain', 'Rain'),
+('clear', 'Clear'),
 )
