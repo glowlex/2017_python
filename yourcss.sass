@@ -1,0 +1,20 @@
+@import "bulma"
+
+.main-background
+  background-image: url(./images/background1.jpg)
+  background-size: cover
+  background-repeat: no-repeat
+  background-position: center
+
+.top-menu
+  @extend .nav
+  background-color: rgba(255, 255, 255, 50)
+
+.top-menu__item
+  @extend .nav-item
+  font-size: 1.5rem
+  padding-right: 8px
+
+a.top-menu__item
+  @extend a.nav-item
+  color: black
