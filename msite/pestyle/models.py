@@ -153,3 +153,7 @@ class Look(models.Model):
 
 	def __str__(self):
 		return u'%s' % self.user.email
+
+class Look_suggestions(Look):
+	class Meta:
+		db_table = 'Look_suggestions'
