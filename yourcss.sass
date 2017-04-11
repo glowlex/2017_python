@@ -1,20 +1,220 @@
 @import "bulma"
 
+
+
 .main-background
-  background-image: url(./images/background1.jpg)
+  background-image: url(./images/background21.jpg)
   background-size: cover
   background-repeat: no-repeat
   background-position: center
+  width: 100vw
+  height: 100vh
+  background-color: white
 
-.top-menu
-  @extend .nav
+.nav_adjusted
   background-color: rgba(255, 255, 255, 50)
 
-.top-menu__item
-  @extend .nav-item
+.nav-item_adjusted
   font-size: 1.5rem
   padding-right: 8px
 
-a.top-menu__item
-  @extend a.nav-item
+a.nav-item_adjusted
   color: black
+
+.tile_no-round
+  border-radius: 0
+
+
+.choice-menu
+  width: 100%
+  margin: auto
+  display: flex
+  justify-content: space-between
+  align-items: center
+  flex-direction: row
+
+.choice-menu__item
+  font-size: 2rem
+  font-weight: bold
+  color: black
+  margin-left: 3vw
+  margin-right: 3vw
+
+.choice-menu__item__image
+  margin: auto
+
+.border-shadow
+  border-width: 2px
+  border-color: black
+  border-style: solid
+  background: black
+  box-shadow: 0 0 10px rgba(0,0,0,0.3)
+  background: linear-gradient(to top, #e3e3e3, white)
+
+.calendar-weather
+  @extend .border-shadow
+  padding: 10px
+  //margin-left: 2vw
+
+.weather
+  color: black
+
+.weather__temp
+  display: flex
+  flex-direction: column
+  position: absolute
+  right: -3rem
+  top: 0px
+  font-size: 1.7rem
+  color: #EB3B2B
+  font-weight: bold
+
+.weather__temp__high
+  position: relative
+  top: -10px
+
+.weather__temp__low
+  position: relative
+  bottom: -15px
+
+.weather-info
+  font-weight: bold
+  display: flex
+  flex-direction: column
+  margin: auto
+  font-size: 1rem
+
+
+
+
+
+.like
+  bottom: 4vh
+  margin-top: 1vh
+
+.like__choice-menu
+  @extend .choice-menu
+  justify-content: center
+  flex-direction: row
+
+.like__choice-menu__item
+  @extend .choice-menu__item
+
+.like__choice-menu__item__image
+  @extend .choice-menu__item__image
+  font-size: 3.5rem
+  text-shadow: 0 0 15px rgba(0,0,0,0.7)
+  display: flex
+  &.red-heart
+    color: black
+    font-weight: lighter
+    text-shadow: 0 0 20px rgba(#ED0909,0.9)
+
+
+.choice-window
+  @extend .border-shadow
+  margin-right: 2vw
+
+.calendar
+  width: 100%
+  padding-left: 1%
+  padding-right: 1%
+
+  tr
+    width: 100%
+    margin: auto
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-direction: row
+
+  tbody
+    width: 100%
+    margin: auto
+    display: flex
+    justify-content: space-between
+    align-items: center
+    flex-direction: column
+
+
+  a
+    text-decoration: none
+  caption
+    //line-height: 32px
+    font-size: 1.5rem
+
+    color: #929292
+    text-align: center
+    //text-shadow: 0 -1px black
+    background: #333
+    background: rgba(255, 255, 255, 0.35)
+    //border-top: 1px solid #333
+    border-bottom: 3px solid #f3f3f3
+    padding-bottom: 3%
+    //box-shadow: inset 0 1px rgba(255, 255, 255, 0.04)
+    a
+      display: block
+      //line-height: 32px
+      font-size: 2rem
+      padding-left: 25px
+      padding-right: 25px
+      color: #6B6A6A
+      padding-top: 15px
+      &:hover
+        color: black
+    .prev
+      float: left
+    .next
+      float: right
+  th, td
+    //width: 30px
+    text-align: center
+    text-shadow: 0 1px rgba(255, 255, 255, 0.8)
+  th:first-child, td:first-child
+    border-left: 0
+  th
+    //line-height: 20px
+    margin: auto
+    font-size: 0.9rem
+    color: #8c8c8c
+    text-transform: uppercase
+    //border-left: 1px solid #c2c2c2
+  td
+    width: 100%
+    height: 100%
+    font-size: 1.4rem
+
+    //border-top: 1px solid #c2c2c2
+    //border-left: 1px solid #c2c2c2
+    a
+      clear: both
+      display: block
+      position: relative
+      //width: 30px
+      line-height: 45px
+      color: #8c8c8c
+      //background-image: linear-gradient(to bottom, #eaeaea 0%, #e5e5e5 60%, #d9d9d9 100%)
+      background: #fafafa
+      box-shadow: inset 1px 1px rgba(255, 255, 255, 0.5)
+      &:hover
+        background: #f3f3f3
+    &.off a
+      background: #fafafa
+      color: #d5d5d5
+    &.active a, a:active
+      margin: -1px
+      color: white
+      text-shadow: 0 1px rgba(0, 0, 0, 0.3)
+      background: #28dcb9
+      //border: 1px solid #598b94
+      box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05)
+    &.active:first-child a, &:first-child a:active
+      border-left: 0
+      margin-left: 0
+    &.active:last-child a, &:last-child a:active
+      border-right: 0
+      margin-right: 0
+  tr:last-child td
+    &.active a, a:active
+      border-bottom: 0
+      margin-bottom: 0

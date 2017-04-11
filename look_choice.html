@@ -4,27 +4,191 @@
   <meta charset="UTF-8">
   <title>pestyle</title>
   <link rel="stylesheet" href="./yourcss.css"/>
+  <link rel="stylesheet" href="./css/font-awesome.css"/>
 
 </head>
 <body class="main-background">
-  <nav class="top-menu">
+  <nav class="nav nav_adjusted">
     <div class="container">
       <div class="nav-right nav-menu">
-        <a class="top-menu__item">
+        <a class="nav-item nav-item_adjusted">
           <figure class="image is-32x32" style="margin-right: 8px;">
-            <img src="http://bulma.io/images/jgthms.png">
+            <img src="./images/1.png">
           </figure>
           FFFFFFFFFFFFfffffffffffffffffffffffffff
         </a>
-        <a class="top-menu__item">
+        <a class="nav-item nav-item_adjusted">
           <figure class="image is-32x32" style="margin-right: 8px;">
-            <img src="http://bulma.io/images/jgthms.png">
+            <img src="./images/1.png">
           </figure>
           Log out
         </a>
       </div>
     </div>
   </nav>
-  <div style="width:100%; height:100vh"></div>
+  <div class="container">
+
+    <div class="tile is-ancestor is-vertical is-parent" style="height:95vh">
+      <div class="tile tile_no-round is-8">
+        <div class="choice-menu">
+          <div class="choice-menu__item">
+            <figure class="image is-64x64 choice-menu__item__image">
+              <img src="./images/1.png">
+            </figure>
+            <div> Гардероб</div>
+          </div>
+          <div class="choice-menu__item">
+            <figure class="image is-64x64 choice-menu__item__image">
+              <img src="./images/1.png">
+            </figure>
+            <div> Гардероб</div>
+          </div>
+          <div class="choice-menu__item">
+            <figure class="image is-64x64 choice-menu__item__image">
+              <img src="./images/1.png">
+            </figure>
+            <div> Гардероб</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="tile">
+        <div class="tile tile_no-round is-8 choice-window">
+          <p class="title">Vertical...</p>
+        </div>
+        <div class="tile tile_no-round is-4 calendar-weather is-vertical">
+          <div class="tile calendar">
+            <table>
+              <caption>
+                <span class="prev icon"><a class="fa fa-chevron-left" aria-hidden="true"></a></span>
+                <span class="next icon"><a class="fa fa-chevron-right" aria-hidden="true" href="#"></a></span>
+                Апрель 2017
+              </caption>
+              <thead>
+                <tr>
+                  <th>Mon</th>
+                  <th>Tue</th>
+                  <th>Wed</th>
+                  <th>Thu</th>
+                  <th>Fri</th>
+                  <th>Sat</th>
+                  <th>Sun</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="off"><a href="#">26</a></td>
+                  <td class="off"><a href="#">27</a></td>
+                  <td class="off"><a href="#">28</a></td>
+                  <td class="off"><a href="#">29</a></td>
+                  <td class="off"><a href="#">30</a></td>
+                  <td class="off"><a href="#">31</a></td>
+                  <td><a href="#">1</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">2</a></td>
+                  <td><a href="#">3</a></td>
+                  <td><a href="#">4</a></td>
+                  <td><a href="#">5</a></td>
+                  <td><a href="#">6</a></td>
+                  <td><a href="#">7</a></td>
+                  <td><a href="#">8</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">9</a></td>
+                  <td><a href="#">10</a></td>
+                  <td><a href="#">11</a></td>
+                  <td><a href="#">12</a></td>
+                  <td><a href="#">13</a></td>
+                  <td><a href="#">14</a></td>
+                  <td><a href="#">15</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">16</a></td>
+                  <td><a href="#">17</a></td>
+                  <td><a href="#">18</a></td>
+                  <td><a href="#">19</a></td>
+                  <td><a href="#">20</a></td>
+                  <td><a href="#">21</a></td>
+                  <td><a href="#">22</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">23</a></td>
+                  <td><a href="#">24</a></td>
+                  <td><a href="#">25</a></td>
+                  <td><a href="#">26</a></td>
+                  <td><a href="#">27</a></td>
+                  <td class="active"><a href="#">28</a></td>
+                  <td><a href="#">29</a></td>
+                </tr>
+                <tr>
+                  <td><a href="#">30</a></td>
+                  <td><a href="#">31</a></td>
+                  <td class="off"><a href="#">1</a></td>
+                  <td class="off"><a href="#">2</a></td>
+                  <td class="off"><a href="#">3</a></td>
+                  <td class="off"><a href="#">4</a></td>
+                  <td class="off"><a href="#">5</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tile weather is-vertical">
+            <div class="tile">
+              <figure class="image is-64x64">
+                <img src="./images/1.png">
+              </figure>
+              <h3 class="title is-3" style="margin-left:auto; margin-right:auto; font-weight:bold; padding-top:3%">Погода на сегодня</h3>
+            </div>
+            <div class="tile">
+              <div class="tile is-5" style="margin:auto;">
+                <figure class="image is-96x96">
+                  <img src="./images/1.png">
+                  <div class="weather__temp">
+                    <p class="weather__temp__high">+15</p>
+                    <p class="weather__temp__low">+9</p>
+                  </div>
+                </figure>
+              </div>
+              <div class="tile is-vertical is-7 weather-info">
+                <p class="weather_info">
+                  вероятность осадков: 40%
+                </p>
+                <p class="weather_info">
+                  влажность: 60%
+                </p>
+                <p class="weather_info">
+                  ветер
+                </p>
+
+              </div>
+
+
+            </div>
+            <div class="tile">
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      <div class="tile tile_no-round is-8 like">
+        <div class="like__choice-menu">
+          <div class="like__choice-menu__item">
+            <span class="like__choice-menu__item__image"><i class="fa fa-chevron-left"></i></span>
+          </div>
+          <div class="like__choice-menu__item">
+            <span class="like__choice-menu__item__image red-heart"><i class="fa fa-heart-o"></i></span>
+          </div>
+          <div class="like__choice-menu__item">
+            <span class="like__choice-menu__item__image"><i class="fa fa-chevron-right" ></i></span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </body>
 <html>
