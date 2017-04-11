@@ -12,7 +12,7 @@
   background-color: white
 
 .nav_adjusted
-  background-color: rgba(255, 255, 255, 50)
+  background-color: rgba(255, 255, 255, 0)
 
 .nav-item_adjusted
   font-size: 1.5rem
@@ -20,6 +20,9 @@
 
 a.nav-item_adjusted
   color: black
+  &:hover
+    transition: all 0.1s linear
+    transform: scale(1.05, 1.05)
 
 .tile_no-round
   border-radius: 0
@@ -39,6 +42,9 @@ a.nav-item_adjusted
   color: black
   margin-left: 3vw
   margin-right: 3vw
+  &:hover
+    transition: all 0.1s linear
+    transform: scale(1.05, 1.05)
 
 .choice-menu__item__image
   margin: auto
@@ -109,11 +115,73 @@ a.nav-item_adjusted
     color: black
     font-weight: lighter
     text-shadow: 0 0 20px rgba(#ED0909,0.9)
+  &:hover
+    transition: all 0.1s linear
+    transform: scale(1.05, 1.05)
 
 
 .choice-window
   @extend .border-shadow
   margin-right: 2vw
+  padding-left: 2vw
+  padding-right: 2vw
+  padding-bottom: 2vh
+
+.choice-window__item
+  margin: 1vh
+  justify-content: space-around
+  &.glass
+    flex: 1
+    padding-left: 20%
+    margin-left: 15%
+    margin-right: 15%
+  &.dress
+
+  &.bag
+    margin: 15%
+    padding-top: 3vh
+  &.shoes
+    margin: 15%
+    position: relative
+    left: 40%
+  &.outerwear
+    padding-top: 20%
+  &:hover
+    transition: all 0.1s linear
+    transform: scale(1.02, 1.02)
+
+.choice-window__item__previous
+  font-size: 6rem
+  color: rgba(#f3f3f3, 0)
+  width: 50%
+  height: 100%
+  display: flex
+  flex-direction: column
+  margin-right: 1%
+  &:hover
+    background-color: rgba(#f3f3f3, 0.5)
+    color: rgba(#faf3fa, 0.9)
+  i
+    margin: auto
+
+
+.choice-window__item__next
+  @extend .choice-window__item__previous
+  text-align: right
+  margin-left: 1%
+  margin-right: 0
+
+.choice-window__item__image
+  background-image: url(./images/1.png)
+  background-size: contain
+  background-repeat: no-repeat
+  background-position: center 0
+  width: 100%
+  height: auto
+  flex-direction: row
+  display: flex
+
+
 
 .calendar
   width: 100%
