@@ -4039,6 +4039,8 @@ a.nav-item_adjusted {
   padding-left: 2vw;
   padding-right: 2vw;
   padding-bottom: 2vh; }
+  .choice-window .button {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); }
 
 .choice-window__item {
   margin: 1vh;
@@ -4058,10 +4060,8 @@ a.nav-item_adjusted {
   .choice-window__item.outerwear {
     padding-top: 20%; }
   .choice-window__item.type {
-    flex: 0;
-    padding-right: 50%;
-    margin-left: 10%;
-    margin-right: 10%; }
+    padding-left: 10%;
+    padding-right: 10%; }
   .choice-window__item:hover {
     transition: all 0.1s linear;
     transform: scale(1.02, 1.02); }
@@ -4189,11 +4189,7 @@ a.nav-item_adjusted {
     border-bottom: 0;
     margin-bottom: 0; }
 
-.reg, .login {
-  bottom: 0;
-  top: 0;
-  left: 0;
-  right: 0;
+.reg, .login, .profile {
   margin: auto;
   border-width: 10px;
   border-color: #A8B6DB;
@@ -4204,23 +4200,27 @@ a.nav-item_adjusted {
   padding-left: 0;
   background-color: rgba(221, 221, 221, 0.5);
   width: 50%; }
-  .reg label, .login label {
+  .reg label, .login label, .profile label {
     color: black;
     font-size: 1.2rem; }
-  .reg button, .login button {
-    border-width: 2px;
-    border-color: black;
-    border-style: solid;
-    background: black;
+  .reg .button, .login .button, .profile .button {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); }
-  .reg .field-label, .login .field-label {
+  .reg button .delete, .login button .delete, .profile button .delete {
+    align-self: flex-end; }
+  .reg .field-label, .login .field-label, .profile .field-label {
     flex-grow: 2; }
 
-.login {
+.login, .profile {
   width: 40%;
   padding-left: 2%; }
-  .login .field-label {
+  .login .field-label, .profile .field-label {
     flex-grow: 1; }
+
+.profile {
+  width: 50%;
+  padding-left: 1%; }
+  .profile .field-label {
+    flex-grow: 2; }
 
 .reg__label {
   text-align: center;

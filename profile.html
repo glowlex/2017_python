@@ -29,87 +29,9 @@
   <div class="container">
 
   <div class="tile is-ancestor">
-    <div class="reg">
-    <div class="label reg__label">Регистрация</div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Имя</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded">
-            <input class="input" type="text" placeholder="name">
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Фамилия</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-grouped">
-          <p class="control is-expanded">
-            <input class="input" type="text" placeholder="last_name">
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label is-normal">
-        <label class="label">Email</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control is-expanded has-icon has-icon-right">
-            <input class="input is-success" type="email" placeholder="email" value="">
-            <span class="icon is-small">
-              <i class="fa fa-check"></i>
-            </span>
-          </p>
-          <p class="help is-success">This email is correct</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">Дата рождения</label>
-      </div>
-      <div class="field-body">
-        <div class="field">
-          <p class="control is-expanded has-icon has-icon-right">
-            <input class="input is-success" type="date" placeholder="birthday" value="">
-            <span class="icon is-small">
-              <i class="fa fa-check"></i>
-            </span>
-          </p>
-          <p class="help is-success">This is correct</p>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="field is-horizontal">
-      <div class="field-label">
-        <label class="label">sex?</label>
-      </div>
-      <div class="field-body">
-        <div class="field is-narrow">
-          <div class="control">
-            <label class="radio">
-              <input type="radio" name="sex">
-              Yes
-            </label>
-            <label class="radio">
-              <input type="radio" name="sex">
-              No
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="profile notification">
+      <button class="delete"></button>
+    <div class="label reg__label">Настройки</div>
 
     <div class="field is-horizontal">
       <div class="field-label is-normal">
@@ -126,6 +48,40 @@
         </div>
       </div>
     </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Новый Email</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control is-expanded has-icon has-icon-left has-icon">
+            <input class="input is-danger" type="email" placeholder="" value="">
+            <span class="icon is-small">
+              <i class="fa fa-envelope"></i>
+            </span>
+          </p>
+          <p class="help is-danger">This email is correct</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Новый пароль</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control has-icon">
+            <input class="input" type="password" name="password1" placeholder="">
+            <span class="icon is-small">
+              <i class="fa fa-lock"></i>
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+
     <div class="field is-horizontal">
       <div class="field-label is-normal">
         <label class="label">Повторите пароль</label>
@@ -133,7 +89,7 @@
       <div class="field-body">
         <div class="field">
           <p class="control has-icon">
-            <input class="input" type="password" name="password2" placeholder="">
+            <input class="input" type="password" name="password1" placeholder="">
             <span class="icon is-small">
               <i class="fa fa-lock"></i>
             </span>
@@ -148,14 +104,17 @@
 
       <div class="field-body">
         <div class="field is-grouped">
+          <div class="field-label">
+          </div>
+
           <div class="control">
-            <a class="button is-success">
-              Зарегистрироваться
+            <a class="button is-light">
+              Отмена
             </a>
           </div>
           <div class="control">
-            <a class="button is-light">
-              отмена
+            <a class="button is-success">
+              Изменить
             </a>
           </div>
         </div>

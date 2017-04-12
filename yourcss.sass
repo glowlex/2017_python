@@ -126,6 +126,8 @@ a.nav-item_adjusted
   padding-left: 2vw
   padding-right: 2vw
   padding-bottom: 2vh
+  .button
+    box-shadow: 0 0 5px rgba(0,0,0,0.6)
 
 .choice-window__item
   margin: 1vh
@@ -147,10 +149,9 @@ a.nav-item_adjusted
   &.outerwear
     padding-top: 20%
   &.type
-    flex: 0
-    padding-right: 50%
-    margin-left: 10%
-    margin-right: 10%
+    //flex: 0
+    padding-left: 10%
+    padding-right: 10%
   &:hover
     transition: all 0.1s linear
     transform: scale(1.02, 1.02)
@@ -306,10 +307,6 @@ a.nav-item_adjusted
 
 
 .reg
-  bottom: 0
-  top: 0
-  left: 0
-  right: 0
   margin: auto
   border-width: 10px
   border-color: #A8B6DB
@@ -323,12 +320,10 @@ a.nav-item_adjusted
   label
     color: black
     font-size: 1.2rem
-  button
-    border-width: 2px
-    border-color: black
-    border-style: solid
-    background: black
+  .button
     box-shadow: 0 0 5px rgba(0,0,0,0.6)
+  button .delete
+    align-self: flex-end
 
   .field-label
     flex-grow: 2
@@ -339,6 +334,13 @@ a.nav-item_adjusted
   padding-left: 2%
   .field-label
     flex-grow: 1
+
+.profile
+  @extend .login
+  width: 50%
+  padding-left: 1%
+  .field-label
+    flex-grow: 2
 
 .reg__label
   text-align: center
