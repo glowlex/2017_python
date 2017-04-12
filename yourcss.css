@@ -3976,7 +3976,7 @@ a.nav-item_adjusted {
   margin: auto; }
 
 .border-shadow, .calendar-weather, .choice-window {
-  border-width: 2px;
+  border-width: 3px;
   border-color: black;
   border-style: solid;
   background: black;
@@ -4057,9 +4057,24 @@ a.nav-item_adjusted {
     left: 40%; }
   .choice-window__item.outerwear {
     padding-top: 20%; }
+  .choice-window__item.type {
+    flex: 0;
+    padding-right: 50%;
+    margin-left: 10%;
+    margin-right: 10%; }
   .choice-window__item:hover {
     transition: all 0.1s linear;
     transform: scale(1.02, 1.02); }
+
+.choice-window__item__params {
+  height: 100%;
+  border-width: 2px;
+  border-color: rgba(0, 0, 0, 0.5);
+  border-style: solid;
+  padding: 4%;
+  margin-left: 2vw; }
+  .choice-window__item__params .field-label {
+    flex-grow: 2; }
 
 .choice-window__item__previous, .choice-window__item__next {
   font-size: 6rem;
@@ -4174,7 +4189,7 @@ a.nav-item_adjusted {
     border-bottom: 0;
     margin-bottom: 0; }
 
-.reg {
+.reg, .login {
   bottom: 0;
   top: 0;
   left: 0;
@@ -4188,12 +4203,24 @@ a.nav-item_adjusted {
   padding-top: 1%;
   padding-left: 0;
   background-color: rgba(221, 221, 221, 0.5);
-  width: 70%; }
-  .reg label {
+  width: 50%; }
+  .reg label, .login label {
     color: black;
     font-size: 1.2rem; }
-  .reg .field-label {
+  .reg button, .login button {
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    background: black;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.6); }
+  .reg .field-label, .login .field-label {
     flex-grow: 2; }
+
+.login {
+  width: 40%;
+  padding-left: 2%; }
+  .login .field-label {
+    flex-grow: 1; }
 
 .reg__label {
   text-align: center;

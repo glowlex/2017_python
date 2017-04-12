@@ -50,7 +50,7 @@ a.nav-item_adjusted
   margin: auto
 
 .border-shadow
-  border-width: 2px
+  border-width: 3px
   border-color: black
   border-style: solid
   background: black
@@ -146,9 +146,26 @@ a.nav-item_adjusted
     left: 40%
   &.outerwear
     padding-top: 20%
+  &.type
+    flex: 0
+    padding-right: 50%
+    margin-left: 10%
+    margin-right: 10%
   &:hover
     transition: all 0.1s linear
     transform: scale(1.02, 1.02)
+    //visibility:hidden
+
+.choice-window__item__params
+  height: 100%
+  border-width: 2px
+  border-color: rgba(black, 0.5)
+  border-style: solid
+  padding: 4%
+  margin-left: 2vw
+  .field-label
+    flex-grow: 2
+
 
 .choice-window__item__previous
   font-size: 6rem
@@ -288,7 +305,6 @@ a.nav-item_adjusted
       margin-bottom: 0
 
 
-
 .reg
   bottom: 0
   top: 0
@@ -303,12 +319,26 @@ a.nav-item_adjusted
   padding-top: 1%
   padding-left: 0
   background-color: rgba(#dddddd, 0.5)
-  width: 70%
+  width: 50%
   label
     color: black
     font-size: 1.2rem
+  button
+    border-width: 2px
+    border-color: black
+    border-style: solid
+    background: black
+    box-shadow: 0 0 5px rgba(0,0,0,0.6)
+
   .field-label
     flex-grow: 2
+
+.login
+  @extend .reg
+  width: 40%
+  padding-left: 2%
+  .field-label
+    flex-grow: 1
 
 .reg__label
   text-align: center
