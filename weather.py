@@ -8,7 +8,9 @@ class Weather():
         return converted_time
 
     def __url_builder(self, city_id):
-        user_api = '0b1eaf7ce235a1ebaba14d5e07ee4228'
+        with open('config.json') as file_config:
+            config = json.load(file_config)
+        user_api = config['user_api']
         unit = 'metric'
         api = 'http://api.openweathermap.org/data/2.5/weather?id='
         full_api_url = api + str(city_id) + '&mode=json&units=' + unit + '&APPID=' + user_api
@@ -42,32 +44,24 @@ class Weather():
             dt=self.__time_converter(raw_api_dict.get('dt')),
             cloudiness=raw_api_dict.get('clouds').get('all')
         )
+# def data_output(city_id):
+#     data = Weather().weather_dictionary(city_id)
+#
+#     m_symbol = '\xb0' + 'C'
+#     print('---------------------------------------')
+#     print('Current weather in: {}, {}:'.format(data['city'], data['country']))
+#     print(data['temp'], m_symbol, data['sky'])
+#     print('Max: {}, Min: {}'.format(data['temp_max'], data['temp_min']))
+#     print('')
+#     print('Wind Speed: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
+#     print('Humidity: {}'.format(data['humidity']))
+#     print('Cloud: {}'.format(data['cloudiness']))
+#     print('Pressure: {}'.format(data['pressure']))
+#     print('Sunrise at: {}'.format(data['sunrise']))
+#     print('Sunset at: {}'.format(data['sunset']))
+#     print('')
+#     print('Last update from the server: {}'.format(data['dt']))
+#     print('---------------------------------------')
 
-#######################
 
-def data_output(city_id):
-    data = Weather().weather_dictionary(city_id)
-
-    m_symbol = '\xb0' + 'C'
-    print('---------------------------------------')
-    print('Current weather in: {}, {}:'.format(data['city'], data['country']))
-    print(data['temp'], m_symbol, data['sky'])
-    print('Max: {}, Min: {}'.format(data['temp_max'], data['temp_min']))
-    print('')
-    print('Wind Speed: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
-    print('Humidity: {}'.format(data['humidity']))
-    print('Cloud: {}'.format(data['cloudiness']))
-    print('Pressure: {}'.format(data['pressure']))
-    print('Sunrise at: {}'.format(data['sunrise']))
-    print('Sunset at: {}'.format(data['sunset']))
-    print('')
-    print('Last update from the server: {}'.format(data['dt']))
-    print('---------------------------------------')
-
-def data_output_decorated(data_output_function, city_id):
-    print('\nПечать до вывода погоды')
-    data_output_function(city_id)
-    print('Это была погода для Москвы')
-
-moscow_id = 524901
-data_output_decorated(data_output, moscow_id)
+# moscow_id = 524901
