@@ -3930,7 +3930,7 @@ label.panel-block {
   padding: 3rem 1.5rem 6rem; }
 
 .main-background {
-  background-image: url(./images/background.jpg);
+  background-image: url(../images/other/background.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -4051,30 +4051,30 @@ a.nav-item_adjusted {
     margin-left: 15%;
     margin-right: 15%; }
     .choice-window__item.glass > .choice-window__item__image {
-      background-image: url(./images/glass.jpg); }
+      background-image: url(../images/item_photo/glass.jpg); }
   .choice-window__item.dress > .choice-window__item__image {
-    background-image: url(./images/dress.jpg); }
+    background-image: url(../images/item_photo/dress.jpg); }
   .choice-window__item.bag {
     margin: 15%;
     padding-top: 3vh; }
     .choice-window__item.bag > .choice-window__item__image {
-      background-image: url(./images/bag.jpg); }
+      background-image: url(../images/item_photo/bag.jpg); }
   .choice-window__item.shoes {
     margin: 15%;
     position: relative;
     left: 40%; }
     .choice-window__item.shoes > .choice-window__item__image {
-      background-image: url(./images/shoes.jpg); }
+      background-image: url(../images/item_photo/shoes.jpg); }
   .choice-window__item.outerwear {
     padding-top: 20%;
     flex: 2; }
     .choice-window__item.outerwear > .choice-window__item__image {
-      background-image: url(./images/outwear.jpg); }
+      background-image: url(../images/item_photo/outwear.jpg); }
   .choice-window__item.type {
     padding-left: 10%;
     padding-right: 10%; }
     .choice-window__item.type > .choice-window__item__image {
-      background-image: url(./images/1.png); }
+      background-image: url(../images/item_photo/1.png); }
   .choice-window__item:hover {
     transition: all 0.1s linear;
     transform: scale(1.02, 1.02); }
