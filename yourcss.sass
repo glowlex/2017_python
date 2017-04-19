@@ -3,7 +3,7 @@
 
 
 .main-background
-  background-image: url(./images/background21.jpg)
+  background-image: url(./images/background.jpg)
   background-size: cover
   background-repeat: no-repeat
   background-position: center
@@ -123,8 +123,8 @@ a.nav-item_adjusted
 .choice-window
   @extend .border-shadow
   margin-right: 2vw
-  padding-left: 2vw
-  padding-right: 2vw
+  padding-left: 0.3vw
+  padding-right: 0.3vw
   padding-bottom: 2vh
   .button
     box-shadow: 0 0 5px rgba(0,0,0,0.6)
@@ -137,21 +137,33 @@ a.nav-item_adjusted
     padding-left: 20%
     margin-left: 15%
     margin-right: 15%
+    &>.choice-window__item__image
+      background-image: url(./images/glass.jpg)
   &.dress
-
+    &>.choice-window__item__image
+      background-image: url(./images/dress.jpg)
   &.bag
     margin: 15%
     padding-top: 3vh
+    &>.choice-window__item__image
+      background-image: url(./images/bag.jpg)
   &.shoes
     margin: 15%
     position: relative
     left: 40%
+    &>.choice-window__item__image
+      background-image: url(./images/shoes.jpg)
   &.outerwear
     padding-top: 20%
+    flex: 2
+    &>.choice-window__item__image
+      background-image: url(./images/outwear.jpg)
   &.type
     //flex: 0
     padding-left: 10%
     padding-right: 10%
+    &>.choice-window__item__image
+      background-image: url(./images/1.png)
   &:hover
     transition: all 0.1s linear
     transform: scale(1.02, 1.02)
@@ -190,7 +202,6 @@ a.nav-item_adjusted
   margin-right: 0
 
 .choice-window__item__image
-  background-image: url(./images/1.png)
   background-size: contain
   background-repeat: no-repeat
   background-position: center 0
@@ -198,7 +209,6 @@ a.nav-item_adjusted
   height: auto
   flex-direction: row
   display: flex
-
 
 
 .calendar
