@@ -1,0 +1,67 @@
+{% block login_window %}
+<form id="login_window" method="post">
+  {% csrf_token %}
+  <div class="tile is-ancestor">
+    <div class="login">
+      <div class="label reg__label">Вход</div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Email</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icon has-icon-left has-icon">
+              {{log_form.email}}
+              <span class="icon is-small">
+                <i class="fa fa-envelope"></i>
+              </span>
+            </p>
+            {% if  form.email.errors %}
+            <p class="help is-danger error-messege">This email is incorrect</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Пароль</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control has-icon">
+              {{log_form.password}}
+              <span class="icon is-small">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+        </div>
+
+        <div class="field-body">
+          <div class="field is-grouped">
+            <div class="field-label">
+            </div>
+
+            <div class="control">
+              <a class="button is-light" href="#">
+                отмена
+              </a>
+            </div>
+            <div class="control">
+              <button class="button is-success" type="submit">
+                Войти
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

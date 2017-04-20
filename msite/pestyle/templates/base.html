@@ -1,9 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title> </title>
-	</head>
-  <p>{{data}}</p>
-	<img src={{image}}>
-	<img src={{image1}}>
-  <html>
+<head>
+  <meta charset="UTF-8">
+  <title>pestyle</title>
+  <link rel="stylesheet" href="static/css/yourcss.css"/>
+  <link rel="stylesheet" href="static/css/font-awesome.css"/>
+</head>
+<body>
+  <nav class="nav nav_adjusted">
+    <div class="container">
+		{% if request.user.is_authenticated %}
+      <div class="nav-right nav-menu">
+        <a class="nav-item nav-item_adjusted">
+          <figure class="image is-32x32" style="margin-right: 8px;">
+						{% if request.user.avatar %}
+            <img src="{{request.user.avatar}}">
+						{% else %}
+						<img src="other/default_avatar.png">
+						{% endif %}
+          </figure>
+          {{request.user.name}}
+        </a>
+        <a class="nav-item nav-item_adjusted">
+          <figure class="image is-32x32" style="margin-right: 8px;">
+            <img src="other/log_out.png">
+          </figure>
+          Выход
+        </a>
+      </div>
+			{% else %}
+			<div class="nav-right nav-menu">
+				<a class="nav-item nav-item_adjusted" href="#login_window">
+					<figure class="image is-32x32" style="margin-right: 8px;">
+						<img src="other/log_in.png">
+					</figure>
+					Вход
+				</a>
+				<a class="nav-item nav-item_adjusted" href="#reg_window">
+					<figure class="image is-32x32" style="margin-right: 8px;">
+						<img src="other/registration.png">
+					</figure>
+					Регистрация
+				</a>
+			</div>
+			{% endif %}
+    </div>
+  </nav>
+{% if not request.user.is_authenticated %}
+<div class="main-background"></div>
+{% endif %}
+{% block content %}
+{% endblock %}
+</body>
+<html>

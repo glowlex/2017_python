@@ -63,3 +63,8 @@ SKY_LIST = (
 ('rain', 'Rain'),
 ('clear', 'Clear'),
 )
+
+SEX_LIST = (
+('M', 'male'),
+('F', 'female')
+)
