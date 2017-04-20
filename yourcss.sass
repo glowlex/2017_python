@@ -9,19 +9,23 @@
   background-position: center
   width: 100vw
   height: 100vh
-  background-color: white
+  top: 0
+  position: absolute
 
 .nav_adjusted
   background-color: rgba(255, 255, 255, 0)
 
 .nav-item_adjusted
   font-size: 1.5rem
-  padding-right: 8px
+  padding-right: 1%
+  padding-left: 1%
 
 a.nav-item_adjusted
-  color: black
+  color: white
   &:hover
-    transition: all 0.1s linear
+    color: white
+    text-shadow: 0 0 15px rgba(white, 1)
+    transition: all 0.2s linear
     transform: scale(1.05, 1.05)
 
 .tile_no-round
@@ -318,6 +322,7 @@ a.nav-item_adjusted
 
 .reg
   margin: auto
+  margin-top: 10%
   border-width: 10px
   border-color: #A8B6DB
   border-style: solid
@@ -325,7 +330,7 @@ a.nav-item_adjusted
   padding: 3%
   padding-top: 1%
   padding-left: 0
-  background-color: rgba(#dddddd, 0.5)
+  background-color: rgba(#dddddd, 0.7)
   width: 50%
   label
     color: black
@@ -334,6 +339,10 @@ a.nav-item_adjusted
     box-shadow: 0 0 5px rgba(0,0,0,0.6)
   button .delete
     align-self: flex-end
+  .error-messege
+    font-size: 1rem
+    text-shadow: 0 0 5px white
+
 
   .field-label
     flex-grow: 2
@@ -344,6 +353,11 @@ a.nav-item_adjusted
   padding-left: 2%
   .field-label
     flex-grow: 1
+
+#login_window
+  display: none
+  &:target
+    display: block
 
 .profile
   @extend .login
@@ -356,3 +370,8 @@ a.nav-item_adjusted
   text-align: center
   font-size: 3rem
   color: #434344
+
+#reg_window
+  display: none
+  &:target
+    display: block
