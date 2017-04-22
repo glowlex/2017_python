@@ -1,5 +1,5 @@
 {% block reg_window %}
-<form id="reg_window">
+<form id="reg_window" method="post">
   {% csrf_token %}
   <div class="tile is-ancestor">
     <div class="reg">
@@ -11,7 +11,7 @@
         <div class="field-body">
           <div class="field is-grouped">
             <p class="control is-expanded">
-              <input class="input" type="text" placeholder="name">
+              {{reg_form.name}}
             </p>
           </div>
         </div>
@@ -23,7 +23,7 @@
         <div class="field-body">
           <div class="field is-grouped">
             <p class="control is-expanded">
-              <input class="input" type="text" placeholder="last_name">
+              {{reg_form.last_name}}
             </p>
           </div>
         </div>
@@ -36,16 +36,32 @@
         <div class="field-body">
           <div class="field">
             <p class="control is-expanded has-icon has-icon-right">
-              <input class="input is-success" type="email" placeholder="email" value="">
+              {{reg_form.email}}
               <span class="icon is-small">
                 <i class="fa fa-check"></i>
               </span>
             </p>
-            <p class="help is-success">This email is correct</p>
+            {% if reg_form.email.errors %}
+            <p class="help is-danger error-messege">{{reg_form.email.errors.as_text}}</p>
+            {% endif %}
           </div>
         </div>
       </div>
-
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Город</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.city}}
+            </p>
+            {% if reg_form.city.errors %}
+            <p class="help is-danger error-messege">{{reg_form.city.errors.as_text}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
       <div class="field is-horizontal">
         <div class="field-label">
           <label class="label">Дата рождения</label>
@@ -53,12 +69,11 @@
         <div class="field-body">
           <div class="field">
             <p class="control is-expanded has-icon has-icon-right">
-              <input class="input is-success" type="date" placeholder="birthday" value="">
+              {{reg_form.birthday}}
               <span class="icon is-small">
                 <i class="fa fa-check"></i>
               </span>
             </p>
-            <p class="help is-success">This is correct</p>
           </div>
         </div>
       </div>
@@ -89,7 +104,7 @@
         <div class="field-body">
           <div class="field">
             <p class="control has-icon">
-              <input class="input" type="password" name="password1" placeholder="">
+              {{reg_form.password}}
               <span class="icon is-small">
                 <i class="fa fa-lock"></i>
               </span>
@@ -104,11 +119,14 @@
         <div class="field-body">
           <div class="field">
             <p class="control has-icon">
-              <input class="input" type="password" name="password2" placeholder="">
+              {{reg_form.password2}}
               <span class="icon is-small">
                 <i class="fa fa-lock"></i>
               </span>
             </p>
+            {% if  reg_form.password2.errors %}
+            <p class="help is-danger error-messege">{{reg_form.password2.errors.as_text}}</p>
+            {% endif %}
           </div>
         </div>
       </div>

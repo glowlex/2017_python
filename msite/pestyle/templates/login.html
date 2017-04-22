@@ -16,8 +16,8 @@
                 <i class="fa fa-envelope"></i>
               </span>
             </p>
-            {% if  form.email.errors %}
-            <p class="help is-danger error-messege">This email is incorrect</p>
+            {% if  log_form.email.errors %}
+            <p class="help is-danger error-messege">{{log_form.email.errors.as_text}}</p>
             {% endif %}
           </div>
         </div>
@@ -35,6 +35,9 @@
                 <i class="fa fa-lock"></i>
               </span>
             </p>
+            {% if  log_form.password.errors %}
+            <p class="help is-danger error-messege">{{log_form.password.errors.as_text}}</p>
+            {% endif %}
           </div>
         </div>
       </div>

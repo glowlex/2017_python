@@ -19,4 +19,5 @@ from django.contrib.auth.views import logout
 
 urlpatterns = [
     url(r'^$', main_page, name='main_page'),
+    url(r'^look_choice/$', look_choice, name='look_choice'),
 ]

@@ -7,7 +7,7 @@ from django.conf import settings
 
 
 class MyUserManager(BaseUserManager):
-	def create_user(self, email, name, sex, birthday, city, password=None, last_name=None, avatar=None):
+	def create_user(self, email, name, sex, city, password=None, last_name=None, birthday=None, avatar=None, **kwargs):
 		#пароля нет, чтобы авторизоваться через сторонние сервисы, но тут почта уникальна. TODO:нужно поправить
 		if not email:
 			raise ValueError('Users must have an email')
@@ -35,8 +35,8 @@ class User(AbstractBaseUser):
 	last_name = models.CharField(max_length=32, blank=True, null=True)
 	email = models.EmailField(max_length=64, unique=True)
 	sex = models.CharField(max_length=1, choices=SEX_LIST, default=SEX_LIST[1][1])
-	birthday = models.DateField()
-	city = models.IntegerField()
+	birthday = models.DateField(blank=True, null=True)
+	city = models.IntegerField(default=1)
 	#static/images/ для отладочного серва, просто avatar/ для nginx
 	avatar = models.ImageField(upload_to='avatar/', blank=True, null=True)
 
