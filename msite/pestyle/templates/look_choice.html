@@ -5,94 +5,30 @@
   <div class="tile is-ancestor is-vertical is-parent" style="height:95vmin">
     <div class="tile tile_no-round is-8">
       <div class="choice-menu">
-        <div class="choice-menu__item">
+        <a class="choice-menu__item" href="#">
           <figure class="image is-64x64 choice-menu__item__image">
             <img src="/other/1.png">
           </figure>
-          <div> Гардероб</div>
-        </div>
-        <div class="choice-menu__item">
+          <div>Мой гардероб</div>
+        </a>
+        <a class="choice-menu__item" href="#">
           <figure class="image is-64x64 choice-menu__item__image">
             <img src="/other/1.png">
           </figure>
-          <div> Гардероб</div>
-        </div>
-        <div class="choice-menu__item">
+          <div>Избранное</div>
+        </a>
+        <a class="choice-menu__item" href="#">
           <figure class="image is-64x64 choice-menu__item__image">
             <img src="/other/1.png">
           </figure>
-          <div> Гардероб</div>
-        </div>
+          <div>Подбор</div>
+        </a>
       </div>
     </div>
 
     <div class="tile">
-      <div class="tile tile_no-round choice-window">
-        <div class="tile is-8 is-vertical">
-          <div class="tile choice-window__item glass">
-            <div class="choice-window__item__image ">
-              <div class="choice-window__item__previous">
-                <i class="fa fa-angle-left"></i>
-              </div>
-              <div class="choice-window__item__next">
-                <i class="fa fa-angle-right"></i>
-              </div>
-            </div>
-          </div>
-          <div class="tile" style="flex:6">
-            <div class="tile  choice-window__item dress">
-              <div class="choice-window__item__image ">
-                <div class="choice-window__item__previous">
-                  <i class="fa fa-angle-left"></i>
-                </div>
-                <div class="choice-window__item__next">
-                  <i class="fa fa-angle-right"></i>
-                </div>
-              </div>
-            </div>
-            <div class="tile  is-vertical">
-              <div class="tile choice-window__item bag">
-                <div class="choice-window__item__image ">
-                  <div class="choice-window__item__previous">
-                    <i class="fa fa-angle-left"></i>
-                  </div>
-                  <div class="choice-window__item__next">
-                    <i class="fa fa-angle-right"></i>
-                  </div>
-                </div>
-              </div>
-              <div class="tile">
-                <div class="tile choice-window__item shoes">
-                  <div class="choice-window__item__image ">
-                    <div class="choice-window__item__previous">
-                      <i class="fa fa-angle-left"></i>
-                    </div>
-                    <div class="choice-window__item__next">
-                      <i class="fa fa-angle-right"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-        <div class="tile is-4 is-vertical">
-            <div class="tile choice-window__item outerwear">
-              <div class="choice-window__item__image ">
-                <div class="choice-window__item__previous">
-                  <i class="fa fa-angle-left"></i>
-                </div>
-                <div class="choice-window__item__next">
-                  <i class="fa fa-angle-right"></i>
-                </div>
-              </div>
-            </div>
-            <div class="tile">
-
-            </div>
-        </div>
-      </div>
+      {% include "look.html" %}
+      {% include "item.html" %}
       <div class="tile tile_no-round is-4 calendar-weather is-vertical">
         <div class="tile calendar">
           <table>
@@ -222,5 +158,8 @@
     </div>
 
   </div>
+</div>
+<div class="container">
+  {% include "profile.html" %}
 </div>
 {% endblock %}

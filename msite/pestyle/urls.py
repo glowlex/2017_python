@@ -16,8 +16,12 @@ Including another URLconf
 from django.conf.urls import url, include
 from pestyle.views import *
 from django.contrib.auth.views import logout
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     url(r'^$', main_page, name='main_page'),
     url(r'^look_choice/$', look_choice, name='look_choice'),
+    url(r'^login_window/$', RedirectView.as_view(url='/#login_window'), name='login'),
+    url(r'^logout/$', logout, name='logout'),
+    url(r'^get_looks/$', get_looks, name='get_looks'),
 ]

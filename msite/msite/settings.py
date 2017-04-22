@@ -121,3 +121,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = BASE_DIR+'/pestyle/static/images'
 #MEDIA_URL = 'avatar/'
 STATIC_ROOT = BASE_DIR+'/pestyle/static/'
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_URL = '/login_window/'

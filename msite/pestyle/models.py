@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from pestyle.lists import *
 from django.conf import settings
+import os
 
 
 class MyUserManager(BaseUserManager):
@@ -67,6 +68,15 @@ class User(AbstractBaseUser):
 
 	def get_short_name(self):
 		return self.name
+
+	def set_avatar(self, avatar):
+		if self.avatar:
+			try:
+				os.remove(self.avatar.path)
+			except OSError:
+				pass
+		self.avatar.save("a.jpg", avatar, save=True)
+
 
 
 

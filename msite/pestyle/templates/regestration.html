@@ -1,5 +1,5 @@
 {% block reg_window %}
-<form id="reg_window" method="post">
+<form id="reg_window" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="tile is-ancestor">
     <div class="reg">
@@ -99,6 +99,19 @@
 
       <div class="field is-horizontal">
         <div class="field-label is-normal">
+          <label class="label">Аватар</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.avatar}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
           <label class="label">Пароль</label>
         </div>
         <div class="field-body">
@@ -143,7 +156,7 @@
               </button>
             </div>
             <div class="control">
-              <a class="button is-light" href="#">
+              <a class="button is-light" href="">
                 отмена
               </a>
             </div>

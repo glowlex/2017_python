@@ -4207,7 +4207,7 @@ a.nav-item_adjusted {
 
 .reg, .login, .profile {
   margin: auto;
-  margin-top: 10%;
+  margin-top: 5%;
   border-width: 10px;
   border-color: #A8B6DB;
   border-style: solid;
@@ -4246,6 +4246,17 @@ a.nav-item_adjusted {
   padding-left: 1%; }
   .profile .field-label {
     flex-grow: 2; }
+
+#profile_window {
+  top: 0;
+  left: 0;
+  right: 0;
+  position: fixed;
+  margin: auto;
+  display: none;
+  width: 100%; }
+  #profile_window:target {
+    display: block; }
 
 .reg__label {
   text-align: center;
