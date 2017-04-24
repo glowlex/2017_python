@@ -110,9 +110,13 @@ def get_items(request):
     print(items)
     return JsonResponse(serializers.serialize('json',items,  fields=('item_type', 'photo')), safe=False)
 
+
+
 @login_required
 def item_window(request):
-    return TemplateResponse(request, 'item.html', {})
+    item_form = Item_Form(request.POST or None)
+    return TemplateResponse(request, 'item.html', {'item_form':item_form})
+
 
 
 @login_required

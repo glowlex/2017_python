@@ -16,99 +16,158 @@
         <button class="button is-medium is-light"><a href="javascript: void(0)">Выбрать фото</a></button>
         <input type="file" id="upload_input" name="upload" style="font-size: 50px; width: 120px; opacity: 0; filter:alpha(opacity=0);  position: relative; top: -40px;; left: -20px" />
       </div>
+    </div>
   </div>
-</div>
-<div class="tile">
-  <div class="tile is-6 is-vertical">
-    <div class="tile" style="flex:6">
-      <div class="tile  choice-window__item dress" id="item">
-        <div class="choice-window__item__image ">
-          <div class="choice-window__item__previous" id="item_prev">
-            <i class="fa fa-angle-left"></i>
-          </div>
-          <div class="choice-window__item__next" id="item_next">
-            <i class="fa fa-angle-right"></i>
+  <div class="tile">
+    <div class="tile is-6 is-vertical">
+      <div class="tile" style="flex:6">
+        <div class="tile  choice-window__item dress" id="item">
+          <div class="choice-window__item__image ">
+            <div class="choice-window__item__previous" id="item_prev">
+              <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="choice-window__item__next" id="item_next">
+              <i class="fa fa-angle-right"></i>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <div class="tile is-6 is-vertical">
-    <div class="choice-window__item__params">
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Категория</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <span class="select">
-                <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
-                </select>
-              </span>
-            </p>
+    <div class="tile is-6 is-vertical">
+      <form class="choice-window__item__params" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Категория</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.item_type %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Цвет</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <span class="select">
-                <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
-                </select>
-              </span>
-            </p>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Цвет</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.color %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Стиль</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <span class="select">
-                <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
-                </select>
-              </span>
-            </p>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Стиль</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.style %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="field is-horizontal">
-        <div class="field-label is-normal">
-          <label class="label">Сезон</label>
-        </div>
-        <div class="field-body">
-          <div class="field">
-            <p class="control">
-              <span class="select">
-                <select>
-                  <option>Select dropdown</option>
-                  <option>With options</option>
-                </select>
-              </span>
-            </p>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Сезон</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.season %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">temperature</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.temperature %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">sky</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  <select style="width:100%">
+                    {% for f in item_form.sky %}
+                    <label class="radio">
+                      {{f.tag}}
+                      {{f.choice_label}}
+                    </label>
+                    {% endfor %}
+                  </select>
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-</div>
 </div>
 
 {% endblock %}

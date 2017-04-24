@@ -153,3 +153,46 @@ class User_Profile_Form(User_Registration_Form):
 
     def clean(self):
         return self.cleaned_data
+
+
+
+
+class Item_Form(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(Item_Form, self).__init__(*args, **kwargs)
+
+    class Meta:
+        model = Item
+        fields = ['item_type', 'photo', 'style', 'color', 'season', 'temperature', 'sky',]
+        exclude =['user', 'rate', 'last_date',]
+        widgets = {
+        'item_type': forms.Select(attrs={}, choices=ITEM_TYPE_LIST,),
+        'style': forms.Select(attrs={}, choices=STYLE_LIST,),
+        'color': forms.Select(attrs={}, choices=COLOR_LIST,),
+        'season': forms.Select(attrs={}, choices=SEASON_LIST,),
+        'temperature': forms.Select(attrs={}, choices=TEMPERATURE_LIST,),
+        'sky': forms.Select(attrs={}, choices=SKY_LIST,),
+        'photo': forms.FileInput(attrs={'type':'file', 'style':"font-size: 50px; width: 120px; opacity: 0; filter:alpha(opacity=0);  position: relative; top: -40px;; left: -20px"}),
+        }
+
+    def save(self, commit=True):
+        user = super(User_Registration_Form, self).save(commit=False)
+        user.set_password(self.cleaned_data["password"])
+        if commit:
+            user.save()
+        return user
+
+    def clean(self):
+        try:
+            name = self.cleaned_data['name']
+        except KeyError:
+            raise forms.ValidationError('The name field was blank.')
+        try:
+            sex = self.cleaned_data['sex']
+        except KeyError:
+            raise forms.ValidationError('The sex field was blank.')
+        try:
+            city = self.cleaned_data['city']
+        except KeyError:
+            raise forms.ValidationError('The city field was blank.')
+        return self.cleaned_data
