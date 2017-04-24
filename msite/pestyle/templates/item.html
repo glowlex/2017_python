@@ -13,9 +13,15 @@
     </div>
     <div class="tile">
       <div class="control" style="margin:auto">
-        <button class="button is-medium is-light"><a href="javascript: void(0)">Выбрать фото</a></button>
-        <input type="file" id="upload_input" name="upload" style="font-size: 50px; width: 120px; opacity: 0; filter:alpha(opacity=0);  position: relative; top: -40px;; left: -20px" />
-      </div>
+        <label class="file_upload" >
+          <a class="button is-medium is-light" >Выбрать фото</a>
+<form method="post" enctype="multipart/form-data" id="image_form">
+            {{item_form.photo}}
+</form>
+
+
+      </label>
+    </div>
     </div>
   </div>
   <div class="tile">
@@ -34,7 +40,7 @@
       </div>
     </div>
     <div class="tile is-6 is-vertical">
-      <form class="choice-window__item__params" enctype="multipart/form-data">
+      <form class="choice-window__item-params" id="item_selects" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="field is-horizontal">
           <div class="field-label is-normal">
@@ -44,14 +50,7 @@
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.item_type %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.item_type}}
                 </span>
               </p>
             </div>
@@ -66,14 +65,7 @@
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.color %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.color}}
                 </span>
               </p>
             </div>
@@ -88,14 +80,7 @@
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.style %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.style}}
                 </span>
               </p>
             </div>
@@ -110,14 +95,7 @@
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.season %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.season}}
                 </span>
               </p>
             </div>
@@ -125,20 +103,13 @@
         </div>
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">temperature</label>
+            <label class="label">Температура</label>
           </div>
           <div class="field-body">
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.temperature %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.temperature}}
                 </span>
               </p>
             </div>
@@ -146,25 +117,23 @@
         </div>
         <div class="field is-horizontal">
           <div class="field-label is-normal">
-            <label class="label">sky</label>
+            <label class="label">Погода</label>
           </div>
           <div class="field-body">
             <div class="field">
               <p class="control">
                 <span class="select" style="width:100%">
-                  <select style="width:100%">
-                    {% for f in item_form.sky %}
-                    <label class="radio">
-                      {{f.tag}}
-                      {{f.choice_label}}
-                    </label>
-                    {% endfor %}
-                  </select>
+                  {{item_form.sky}}
                 </span>
               </p>
             </div>
           </div>
         </div>
+        <div class="control choice-window__item-params__button" id="item_change_button">
+  <button class="button is-medium is-light" type="submit" id="item_submit_button">
+    Отправить
+  </button>
+</div>
       </form>
     </div>
   </div>

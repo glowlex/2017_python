@@ -4085,15 +4085,19 @@ a.nav-item_adjusted {
     transition: all 0.1s linear;
     transform: scale(1.02, 1.02); }
 
-.choice-window__item__params {
+.choice-window__item-params {
   height: 100%;
   border-width: 2px;
   border-color: rgba(0, 0, 0, 0.5);
   border-style: solid;
   padding: 4%;
   margin-left: 2vw; }
-  .choice-window__item__params .field-label {
+  .choice-window__item-params .field-label {
     flex-grow: 2; }
+
+.choice-window__item-params__button {
+  margin: auto;
+  margin-bottom: 0; }
 
 .choice-window__item__previous, .choice-window__item__next {
   font-size: 6rem;
@@ -4266,5 +4270,20 @@ a.nav-item_adjusted {
   display: none; }
   #reg_window:target {
     display: block; }
+
+.file_upload {
+  position: relative;
+  overflow: hidden;
+  font-size: 1em;
+  height: 2em;
+  line-height: 2em; }
+
+.file_upload input[type=file] {
+  position: absolute;
+  top: 0;
+  opacity: 0; }
+
+.select > select {
+  width: 100%; }
 
 /*# sourceMappingURL=yourcss.css.map */

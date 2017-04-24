@@ -6,6 +6,21 @@ from pestyle.lists import *
 from django.conf import settings
 import os
 
+#для хитрых имён
+from uuid import uuid4
+def path_and_rename(path):
+    def wrapper(instance, filename):
+        ext = filename.split('.')[-1]
+        # get filename
+        if instance.pk:
+            filename = '{}.{}'.format(instance.pk, ext)
+        else:
+            # set filename as random string
+            filename = '{}.{}'.format(uuid4().hex, ext)
+        # return the whole path to the file
+        return os.path.join(path, filename)
+    return wrapper
+
 
 class MyUserManager(BaseUserManager):
 	def create_user(self, email, name, sex, city, password=None, last_name=None, birthday=None, avatar=None, **kwargs):
@@ -39,7 +54,7 @@ class User(AbstractBaseUser):
 	birthday = models.DateField(blank=True, null=True)
 	city = models.IntegerField(default=1)
 	#static/images/ для отладочного серва, просто avatar/ для nginx
-	avatar = models.ImageField(upload_to='avatar/', blank=True, null=True)
+	avatar = models.ImageField(upload_to=path_and_rename('avatar/'), blank=True, null=True)
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['name', 'sex', 'birthday', 'city',]
@@ -105,7 +120,7 @@ class Event(models.Model):
 class Item(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	item_type = models.CharField(max_length=16, choices=ITEM_TYPE_LIST)
-	photo = models.ImageField(upload_to='item_photo/',)
+	photo = models.ImageField(upload_to=path_and_rename('item_photo/'),)
 	style= models.CharField(max_length=1, choices=STYLE_LIST,)
 	color = models.CharField(max_length=16, choices=COLOR_LIST)
 	season = models.CharField(max_length=2, choices=SEASON_LIST)

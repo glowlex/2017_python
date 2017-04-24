@@ -26,5 +26,6 @@ urlpatterns = [
     url(r'^get_looks/$', get_looks, name='get_looks'),
     url(r'^like_look/$', like_look, name='like_look'),
     url(r'^get_items/$', get_items, name='get_items'),
-    url(r'^item_window/$', item_window, name='item_window'),
+    url(r'^get_item_window/$', get_item_window, name='item_window'),
+    url(r'^set_item/$', set_item, name='set_item'),
 ]

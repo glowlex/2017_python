@@ -5,10 +5,11 @@ from .models import *
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
 from django.db.models import Prefetch, prefetch_related_objects, Q
 from django.template.response import TemplateResponse
 import json
+from .lists import *
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -75,6 +76,8 @@ def look_choice(request):
 #TODO отправув json
 @login_required
 def get_looks(request):
+    if not request.method == 'GET':
+        return HttpResponseForbidden()
     last = int(request.GET.get('last', None))
     looks = {}
     rtype = request.GET.get('type', False)
@@ -95,34 +98,60 @@ def get_looks(request):
     for l in looks:
         tmp.append({"pk":l.pk, 'like':l.like if rtype=='s' else True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
     #TODO норм жсон без двойного парса на клиенте или ^ конструкции
-    return JsonResponse(tmp, safe=False)
+    return HttpResponse(json.dumps(tmp), content_type = "application/json")
 
 
 
 @login_required
 def get_items(request):
+    if not request.method == 'GET':
+        return HttpResponseForbidden()
     itype = json.loads(request.GET.get('itype', None))
     queries = [Q(item_type=i) for i in itype]
     query = queries.pop()
     for item in queries:
         query |= item
-    items = Item.objects.filter(query)
-    print(items)
-    return JsonResponse(serializers.serialize('json',items,  fields=('item_type', 'photo')), safe=False)
+    items = Item.objects.filter(query).order_by('pk')
+    return HttpResponse(serializers.serialize('json', items,), content_type = "application/json")
 
 
 
 @login_required
-def item_window(request):
-    item_form = Item_Form(request.POST or None)
+def get_item_window(request):
+    if not request.method == 'GET':
+        return HttpResponseForbidden()
+    item_form = Item_Form(request.POST or None,
+     initial={'item_type':ITEM_TYPE_LIST[0][0],
+             'style':STYLE_LIST[0][0],
+             'color':COLOR_LIST[0][0],
+             'season':SEASON_LIST[0][0],
+             'temperature':TEMPERATURE_LIST[0][0],
+             'sky':SKY_LIST[0][0],
+             })
     return TemplateResponse(request, 'item.html', {'item_form':item_form})
 
+@login_required
+def set_item(request):
+    if not request.method == 'POST':
+        return HttpResponseForbidden()
+    item_id=request.POST.get('item_id')
+    item = None
+    if item_id:
+        item = Item_Form(data=request.POST, instance=Item.objects.get(pk=item_id)).save()
+    else:
+        item = Item_Form(request.POST, request.FILES, user_id=request.user.id,
+     item_id=item_id).save()
+    #1 объект не сереализуется и делаем костыль
+    item = Item.objects.filter(pk=item.id)
+    return HttpResponse(serializers.serialize('json', item, ), content_type = "application/json")
 
 
 @login_required
 def like_look(request):
-    lid = int(request.GET.get('look_id', None))
-    up = request.GET.get('up', False)
+    if not request.method == 'POST':
+        return HttpResponseForbidden()
+    lid = int(request.POST.get('look_id', None))
+    up = request.POST.get('up', False)
     if up =='false':
         up = False
     else:

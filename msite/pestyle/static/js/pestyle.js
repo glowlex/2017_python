@@ -1,4 +1,7 @@
+'use strict';
 $(document).ready(function() {
+  //TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
+  if($('#look_window').length==0){return;}
   window.looks_s = new Look_list('s');
 
   $("#select_item_window").click(function(){
@@ -7,7 +10,7 @@ $(document).ready(function() {
     }
     $('#look_window').hide();
     $('#item_window').show();
-    $('.like__choice-menu').css("pointer-events", 'none')
+    $('.like__choice-menu').css("opacity", '0')
   });
 
   $("#select_look_window_c").click(function(){
@@ -17,7 +20,7 @@ $(document).ready(function() {
     $('#look_window').show();
     $('#item_window').hide();
     window.looks_c.init();
-    $('.like__choice-menu').css("pointer-events", 'auto')
+    $('.like__choice-menu').css("opacity", 'inherit')
   });
   $("#select_look_window_s").click(function(){
     if(!window.looks_c){
@@ -26,8 +29,11 @@ $(document).ready(function() {
     $('#look_window').show();
     $('#item_window').hide();
     window.looks_s.init();
-    $('.like__choice-menu').css("pointer-events", 'auto')
+    $('.like__choice-menu').css("opacity", 'inherit')
   });
+
+  //test
+  $("#select_item_window").click();
 
 });
 
@@ -79,6 +85,7 @@ class Look_list{
     $("#choice_like").click(function(){
       $.ajax({
         url: "/like_look/",
+        type:'POST',
         data: {
           up: !this.list[this.current_look].like,
           look_id:this.list[this.current_look].pk
@@ -144,74 +151,146 @@ class Look_list{
 */
 class My_items{
   constructor(){
-  this.dict = {};
-  this.get_page();
-  for(let i in clothes){
-    this.dict[i] = {'current':0, 'type':i, 'items':[]};
+    this.dict = {};
+    this.get_page();
+    for(let i in clothes){
+      this.dict[i] = {'current':0, 'type':i, 'items':[]};
+    }
+    this.keys = Object.keys(this.dict);
+    this.selected_type = 0;
+    this.item_to_change;
+    this.item_to_change_arr;
   }
-  this.keys = Object.keys(this.dict);
-  this.selected_type = 0;
-  this.get_items();
-}
 
 
-init(){
-  $("#item_next").click(function(){
-    this.change_item(1);
-  }.bind(this));
-  $("#item_prev").click(function(){
-    this.change_item(-1);
-  }.bind(this));
+  init(){
+    $("#item_submit_button").click(this.click_item_submit.bind(this));
 
-  $("#item_type_next").click(function(){
-    if(this.selected_type<this.keys.length-1){
-    this.selected_type++;
-    this.change_item();
+    //TODO редактирование изображения
+    $("#item_photo_button").change(function(){
+      let ph = $('#item_photo_button')[0].files;
+      if(ph.length==0){return;}
+    }.bind(this));
+
+
+    $("#item_next").click(function(){
+      this.change_item(1);
+    }.bind(this));
+    $("#item_prev").click(function(){
+      this.change_item(-1);
+    }.bind(this));
+
+    $("#item_type_next").click(function(){
+      if(this.selected_type<this.keys.length-1){
+        this.selected_type++;
+        this.change_item();
+      }
+    }.bind(this));
+    $("#item_type_prev").click(function(){
+      if(this.selected_type>0){
+        this.selected_type--;
+        this.change_item();
+      }
+    }.bind(this));
   }
-  }.bind(this));
-  $("#item_type_prev").click(function(){
-    if(this.selected_type>0){
-    this.selected_type--;
-    this.change_item();
+
+  get_category(type){
+    for(let i in clothes){
+      if(clothes[i].includes(type)){
+        return i;
+      }
+    }
+    return undefined;
   }
-  }.bind(this));
-}
 
-change_item(val=0, type=this.keys[this.selected_type]){
-  let obj = this.dict[this.keys[this.selected_type]];
-  if(obj.items.length==0){this.get_items();}
-  if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
-  obj.current+=val;
-  let tmp = $('#item').find('.choice-window__item__image');
-  $(tmp).css('background-image', 'url(/'+obj.items[obj.current].fields.photo+')');
-}
+  click_item_submit(){
+    //выкл кнопку
+    $("#item_submit_button").prop('disabled', true);
+    let ph = $('#item_photo_button')[0].files;
+    let data=new FormData($('#item_selects')[0]);
+    if(ph.length==0){
+      let obj = this.dict[this.keys[this.selected_type]];
+      data.append('item_id', obj.items[obj.current].pk);
+      this.item_to_change = obj.current;
+      this.item_to_change_arr = obj.items;
+    }
+    let sel = $('#item_selects').find('select');
+    data.append('photo', ph[0])
 
-get_page(){
-  $.ajax({
-    url: "/item_window/",
-    data: {},
-    success: function(result) {
-      $('#windows').prepend(result);
-      this.init()
-    }.bind(this)
-  });
-}
+    this.send_item(data).then(function(result){
+      let category = this.get_category(result[0].fields.item_type);
+      if(this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
+        this.item_to_change_arr[this.item_to_change] = result[0];
+      }else{
+        this.item_to_change_arr.splice(this.item_to_change, 1);
+        this.dict[category].items.push(result[0]);
+        this.dict[category].current = this.dict[category].items.length-1;
+        this.selected_type = $.inArray(category, this.keys)
+      }
+      //вкл кнопку
+      $("#item_submit_button").prop('disabled', false);
+      this.change_item();
+    }.bind(this));
+  }
 
-get_items(last=0, type=this.keys[this.selected_type]){
-  new Promise(function (resolve, reject) {
-  $.ajax({
-    url: "/get_items/",
-    data: {
-      last: last,
-      itype: JSON.stringify(clothes[type])
-    },
-    success: function(result) {
-      this.items = JSON.parse(result);
-    }.bind(this.dict[this.keys[this.selected_type]])
-  }).done(resolve).fail(reject)}.bind(this)).then(result =>{this.change_item();});
-}
-}
+  send_item(data){
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        cache: false,
+        processData: false,
+        contentType: false,
+        type: 'POST',
+        url: "/set_item/",
+        data: data,
+        success: function(result) {
+        }.bind(this)
+      }).done(resolve).fail(reject)}.bind(this));
+    }
+
+    change_item(val=0, type=this.keys[this.selected_type]){
+      let obj = this.dict[this.keys[this.selected_type]];
+      if(obj.items.length==0){this.get_items();}
+      if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
+      obj.current+=val;
+      let item = obj.items[obj.current];
+      let tmp = $('#item').find('.choice-window__item__image');
+      $(tmp).css('background-image', 'url(/'+item.fields['photo']+')');
+      tmp = $('#item_selects').find('select');
+      $(tmp).each(function(index, elem) {
+        $(elem).val(item.fields[elem.name]);
+      });
+    }
+
+    get_page(){
+      $.ajax({
+        url: "/get_item_window/",
+        data: {},
+        success: function(result) {
+          $('#windows').prepend(result);
+          this.get_items();
+          this.init();
+        }.bind(this)
+      });
+    }
+
+    get_items(last=0, type=this.keys[this.selected_type]){
+      new Promise(function (resolve, reject) {
+        $.ajax({
+          url: "/get_items/",
+          data: {
+            last: last,
+            itype: JSON.stringify(clothes[type])
+          },
+          success: function(result) {
+            this.items = result;
+          }.bind(this.dict[this.keys[this.selected_type]])
+        }).done(resolve).fail(reject)}.bind(this)).then(result =>{this.change_item();});
+      }
+    }
 
 
 
-//tt
+
+
+
+    //tt
