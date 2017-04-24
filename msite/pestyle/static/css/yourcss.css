@@ -4030,10 +4030,12 @@ a.nav-item_adjusted {
   font-size: 3.5rem;
   text-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
   display: flex; }
-  .like__choice-menu__item__image.red-heart {
+  .like__choice-menu__item__image.heart, .like__choice-menu__item__image.heart_red {
     color: black;
     font-weight: lighter;
     text-shadow: 0 0 20px rgba(237, 9, 9, 0.9); }
+  .like__choice-menu__item__image.heart_red {
+    color: red; }
   .like__choice-menu__item__image:hover {
     transition: all 0.1s linear;
     transform: scale(1.05, 1.05); }
@@ -4049,12 +4051,12 @@ a.nav-item_adjusted {
 .choice-window__item {
   margin: 1vh;
   justify-content: space-around; }
-  .choice-window__item.glass {
+  .choice-window__item.glasses {
     flex: 1;
     padding-left: 20%;
     margin-left: 15%;
     margin-right: 15%; }
-    .choice-window__item.glass > .choice-window__item__image {
+    .choice-window__item.glasses > .choice-window__item__image {
       background-image: url(../images/item_photo/glass.jpg); }
   .choice-window__item.dress > .choice-window__item__image {
     background-image: url(../images/item_photo/dress.jpg); }
@@ -4207,14 +4209,13 @@ a.nav-item_adjusted {
 
 .reg, .login, .profile {
   margin: auto;
+  max-width: 45rem;
   margin-top: 5%;
   border-width: 10px;
   border-color: #A8B6DB;
   border-style: solid;
   border-radius: 10px;
-  padding: 3%;
-  padding-top: 1%;
-  padding-left: 0;
+  padding: 1%;
   background-color: rgba(221, 221, 221, 0.7);
   width: 50%; }
   .reg label, .login label, .profile label {
@@ -4231,8 +4232,7 @@ a.nav-item_adjusted {
     flex-grow: 2; }
 
 .login, .profile {
-  width: 40%;
-  padding-left: 2%; }
+  width: 40%; }
   .login .field-label, .profile .field-label {
     flex-grow: 1; }
 
@@ -4242,8 +4242,7 @@ a.nav-item_adjusted {
     display: block; }
 
 .profile {
-  width: 50%;
-  padding-left: 1%; }
+  width: 50%; }
   .profile .field-label {
     flex-grow: 2; }
 

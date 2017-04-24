@@ -1,3 +1,4 @@
+
 STYLE_LIST = (
 ('C', 'casual'),
 ('B', 'bussines'),
@@ -21,6 +22,14 @@ ITEM_TYPE_LIST =(
 ('shoes', 'Shoes'),
 ('boots', 'Boots'),
 )
+
+#справочная инфа для фронта
+body = ('dress', 'blouse', 'tshirt')
+pants = ('pants', 'skirt')
+outerwear = ('outerwear',)
+glasses = ('cap', 'glasses')
+shoes = ('sneakers', 'shoes', 'boots', 'footwear')
+bag = ('bag',)
 
 COLOR_LIST = (
 ('black', 'black'),

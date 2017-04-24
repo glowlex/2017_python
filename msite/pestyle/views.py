@@ -4,6 +4,11 @@ from .forms import *
 from .models import *
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
+from django.http import JsonResponse
+from django.db.models import Prefetch, prefetch_related_objects, Q
+from django.template.response import TemplateResponse
+import json
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -70,4 +75,55 @@ def look_choice(request):
 #TODO отправув json
 @login_required
 def get_looks(request):
-    looks = Look.objects.filter(user=request.user)[:10]
+    last = int(request.GET.get('last', None))
+    looks = {}
+    rtype = request.GET.get('type', False)
+    tmp=[]
+    if rtype == 's':
+        looks = Look_suggestions.objects.prefetch_related(Prefetch(
+    'items',
+     queryset=Item.objects.all(),
+     to_attr='tp')
+    ).filter(user=request.user)[last:last+7]
+    elif rtype == 'c':
+        looks = Look.objects.prefetch_related(Prefetch(
+    'items',
+     queryset=Item.objects.all(),
+     to_attr='tp')
+    ).filter(user=request.user)[last:last+7]
+
+    for l in looks:
+        tmp.append({"pk":l.pk, 'like':l.like if rtype=='s' else True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
+    #TODO норм жсон без двойного парса на клиенте или ^ конструкции
+    return JsonResponse(tmp, safe=False)
+
+
+
+@login_required
+def get_items(request):
+    itype = json.loads(request.GET.get('itype', None))
+    queries = [Q(item_type=i) for i in itype]
+    query = queries.pop()
+    for item in queries:
+        query |= item
+    items = Item.objects.filter(query)
+    print(items)
+    return JsonResponse(serializers.serialize('json',items,  fields=('item_type', 'photo')), safe=False)
+
+@login_required
+def item_window(request):
+    return TemplateResponse(request, 'item.html', {})
+
+
+@login_required
+def like_look(request):
+    lid = int(request.GET.get('look_id', None))
+    up = request.GET.get('up', False)
+    if up =='false':
+        up = False
+    else:
+        up= True
+    look = Look_suggestions.objects.get(pk=lid)
+    if request.user.pk==look.user.pk:
+        look.set_like(up)
+    return JsonResponse({'status': 'true', 'look_id':lid,})

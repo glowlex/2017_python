@@ -112,6 +112,7 @@ class Item(models.Model):
 	temperature = models.CharField(max_length=16, choices=TEMPERATURE_LIST)
 	sky = models.CharField(max_length=8, choices=SKY_LIST)
 	last_date = models.DateField(blank=True, null=True, )
+	rate = models.IntegerField(default=0)
 	#likes = models.ForeignKey('Like', on_delete=models.SET_NULL, null=True)
 
 	class Meta:
@@ -124,9 +125,9 @@ class Item(models.Model):
 
 
 	@classmethod
-	def create_item(cls, user, item_type, photo, style, color, season, temperature, sky, last_date =None):
+	def create_item(cls, user, item_type, photo, style, color, season, temperature, sky, rate=0, last_date =None,):
 		item =cls(user =user, item_type =item_type, photo =photo, style =style,
-		 color =color, season =season, temperature =temperature, sky =sky, last_date =last_date)
+		 color =color, season =season, temperature =temperature, sky =sky, last_date =last_date, rate=rate)
 		item.photo.save("i.jpg", photo, save=True)
 		item.save()
 		return item
@@ -149,6 +150,7 @@ class Look(models.Model):
 	items = models.ManyToManyField(Item)
 	class Meta:
 		db_table = 'Look_like'
+		ordering = ['pk']
 
 	@classmethod
 	def create_look(cls, user, style, items):
@@ -164,6 +166,16 @@ class Look(models.Model):
 	def __str__(self):
 		return u'%s' % self.user.email
 
+
+#TODO убрать наследование, чтобы была другая таблица или не убрать
 class Look_suggestions(Look):
+	like = models.BooleanField(default=False)
 	class Meta:
 		db_table = 'Look_suggestions'
+	@classmethod
+	def create_look(self, user, style, items, like=False):
+		super(Look_suggestions, self).create_look(user=user, style=style, items =items)
+
+	def set_like(self, up=True):
+		self.like = True if up else False
+		self.save()

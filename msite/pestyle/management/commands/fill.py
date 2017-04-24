@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         uscount = User.objects.all().count()
-        for i in range(uscount, uscount+3):
+        for i in range(uscount, uscount+options.get('users', 0)):
             name = "UserN_"+str(i)+get_random_string(length=3)
             last_name = None if randint(1, 2) == 1 else get_random_string(length=24)
             email = "a" + str(i) + "@aaaa.go"
@@ -32,7 +32,7 @@ class Command(BaseCommand):
         print("user complete")
 
 
-        for _ in range(300):
+        for _ in range(options.get('items',10)):
             user = User.objects.get(id=randint(1, User.objects.all().count()))
             item_type = ITEM_TYPE_LIST[randint(0, len(ITEM_TYPE_LIST)-1)][0]
             style = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
@@ -52,13 +52,13 @@ class Command(BaseCommand):
         print("item complete")
 
 
-        for _ in range(30):
+        for _ in range(options.get('looks',100)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
             body = ('dress', 'blouse', 'Tshirt')
             pants = ('pants', 'skirt')
-            outerwear = ('outerwear')
+            outerwear = ('outerwear',)
             accessory = ('bag', 'cap', 'glasses')
             shoes = ('Sneakers', 'Shoes', 'Boots', 'footwear')
 
@@ -89,6 +89,44 @@ class Command(BaseCommand):
 
             Look.create_look(user, style, item_dict.values())
         print("look complete")
+
+        for _ in range(options.get('looks_suggestions',300)):
+            #сделать переопределение в листах, что к чему
+            user = User.objects.get(pk=randint(1, User.objects.all().count()))
+            style = ('C','B','S','P',)[randint(0,3)]
+            body = ('dress', 'blouse', 'Tshirt')
+            pants = ('pants', 'skirt')
+            outerwear = ('outerwear',)
+            accessory = ('bag', 'cap', 'glasses')
+            shoes = ('Sneakers', 'Shoes', 'Boots', 'footwear')
+
+            dickt = {'body':body, 'pants':pants, 'outerwear':outerwear,
+            'accessory':accessory, 'shoes':shoes}
+
+            all_items = user.item_set.all()
+
+            def pick(items, name, dickt):
+                i = None
+                j=10
+                while not i and j>0:
+                    item_type = dickt[name][randint(0,len(dickt[name])-1)]
+                    i = items.filter(item_type=item_type)
+                    if i:
+                        i = i[randint(0, i.count()-1)]
+                    j-=1
+                return i
+
+            item_dict = {}
+            for key in dickt:
+                itm = pick(all_items, key, dickt)
+                if itm:
+                    item_dict[key] = itm
+
+            if len(item_dict.values())<2:
+                continue
+
+            Look_suggestions.create_look(user, style, item_dict.values())
+        print("Look_suggestions complete")
 
 
         for _ in range(User.objects.all().count()*30):

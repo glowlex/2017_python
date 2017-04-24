@@ -1,33 +1,32 @@
 {% block item_window %}
-<div class="tile tile_no-round choice-window is-vertical" id="item_window" style="display:none">
+<div class="tile tile_no-round choice-window is-vertical" id="item_window">
   <div class="tile" style="flex:0">
-    <div class="tile is-6 choice-window__item type">
+    <div class="tile is-6 choice-window__item type" id="item_type">
       <div class="choice-window__item__image ">
-        <div class="choice-window__item__previous">
+        <div class="choice-window__item__previous" id="item_type_prev">
           <i class="fa fa-angle-left"></i>
         </div>
-        <div class="choice-window__item__next">
+        <div class="choice-window__item__next" id="item_type_next">
           <i class="fa fa-angle-right"></i>
         </div>
       </div>
     </div>
     <div class="tile">
       <div class="control" style="margin:auto">
-        <input class="button is-medium is-light" type="file">
-        Добавить
-      </input>
-    </div>
+        <button class="button is-medium is-light"><a href="javascript: void(0)">Выбрать фото</a></button>
+        <input type="file" id="upload_input" name="upload" style="font-size: 50px; width: 120px; opacity: 0; filter:alpha(opacity=0);  position: relative; top: -40px;; left: -20px" />
+      </div>
   </div>
 </div>
 <div class="tile">
   <div class="tile is-6 is-vertical">
     <div class="tile" style="flex:6">
-      <div class="tile  choice-window__item dress">
+      <div class="tile  choice-window__item dress" id="item">
         <div class="choice-window__item__image ">
-          <div class="choice-window__item__previous">
+          <div class="choice-window__item__previous" id="item_prev">
             <i class="fa fa-angle-left"></i>
           </div>
-          <div class="choice-window__item__next">
+          <div class="choice-window__item__next" id="item_next">
             <i class="fa fa-angle-right"></i>
           </div>
         </div>

@@ -29,7 +29,7 @@ service nginx restart
 python ./msite/manage.py collectstatic
 
 cd ./msite
-gunicorn msite.wsgi:application
+gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 
 #для запуска отладочного серва джанги и прочая полезная хуйня
 

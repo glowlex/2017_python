@@ -24,4 +24,7 @@ urlpatterns = [
     url(r'^login_window/$', RedirectView.as_view(url='/#login_window'), name='login'),
     url(r'^logout/$', logout, name='logout'),
     url(r'^get_looks/$', get_looks, name='get_looks'),
+    url(r'^like_look/$', like_look, name='like_look'),
+    url(r'^get_items/$', get_items, name='get_items'),
+    url(r'^item_window/$', item_window, name='item_window'),
 ]
