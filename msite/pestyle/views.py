@@ -10,6 +10,7 @@ from django.db.models import Prefetch, prefetch_related_objects, Q
 from django.template.response import TemplateResponse
 import json
 from .lists import *
+from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -111,7 +112,7 @@ def get_items(request):
     query = queries.pop()
     for item in queries:
         query |= item
-    items = Item.objects.filter(query).order_by('pk')
+    items = Item.objects.filter(query).order_by('-pk')
     return HttpResponse(serializers.serialize('json', items,), content_type = "application/json")
 
 
@@ -132,12 +133,12 @@ def get_item_window(request):
 
 @login_required
 def set_item(request):
-    if not request.method == 'POST':
-        return HttpResponseForbidden()
     item_id=request.POST.get('item_id')
-    item = None
+    item = Item.objects.get(pk=item_id) if item_id else None
+    if request.method != 'POST' or (item and item.user_id!=request.user.id):
+        return HttpResponseForbidden()
     if item_id:
-        item = Item_Form(data=request.POST, instance=Item.objects.get(pk=item_id)).save()
+        item = Item_Form(data=request.POST, instance=item).save()
     else:
         item = Item_Form(request.POST, request.FILES, user_id=request.user.id,
      item_id=item_id).save()
@@ -147,8 +148,23 @@ def set_item(request):
 
 
 @login_required
+def delete_item(request):
+    item_id = request.POST.get('item_id')
+    item = None
+    try:
+        item = Item.objects.get(pk=item_id)
+    except ObjectDoesNotExist:
+        return HttpResponseForbidden()
+    if request.method != 'POST' or (item and item.user_id!=request.user.id):
+        return HttpResponseForbidden()
+    item.delete()
+    return JsonResponse({'status': 'ok',})
+
+
+@login_required
 def like_look(request):
-    if not request.method == 'POST':
+    look = Look_suggestions.objects.get(pk=lid)
+    if not request.method == 'POST' or request.user.id != look.user_id:
         return HttpResponseForbidden()
     lid = int(request.POST.get('look_id', None))
     up = request.POST.get('up', False)
@@ -156,7 +172,6 @@ def like_look(request):
         up = False
     else:
         up= True
-    look = Look_suggestions.objects.get(pk=lid)
     if request.user.pk==look.user.pk:
         look.set_like(up)
-    return JsonResponse({'status': 'true', 'look_id':lid,})
+    return JsonResponse({'status': 'ok', 'look_id':lid,})

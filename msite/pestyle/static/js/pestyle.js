@@ -84,14 +84,14 @@ class Look_list{
 
     $("#choice_like").click(function(){
       $.ajax({
-        url: "/like_look/",
+        url: "/api/like_look/",
         type:'POST',
         data: {
           up: !this.list[this.current_look].like,
           look_id:this.list[this.current_look].pk
         },
         success: function(result){
-          if(result.status){
+          if(result.status=='ok'){
             $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
             $('#choice_like').find('span').toggleClass('heart_red');
             this.like=!this.like;
@@ -131,7 +131,7 @@ class Look_list{
 
   get_looks(last=0){
     $.ajax({
-      url: "/get_looks/",
+      url: "/api/get_looks/",
       data: {
         last: last,
         type: this.type
@@ -165,6 +165,7 @@ class My_items{
 
   init(){
     $("#item_submit_button").click(this.click_item_submit.bind(this));
+    $("#item_delete_button").click(this.click_item_delete.bind(this));
 
     //TODO редактирование изображения
     $("#item_photo_button").change(function(){
@@ -203,21 +204,41 @@ class My_items{
     return undefined;
   }
 
+  click_item_delete(){
+    let obj = this.dict[this.keys[this.selected_type]];
+    this.item_to_change = obj.current;
+    this.item_to_change_arr = obj.items;
+    let d = obj.items[obj.current].pk;
+    debugger;
+    $.ajax({
+      type: 'POST',
+      url: "/api/delete_item/",
+      data: {
+        item_id:d
+      },
+      success: function(result) {
+        this.item_to_change_arr.splice(this.item_to_change, 1);
+        this.change_item();
+      }.bind(this)
+    });
+  }
+
   click_item_submit(){
     //выкл кнопку
     $("#item_submit_button").prop('disabled', true);
     let ph = $('#item_photo_button')[0].files;
     let data=new FormData($('#item_selects')[0]);
+    let obj = this.dict[this.keys[this.selected_type]];
+    this.item_to_change = obj.current;
+    this.item_to_change_arr = obj.items;
     if(ph.length==0){
-      let obj = this.dict[this.keys[this.selected_type]];
       data.append('item_id', obj.items[obj.current].pk);
-      this.item_to_change = obj.current;
-      this.item_to_change_arr = obj.items;
     }
     let sel = $('#item_selects').find('select');
     data.append('photo', ph[0])
 
     this.send_item(data).then(function(result){
+      debugger;
       let category = this.get_category(result[0].fields.item_type);
       if(this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
         this.item_to_change_arr[this.item_to_change] = result[0];
@@ -240,7 +261,7 @@ class My_items{
         processData: false,
         contentType: false,
         type: 'POST',
-        url: "/set_item/",
+        url: "/api/set_item/",
         data: data,
         success: function(result) {
         }.bind(this)
@@ -249,7 +270,7 @@ class My_items{
 
     change_item(val=0, type=this.keys[this.selected_type]){
       let obj = this.dict[this.keys[this.selected_type]];
-      if(obj.items.length==0){this.get_items();}
+      if(obj.items.length==0){this.get_items().then(function(result){this.change_item();}.bind(this));}
       if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
       obj.current+=val;
       let item = obj.items[obj.current];
@@ -263,7 +284,7 @@ class My_items{
 
     get_page(){
       $.ajax({
-        url: "/get_item_window/",
+        url: "/api/get_item_window/",
         data: {},
         success: function(result) {
           $('#windows').prepend(result);
@@ -274,17 +295,17 @@ class My_items{
     }
 
     get_items(last=0, type=this.keys[this.selected_type]){
-      new Promise(function (resolve, reject) {
+      return new Promise(function (resolve, reject) {
         $.ajax({
-          url: "/get_items/",
+          url: "/api/get_items/",
           data: {
             last: last,
             itype: JSON.stringify(clothes[type])
           },
-          success: function(result) {
-            this.items = result;
+          success: function(result){
+            this.items = this.items.concat(result);
           }.bind(this.dict[this.keys[this.selected_type]])
-        }).done(resolve).fail(reject)}.bind(this)).then(result =>{this.change_item();});
+        }).done(resolve).fail(reject)}.bind(this));
       }
     }
 

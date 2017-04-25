@@ -136,6 +136,7 @@ class Item(models.Model):
 		ordering = ['item_type']
 		indexes = [
             models.Index(fields=['user', 'item_type']),
+			models.Index(fields=['user', 'pk']),
         ]
 
 
