@@ -1,6 +1,8 @@
 language: python
 python:
   - "3.6"
+os:
+  - "linux"
 env:
   - DJANGO=1.11
 install:
