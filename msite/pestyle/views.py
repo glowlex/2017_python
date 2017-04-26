@@ -12,6 +12,7 @@ import json
 from .lists import *
 from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
 
+
 def main_page(request):
     if request.user.is_authenticated:
         return redirect('/look_choice/')
@@ -83,18 +84,21 @@ def get_looks(request):
     looks = {}
     rtype = request.GET.get('type', False)
     tmp=[]
-    if rtype == 's':
-        looks = Look_suggestions.objects.prefetch_related(Prefetch(
-    'items',
-     queryset=Item.objects.all(),
-     to_attr='tp')
-    ).filter(user=request.user)[last:last+7]
-    elif rtype == 'c':
-        looks = Look.objects.prefetch_related(Prefetch(
-    'items',
-     queryset=Item.objects.all(),
-     to_attr='tp')
-    ).filter(user=request.user)[last:last+7]
+    try:
+        if rtype == 's':
+            looks = Look_suggestions.objects.prefetch_related(Prefetch(
+        'items',
+         queryset=Item.objects.all(),
+         to_attr='tp')
+        ).filter(user=request.user)[last:last+7]
+        elif rtype == 'c':
+            looks = Look.objects.prefetch_related(Prefetch(
+        'items',
+         queryset=Item.objects.all(),
+         to_attr='tp')
+        ).filter(user=request.user)[last:last+7]
+    except DoesNotExist:
+        return JsonResponse({'status': 'ok',})
 
     for l in looks:
         tmp.append({"pk":l.pk, 'like':l.like if rtype=='s' else True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
@@ -168,8 +172,11 @@ def like_look(request):
     try:
         look = Look_suggestions.objects.get(pk=lid)
     except ObjectDoesNotExist:
-        look = Look.objects.get(pk=lid)
-        look.delete()
+        try:
+            look = Look.objects.get(pk=lid)
+            look.delete()
+        except ObjectDoesNotExist:
+            return HttpResponseForbidden()
     if not request.method == 'POST' or request.user.id != look.user.id:
         return HttpResponseForbidden()
     up = request.POST.get('up', False)

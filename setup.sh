@@ -40,5 +40,5 @@ gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 #python -Wall manage.py test
 #запуск заполнения базы
 #python manage.py fill
-#manage.py migrate --database=test_db
+#python manage.py migrate --database=test_db
 #python manage.py dumpdata --database=test_db -o ./test_db.json

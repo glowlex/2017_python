@@ -1,0 +1,17 @@
+language: python
+python:
+  - "3.6"
+env:
+  - DJANGO=1.11
+install:
+  - pip3 install --upgrade pip
+  - pip3 install -q Django==$DJANGO --use-mirrors
+  - easy_install Celery
+  - pip3 install Pillow
+  - pip3 install requests
+  - pip3 install mysql-python --use-mirrors
+before_script:
+  - python manage.py makemigrations pestyle
+  - python manage.py migrate --database=test_db
+script:
+  - python manage.py test

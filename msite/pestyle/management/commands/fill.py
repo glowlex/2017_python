@@ -16,7 +16,7 @@ class Command(BaseCommand):
             #r = get("http://lorempixel.com/30/30/")
             #f = open("/tmp/1.jpg", 'wb')
             #f.write(r.content)
-            self.pic = File(open('/tmp/1.jpg', 'rb'))
+            self.pic = File(open(settings.BASE_DIR+'/pestyle/static/images'+'/other/1.png', 'rb'))
 
         if(User.objects.filter(email='test@test.ru').count()==0):
             User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
