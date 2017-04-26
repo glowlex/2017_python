@@ -136,10 +136,11 @@ class Look_list{
         last: last,
         type: this.type
       },
+      context:{obj:this, last:last},
       success: function(result) {
-        this.list = this.list.concat(result);
-        if(last==0){this.change_look(0);}
-      }.bind(this)
+        this.obj.list = this.obj.list.concat(result);
+        if(this.last==0){this.obj.change_look(0);}
+      }
     });
   }
 }
@@ -154,7 +155,7 @@ class My_items{
     this.dict = {};
     this.get_page();
     for(let i in clothes){
-      this.dict[i] = {'current':0, 'type':i, 'items':[]};
+      this.dict[i] = {'current':0, 'type':i, 'empty':false, 'items':[]};
     }
     this.keys = Object.keys(this.dict);
     this.selected_type = 0;
@@ -183,6 +184,7 @@ class My_items{
 
     $("#item_type_next").click(function(){
       if(this.selected_type<this.keys.length-1){
+
         this.selected_type++;
         this.change_item();
       }
@@ -204,22 +206,26 @@ class My_items{
     return undefined;
   }
 
-  click_item_delete(){
+  click_item_delete(e){
+    //выкл кнопку
+    $(e.target).prop('disabled', true);
     let obj = this.dict[this.keys[this.selected_type]];
     this.item_to_change = obj.current;
     this.item_to_change_arr = obj.items;
     let d = obj.items[obj.current].pk;
-    debugger;
     $.ajax({
       type: 'POST',
       url: "/api/delete_item/",
       data: {
         item_id:d
       },
-      success: function(result) {
-        this.item_to_change_arr.splice(this.item_to_change, 1);
-        this.change_item();
-      }.bind(this)
+      context:{obj:this, e:e},
+      success: function(result, e) {
+
+        this.obj.item_to_change_arr.splice(this.obj.item_to_change, 1);
+        this.obj.change_item();
+        $(this.e.target).prop('disabled', false);
+      }
     });
   }
 
@@ -238,9 +244,9 @@ class My_items{
     data.append('photo', ph[0])
 
     this.send_item(data).then(function(result){
-      debugger;
+
       let category = this.get_category(result[0].fields.item_type);
-      if(this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
+      if(this.item_to_change_arr.length>0 && this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
         this.item_to_change_arr[this.item_to_change] = result[0];
       }else{
         this.item_to_change_arr.splice(this.item_to_change, 1);
@@ -270,7 +276,10 @@ class My_items{
 
     change_item(val=0, type=this.keys[this.selected_type]){
       let obj = this.dict[this.keys[this.selected_type]];
-      if(obj.items.length==0){this.get_items().then(function(result){this.change_item();}.bind(this));}
+      if(obj.items.length==0 && obj.empty ==false){
+        this.get_items().then(function(result){this.change_item();}.bind(this));
+         $('#item').find('.choice-window__item__image').css('background-image', 'url(/)');
+       }
       if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
       obj.current+=val;
       let item = obj.items[obj.current];
@@ -288,7 +297,7 @@ class My_items{
         data: {},
         success: function(result) {
           $('#windows').prepend(result);
-          this.get_items();
+          this.get_items().then(function(result){this.change_item();}.bind(this));
           this.init();
         }.bind(this)
       });
@@ -304,6 +313,10 @@ class My_items{
           },
           success: function(result){
             this.items = this.items.concat(result);
+            //для борьбы с многократной загрузкой если нет итемов
+            if(this.items.length==0){
+              this.empty = true;
+            }
           }.bind(this.dict[this.keys[this.selected_type]])
         }).done(resolve).fail(reject)}.bind(this));
       }

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -77,8 +78,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+        'test_db': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
+        },
 }
+
+if 'test'  in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
+    }
 
 
 # Password validation
@@ -124,3 +135,4 @@ STATIC_ROOT = BASE_DIR+'/pestyle/static/'
 
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login_window/'
+LOGIN_REDIRECT_URL = '/#login_window'

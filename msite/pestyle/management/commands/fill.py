@@ -10,9 +10,28 @@ from django.core.files import File
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        r = get("http://lorempixel.com/60/60")
+        f = open("/tmp/1.jpg", 'wb')
+        f.write(r.content)
+        reopen = open('/tmp/1.jpg', 'rb')
+        avatar = File(reopen)
+        User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
+                    sex ='F', birthday =datetime.now(), city=55, password='1', avatar=avatar)
+        self.users(*args, **options)
+        print("user complete")
+        self.items(*args, **options)
+        print("item complete")
+        self.looks(*args, **options)
+        print("looks complete")
+        self.looks_s(*args, **options)
+        print("looks_s complete")
+        self.events(*args, **options)
+        print("events complete")
 
+
+    def users(self, *args, **options):
         uscount = User.objects.all().count()
-        for i in range(uscount, uscount+options.get('users', 0)):
+        for i in range(uscount, uscount+options.get('users', 3)):
             name = "UserN_"+str(i)+get_random_string(length=3)
             last_name = None if randint(1, 2) == 1 else get_random_string(length=24)
             email = "a" + str(i) + "@aaaa.go"
@@ -29,10 +48,11 @@ class Command(BaseCommand):
 
             User.objects.create_user(name=name, last_name=last_name, email =email,
             sex =sex, birthday =birthday, city=city, password=password, avatar =avatar)
-        print("user complete")
 
 
-        for _ in range(options.get('items',10)):
+
+    def items(self, *args, **options):
+        for _ in range(options.get('items', 300)):
             user = User.objects.get(id=randint(1, User.objects.all().count()))
             item_type = ITEM_TYPE_LIST[randint(0, len(ITEM_TYPE_LIST)-1)][0]
             style = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
@@ -49,10 +69,11 @@ class Command(BaseCommand):
 
             Item.create_item(user =user, item_type =item_type, photo =photo, style =style,
     		 color =color, season =season, temperature =temperature, sky =sky,)
-        print("item complete")
 
 
-        for _ in range(options.get('looks',100)):
+
+    def looks(self, *args, **options):
+        for _ in range(options.get('looks', 30)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
@@ -88,9 +109,11 @@ class Command(BaseCommand):
                 continue
 
             Look.create_look(user, style, item_dict.values())
-        print("look complete")
 
-        for _ in range(options.get('looks_suggestions',300)):
+
+
+    def looks_s(self, *args, **options):
+        for _ in range(options.get('looks_suggestions', 30)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
@@ -126,10 +149,11 @@ class Command(BaseCommand):
                 continue
 
             Look_suggestions.create_look(user, style, item_dict.values())
-        print("Look_suggestions complete")
 
 
-        for _ in range(User.objects.all().count()*30):
+
+    def events(self, *args, **options):
+        for _ in range(options.get('events', User.objects.all().count()*30)):
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             date = datetime.now() + timedelta(days=randint(0, 10))
             event_type = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
@@ -137,4 +161,3 @@ class Command(BaseCommand):
             name = get_random_string(length=randint(6, 32))
 
             Event.create_event(user=user, date=date, event_type=event_type, name=name, description=description)
-        print("event complete")

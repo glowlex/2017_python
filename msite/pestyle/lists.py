@@ -7,6 +7,7 @@ STYLE_LIST = (
 )
 
 ITEM_TYPE_LIST =(
+('', 'type'),
 ('dress', 'dress'),
 ('blouse', 'blouse'),
 ('pants', 'pants'),

@@ -40,3 +40,4 @@ gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 #python -Wall manage.py test
 #запуск заполнения базы
 #python manage.py fill
+#manage.py migrate --database=test_db

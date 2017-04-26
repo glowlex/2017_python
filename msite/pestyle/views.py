@@ -112,7 +112,7 @@ def get_items(request):
     query = queries.pop()
     for item in queries:
         query |= item
-    items = Item.objects.filter(query).order_by('-pk')
+    items = Item.objects.filter(Q(user=request.user.id) & query).order_by('-pk')
     return HttpResponse(serializers.serialize('json', items,), content_type = "application/json")
 
 
@@ -163,15 +163,20 @@ def delete_item(request):
 
 @login_required
 def like_look(request):
-    look = Look_suggestions.objects.get(pk=lid)
+    lid = int(request.POST.get('look_id', None))
+    #TODO переделать. так, чтобы работало удаление избранных
+    try:
+        look = Look_suggestions.objects.get(pk=lid)
+    except ObjectDoesNotExist:
+        look = Look.objects.get(pk=lid)
+        look.delete()
     if not request.method == 'POST' or request.user.id != look.user_id:
         return HttpResponseForbidden()
-    lid = int(request.POST.get('look_id', None))
     up = request.POST.get('up', False)
     if up =='false':
         up = False
     else:
         up= True
-    if request.user.pk==look.user.pk:
+    if request.user.pk==look.user.pk and isinstance(look, Look_suggestions):
         look.set_like(up)
     return JsonResponse({'status': 'ok', 'look_id':lid,})

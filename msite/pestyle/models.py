@@ -95,6 +95,7 @@ class User(AbstractBaseUser):
 
 
 
+
 class Event(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	date = models.DateField()
@@ -135,9 +136,8 @@ class Item(models.Model):
 		get_latest_by = 'last_date'
 		ordering = ['item_type']
 		indexes = [
-            models.Index(fields=['user', 'item_type']),
-			models.Index(fields=['user', 'pk']),
-        ]
+			models.Index(fields=['user', 'item_type']),
+		]
 
 
 	@classmethod
