@@ -5,7 +5,7 @@ env:
   - DJANGO=1.11
 install:
   - pip3 install --upgrade pip
-  - pip3 install -q Django==$DJANGO --use-mirrors
+  - pip3 install django==1.11
   - easy_install Celery
   - pip3 install Pillow
   - pip3 install requests
