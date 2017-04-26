@@ -82,6 +82,9 @@ DATABASES = {
     'test_db': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
+        'TEST': {
+            'MIRROR': 'default',
+        },
     },
 }
 
@@ -131,8 +134,4 @@ LOGIN_URL = '/login_window/'
 LOGIN_REDIRECT_URL = '/#login_window'
 
 if 'test' in sys.argv:
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
-    }
     MEDIA_ROOT = BASE_DIR+'/pestyle/static/test_images'

@@ -6,4 +6,4 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         settings.DATABASES['default']=settings.DATABASES['test_db']
         settings.MEDIA_ROOT = settings.BASE_DIR+'/pestyle/static/test_images'
-        call_command('fill', users=2, items=100, looks=20, looks_s=20, events=20, test=True)
+        call_command('fill', users=2, items=20, looks=5, looks_s=5, events=3, test=True)

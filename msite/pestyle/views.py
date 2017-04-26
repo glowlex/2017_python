@@ -170,13 +170,13 @@ def like_look(request):
     except ObjectDoesNotExist:
         look = Look.objects.get(pk=lid)
         look.delete()
-    if not request.method == 'POST' or request.user.id != look.user_id:
+    if not request.method == 'POST' or request.user.id != look.user.id:
         return HttpResponseForbidden()
     up = request.POST.get('up', False)
     if up =='false':
         up = False
     else:
         up= True
-    if request.user.pk==look.user.pk and isinstance(look, Look_suggestions):
+    if request.user.id==look.user.id and isinstance(look, Look_suggestions):
         look.set_like(up)
     return JsonResponse({'status': 'ok', 'look_id':lid,})

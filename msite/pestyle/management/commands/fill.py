@@ -12,9 +12,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.test=options.get('test', False)
         if(self.test):
-            r = get("http://lorempixel.com/30/30/")
-            f = open("/tmp/1.jpg", 'wb')
-            f.write(r.content)
+            #TODO пока так для скорости
+            #r = get("http://lorempixel.com/30/30/")
+            #f = open("/tmp/1.jpg", 'wb')
+            #f.write(r.content)
+            self.pic = File(open('/tmp/1.jpg', 'rb'))
 
         if(User.objects.filter(email='test@test.ru').count()==0):
             User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
@@ -155,7 +157,7 @@ class Command(BaseCommand):
 
     def get_avatar(self, w, h):
         if(self.test):
-            return File(open('/tmp/1.jpg', 'rb'))
+            return self.pic
         r = get("http://lorempixel.com/%s/%s/" %(w, h))
         f = open("/tmp/1.jpg", 'wb')
         f.write(r.content)
