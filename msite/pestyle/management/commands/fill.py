@@ -10,13 +10,15 @@ from django.core.files import File
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        r = get("http://lorempixel.com/60/60")
-        f = open("/tmp/1.jpg", 'wb')
-        f.write(r.content)
-        reopen = open('/tmp/1.jpg', 'rb')
-        avatar = File(reopen)
-        User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
-                    sex ='F', birthday =datetime.now(), city=55, password='1', avatar=avatar)
+        self.test=options.get('test', False)
+        if(self.test):
+            r = get("http://lorempixel.com/30/30/")
+            f = open("/tmp/1.jpg", 'wb')
+            f.write(r.content)
+
+        if(User.objects.filter(email='test@test.ru').count()==0):
+            User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
+                    sex ='F', birthday =datetime.now(), city=55, password='1', avatar=self.get_avatar(60, 60))
         self.users(*args, **options)
         print("user complete")
         self.items(*args, **options)
@@ -40,19 +42,14 @@ class Command(BaseCommand):
             city = randint(0, 10**7)
             password =get_random_string(length=10)
 
-            r = get("http://lorempixel.com/60/60")
-            f = open("/tmp/1.jpg", 'wb')
-            f.write(r.content)
-            reopen = open('/tmp/1.jpg', 'rb')
-            avatar = File(reopen)
 
             User.objects.create_user(name=name, last_name=last_name, email =email,
-            sex =sex, birthday =birthday, city=city, password=password, avatar =avatar)
+            sex =sex, birthday =birthday, city=city, password=password, avatar =self.get_avatar(60, 60))
 
 
 
     def items(self, *args, **options):
-        for _ in range(options.get('items', 300)):
+        for _ in range(options.get('items', 100)):
             user = User.objects.get(id=randint(1, User.objects.all().count()))
             item_type = ITEM_TYPE_LIST[randint(0, len(ITEM_TYPE_LIST)-1)][0]
             style = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
@@ -61,13 +58,7 @@ class Command(BaseCommand):
             temperature = TEMPERATURE_LIST[randint(0, len(TEMPERATURE_LIST)-1)][0]
             sky = SKY_LIST[randint(0, len(SKY_LIST)-1)][0]
 
-            r = get("http://lorempixel.com/300/300")
-            f = open("/tmp/1.jpg", 'wb')
-            f.write(r.content)
-            reopen = open('/tmp/1.jpg', 'rb')
-            photo = File(reopen)
-
-            Item.create_item(user =user, item_type =item_type, photo =photo, style =style,
+            Item.create_item(user =user, item_type =item_type, photo =self.get_avatar(300, 300), style =style,
     		 color =color, season =season, temperature =temperature, sky =sky,)
 
 
@@ -161,3 +152,12 @@ class Command(BaseCommand):
             name = get_random_string(length=randint(6, 32))
 
             Event.create_event(user=user, date=date, event_type=event_type, name=name, description=description)
+
+    def get_avatar(self, w, h):
+        if(self.test):
+            return File(open('/tmp/1.jpg', 'rb'))
+        r = get("http://lorempixel.com/%s/%s/" %(w, h))
+        f = open("/tmp/1.jpg", 'wb')
+        f.write(r.content)
+        reopen = open('/tmp/1.jpg', 'rb')
+        return  File(reopen)

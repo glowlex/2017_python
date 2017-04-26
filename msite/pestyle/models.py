@@ -8,18 +8,19 @@ import os
 
 #для хитрых имён
 from uuid import uuid4
-def path_and_rename(path):
-    def wrapper(instance, filename):
+from django.utils.deconstruct import deconstructible
+@deconstructible
+class PathAndRename(object):
+
+    def __init__(self, sub_path):
+        self.path = sub_path
+
+    def __call__(self, instance, filename):
         ext = filename.split('.')[-1]
-        # get filename
-        if instance.pk:
-            filename = '{}.{}'.format(instance.pk, ext)
-        else:
-            # set filename as random string
-            filename = '{}.{}'.format(uuid4().hex, ext)
+        # set filename as random string
+        filename = '{}.{}'.format(uuid4().hex, ext)
         # return the whole path to the file
-        return os.path.join(path, filename)
-    return wrapper
+        return os.path.join(self.path, filename)
 
 
 class MyUserManager(BaseUserManager):
@@ -54,7 +55,7 @@ class User(AbstractBaseUser):
 	birthday = models.DateField(blank=True, null=True)
 	city = models.IntegerField(default=1)
 	#static/images/ для отладочного серва, просто avatar/ для nginx
-	avatar = models.ImageField(upload_to=path_and_rename('avatar/'), blank=True, null=True)
+	avatar = models.ImageField(upload_to=PathAndRename('avatar/'), blank=True, null=True)
 
 	USERNAME_FIELD = 'email'
 	REQUIRED_FIELDS = ['name', 'sex', 'birthday', 'city',]
@@ -121,7 +122,7 @@ class Event(models.Model):
 class Item(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	item_type = models.CharField(max_length=16, choices=ITEM_TYPE_LIST)
-	photo = models.ImageField(upload_to=path_and_rename('item_photo/'),)
+	photo = models.ImageField(upload_to=PathAndRename('item_photo/'),)
 	style= models.CharField(max_length=1, choices=STYLE_LIST,)
 	color = models.CharField(max_length=16, choices=COLOR_LIST)
 	season = models.CharField(max_length=2, choices=SEASON_LIST)

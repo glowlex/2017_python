@@ -79,18 +79,11 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
-        'test_db': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
-        },
-}
-
-if 'test'  in sys.argv:
-    DATABASES['default'] = {
+    'test_db': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
-    }
-
+    },
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.10/ref/settings/#auth-password-validators
@@ -136,3 +129,10 @@ STATIC_ROOT = BASE_DIR+'/pestyle/static/'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = '/login_window/'
 LOGIN_REDIRECT_URL = '/#login_window'
+
+if 'test' in sys.argv:
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.test_sqlite3'),
+    }
+    MEDIA_ROOT = BASE_DIR+'/pestyle/static/test_images'

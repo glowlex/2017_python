@@ -34,7 +34,7 @@ gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 #для запуска отладочного серва джанги и прочая полезная хуйня
 
 #python manage.py createsuperuser
-#python manage.py makemigrations
+#python manage.py makemigrations pestyle
 #python manage.py migrate
 #python manage.py runserver
 #python -Wall manage.py test
