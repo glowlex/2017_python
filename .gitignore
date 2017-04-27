@@ -4,3 +4,4 @@
 *.pot
 __pycache__/
 *.py[cod]
+**/test_images/

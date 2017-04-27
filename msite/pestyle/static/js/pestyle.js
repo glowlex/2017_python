@@ -1,7 +1,8 @@
 'use strict';
 $(document).ready(function() {
-  //TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
-  if($('#look_window').length==0){return;}
+//TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
+
+  if($('#look_window')==null){return;}
   window.looks_s = new Look_list('s');
 
   $("#select_item_window").click(function(){

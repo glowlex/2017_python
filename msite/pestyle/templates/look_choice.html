@@ -9,7 +9,7 @@
           <figure class="image is-64x64 choice-menu__item__image">
             <img src="/other/1.png">
           </figure>
-          <div>Мой гардероб</div>
+          <div>Гардероб</div>
         </a>
         <a class="choice-menu__item" id="select_look_window_c">
           <figure class="image is-64x64 choice-menu__item__image">
@@ -29,11 +29,11 @@
     <div class="tile" id="windows">
         {% include "look.html" %}
       <div class="tile tile_no-round is-4 calendar-weather is-vertical">
-        <div class="tile calendar">
+        <div class="tile calendar" id="calendar">
           <table>
             <caption>
-              <span class="prev icon"><a class="fa fa-chevron-left" aria-hidden="true"></a></span>
-              <span class="next icon"><a class="fa fa-chevron-right" aria-hidden="true" href="#"></a></span>
+              <span class="prev icon"><a class="fa fa-chevron-left" aria-hidden="true" id="month_prev"></a></span>
+              <span class="next icon"><a class="fa fa-chevron-right" aria-hidden="true" id='month_next'></a></span>
               Апрель 2017
             </caption>
             <thead>

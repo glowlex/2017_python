@@ -12,10 +12,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.test=options.get('test', False)
         if(self.test):
-            #TODO пока так для скорости
-            #r = get("http://lorempixel.com/30/30/")
-            #f = open("/tmp/1.jpg", 'wb')
-            #f.write(r.content)
             self.pic = File(open(settings.BASE_DIR+'/pestyle/static/images'+'/other/1.png', 'rb'))
 
         if(User.objects.filter(email='test@test.ru').count()==0):
@@ -51,7 +47,7 @@ class Command(BaseCommand):
 
 
     def items(self, *args, **options):
-        for _ in range(options.get('items', 100)):
+        for _ in range(options.get('items', 1000)):
             user = User.objects.get(id=randint(1, User.objects.all().count()))
             item_type = ITEM_TYPE_LIST[randint(0, len(ITEM_TYPE_LIST)-1)][0]
             style = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
