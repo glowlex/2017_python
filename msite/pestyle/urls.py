@@ -29,4 +29,7 @@ urlpatterns = [
     url(r'^api/get_item_window/$', get_item_window, name='item_window'),
     url(r'^api/set_item/$', set_item, name='set_item'),
     url(r'^api/delete_item/$', delete_item, name='delete_item'),
+    url(r'^api/set_event/$', set_event, name='set_event'),
+    url(r'^api/delete_event/$', delete_event, name='delete_event'),
+    url(r'^api/get_calendar/$', get_calendar, name='get_calendar'),
 ]

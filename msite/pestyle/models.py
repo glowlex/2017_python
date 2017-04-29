@@ -108,7 +108,7 @@ class Event(models.Model):
 		db_table = 'Calendar'
 
 	@classmethod
-	def create_event(cls, user, date, event_type, name, description=None):
+	def create_event(cls, user, date, event_type, name='blank', description=None):
 		event =cls(user=user, date=date, event_type=event_type, name=name, description=description)
 		event.save()
 		return event

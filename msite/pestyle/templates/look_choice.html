@@ -27,83 +27,10 @@
     </div>
 
     <div class="tile" id="windows">
-        {% include "look.html" %}
+      {% include "look.html" %}
       <div class="tile tile_no-round is-4 calendar-weather is-vertical">
         <div class="tile calendar" id="calendar">
-          <table>
-            <caption>
-              <span class="prev icon"><a class="fa fa-chevron-left" aria-hidden="true" id="month_prev"></a></span>
-              <span class="next icon"><a class="fa fa-chevron-right" aria-hidden="true" id='month_next'></a></span>
-              Апрель 2017
-            </caption>
-            <thead>
-              <tr>
-                <th>Mon</th>
-                <th>Tue</th>
-                <th>Wed</th>
-                <th>Thu</th>
-                <th>Fri</th>
-                <th>Sat</th>
-                <th>Sun</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="off"><a href="#">26</a></td>
-                <td class="off"><a href="#">27</a></td>
-                <td class="off"><a href="#">28</a></td>
-                <td class="off"><a href="#">29</a></td>
-                <td class="off"><a href="#">30</a></td>
-                <td class="off"><a href="#">31</a></td>
-                <td><a href="#">1</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">2</a></td>
-                <td><a href="#">3</a></td>
-                <td><a href="#">4</a></td>
-                <td><a href="#">5</a></td>
-                <td><a href="#">6</a></td>
-                <td><a href="#">7</a></td>
-                <td><a href="#">8</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">9</a></td>
-                <td><a href="#">10</a></td>
-                <td><a href="#">11</a></td>
-                <td><a href="#">12</a></td>
-                <td><a href="#">13</a></td>
-                <td><a href="#">14</a></td>
-                <td><a href="#">15</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">16</a></td>
-                <td><a href="#">17</a></td>
-                <td><a href="#">18</a></td>
-                <td><a href="#">19</a></td>
-                <td><a href="#">20</a></td>
-                <td><a href="#">21</a></td>
-                <td><a href="#">22</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">23</a></td>
-                <td><a href="#">24</a></td>
-                <td><a href="#">25</a></td>
-                <td><a href="#">26</a></td>
-                <td><a href="#">27</a></td>
-                <td class="active"><a href="#">28</a></td>
-                <td><a href="#">29</a></td>
-              </tr>
-              <tr>
-                <td><a href="#">30</a></td>
-                <td><a href="#">31</a></td>
-                <td class="off"><a href="#">1</a></td>
-                <td class="off"><a href="#">2</a></td>
-                <td class="off"><a href="#">3</a></td>
-                <td class="off"><a href="#">4</a></td>
-                <td class="off"><a href="#">5</a></td>
-              </tr>
-            </tbody>
-          </table>
+          {% include "calendar.html" %}
         </div>
         <div class="tile weather is-vertical">
           <div class="tile">
@@ -160,5 +87,32 @@
 </div>
 <div class="container">
   {% include "profile.html" %}
+</div>
+<div class="event-window" id='event-window'>
+  <div class="field is-horizontal" style="width: 20vw;">
+    <div class="field-label is-normal">
+      <label class="label">Стиль</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <span class="select" style="width:100%">
+            <select name="style" required="" id="event-window_id_style">
+              <option value="" selected="">---------</option>
+
+              <option value="C">casual</option>
+
+              <option value="B">bussines</option>
+
+              <option value="S">sport</option>
+
+              <option value="P">party</option>
+
+            </select>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 {% endblock %}

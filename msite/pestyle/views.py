@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from .forms import *
@@ -11,6 +12,7 @@ from django.template.response import TemplateResponse
 import json
 from .lists import *
 from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
+import datetime
 
 
 def main_page(request):
@@ -187,3 +189,28 @@ def like_look(request):
     if request.user.id==look.user.id and isinstance(look, Look_suggestions):
         look.set_like(up)
     return JsonResponse({'status': 'ok', 'look_id':lid,})
+
+@login_required
+def set_event(request):
+    etype = request.POST.get('etype')
+    date = json.loads(request.POST.get('date'))
+    if request.method != 'POST' and not date and not etype:
+        return HttpResponseForbidden()
+    try:
+        date = datetime.datetime(year=date['year'], month=date['month'], day=date['day'])
+        event = Event.create_event(user=request.user, date=date, event_type=etype)
+    except:
+        return HttpResponseForbidden()
+    event = Event.objects.filter(pk=event.id)
+    return HttpResponse(serializers.serialize('json', event, fields=('event_type', 'date')), content_type = "application/json")
+
+@login_required
+def delete_event(request):
+    pass
+
+@login_required
+def get_calendar(request):
+    if not request.method == 'GET':
+        return HttpResponseForbidden()
+    calendar = Event.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize('json', calendar, fields=('event_type', 'date')), content_type = "application/json")

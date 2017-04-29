@@ -4189,25 +4189,33 @@ a.nav-item_adjusted {
       line-height: 45px;
       color: #8c8c8c;
       background: #fafafa;
-      box-shadow: inset 1px 1px rgba(255, 255, 255, 0.5); }
+      box-shadow: inset 1px 1px rgba(255, 255, 255, 0.5);
+      margin: 1px; }
       .calendar td a:hover {
         background: #f3f3f3; }
     .calendar td.off a {
       background: #fafafa;
       color: #d5d5d5; }
-    .calendar td.active a, .calendar td a:active {
+    .calendar td.now a {
+      outline: 1px solid #28dcb9; }
+    .calendar td.active a, .calendar td a:focus {
       margin: -1px;
       color: white;
       text-shadow: 0 1px rgba(0, 0, 0, 0.3);
       background: #28dcb9;
       box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05); }
-    .calendar td.active:first-child a, .calendar td:first-child a:active {
+    .calendar td.marked a {
+      margin: -1px;
+      color: white;
+      text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+      background: yellowgreen; }
+    .calendar td.active:first-child a, .calendar td:first-child {
       border-left: 0;
       margin-left: 0; }
-    .calendar td.active:last-child a, .calendar td:last-child a:active {
+    .calendar td.active:last-child a, .calendar td:last-child {
       border-right: 0;
       margin-right: 0; }
-  .calendar tr:last-child td.active a, .calendar tr:last-child td a:active {
+  .calendar tr:last-child td.active a {
     border-bottom: 0;
     margin-bottom: 0; }
 
@@ -4285,5 +4293,44 @@ a.nav-item_adjusted {
 
 .select > select {
   width: 100%; }
+
+.event-window {
+  position: absolute;
+  display: none;
+  background-color: white;
+  border-width: 2px;
+  border-color: #fafafa;
+  border-style: solid;
+  border-radius: 3px;
+  padding: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); }
+  .event-window:focus {
+    display: block; }
+
+.event-window_error {
+  border-color: red;
+  animation-name: error-animation;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease; }
+@keyframes error-animation {
+  0% {
+    border-color: rgba(255, 0, 0, 0.5); }
+  50% {
+    border-color: #fafafa; }
+  100% {
+    border-color: rgba(255, 0, 0, 0.5); } }
+.event-window_ok {
+  animation-name: ok-animation;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease; }
+@keyframes ok-animation {
+  0% {
+    border-color: rgba(173, 255, 47, 0.7); }
+  50% {
+    border-color: #fafafa; }
+  100% {
+    border-color: rgba(173, 255, 47, 0.7); } }
 
 /*# sourceMappingURL=yourcss.css.map */
