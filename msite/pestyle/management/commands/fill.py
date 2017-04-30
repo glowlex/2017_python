@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
         if(User.objects.filter(email='test@test.ru').count()==0):
             User.objects.create_user(name='test', last_name='testovich', email ='test@test.ru',
-                    sex ='F', birthday =datetime.now(), city=55, password='1', avatar=self.get_avatar(60, 60))
+                    sex ='F', birthday =datetime.now(), city=524901, password='1', avatar=self.get_avatar(60, 60))
         self.users(*args, **options)
         print("user complete")
         self.items(*args, **options)

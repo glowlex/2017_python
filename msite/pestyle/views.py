@@ -66,7 +66,6 @@ def look_choice(request):
             auth.login(request, user)
 
     weather = Weather().weather_dictionary(request.user.city)
-    print(weather)
     return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
 
 

@@ -54,8 +54,9 @@ class MyTestCase(TestCase):
         )
 
     def test_logged_in_uses_correct_template(self):
-        login = self.client.login(email=self.user.email, password='1')
-        resp = self.client.get(reverse('look_choice'))
+        c = Client()
+        login = c.login(email=self.user.email, password='1')
+        resp = c.get(reverse('look_choice'))
         #Check our user is logged in
         self.assertEqual(str(resp.context['user']), str(self.user))
         #Check that we got a response "success"
