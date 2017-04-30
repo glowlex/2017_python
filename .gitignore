@@ -5,3 +5,11 @@
 __pycache__/
 *.py[cod]
 **/test_images/
+
+
+**//sass
+**/.sass-cache
+**.css.map
+**bulma.css
+**bulma.sass
+/msite/pestyle/static/css/static

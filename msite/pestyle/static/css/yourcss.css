@@ -3991,15 +3991,20 @@ a.nav-item_adjusted {
   padding: 10px; }
 
 .weather {
-  color: black; }
+  color: black;
+  padding-top: 1vh; }
+
+.weather__title {
+  padding: 1vh;
+  flex: 0; }
 
 .weather__temp {
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: -3rem;
+  right: -2.6rem;
   top: 0px;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: #EB3B2B;
   font-weight: bold; }
 
@@ -4016,7 +4021,10 @@ a.nav-item_adjusted {
   display: flex;
   flex-direction: column;
   margin: auto;
-  font-size: 1rem; }
+  font-size: 0.95rem; }
+  .weather-info > p {
+    margin-left: 3vh;
+    margin-bottom: 5px; }
 
 .like {
   bottom: 4vh;
@@ -4057,30 +4065,30 @@ a.nav-item_adjusted {
     margin-left: 15%;
     margin-right: 15%; }
     .choice-window__item.glasses > .choice-window__item__image {
-      background-image: url(../images/item_photo/glass.jpg); }
+      background-image: url(../images/other/glass.jpg); }
   .choice-window__item.dress > .choice-window__item__image {
-    background-image: url(../images/item_photo/dress.jpg); }
+    background-image: url(../images/other/dress.jpg); }
   .choice-window__item.bag {
     margin: 15%;
     padding-top: 3vh; }
     .choice-window__item.bag > .choice-window__item__image {
-      background-image: url(../images/item_photo/bag.jpg); }
+      background-image: url(../images/other/bag.jpg); }
   .choice-window__item.shoes {
     margin: 15%;
     position: relative;
     left: 40%; }
     .choice-window__item.shoes > .choice-window__item__image {
-      background-image: url(../images/item_photo/shoes.jpg); }
+      background-image: url(../images/other/shoes.jpg); }
   .choice-window__item.outerwear {
     padding-top: 20%;
     flex: 2; }
     .choice-window__item.outerwear > .choice-window__item__image {
-      background-image: url(../images/item_photo/outwear.jpg); }
+      background-image: url(../images/other/outwear.jpg); }
   .choice-window__item.type {
     padding-left: 10%;
     padding-right: 10%; }
     .choice-window__item.type > .choice-window__item__image {
-      background-image: url(../images/item_photo/1.png); }
+      background-image: url(../images/other/1.png); }
   .choice-window__item:hover {
     transition: all 0.1s linear;
     transform: scale(1.02, 1.02); }

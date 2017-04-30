@@ -13,7 +13,7 @@ import json
 from .lists import *
 from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
 import datetime
-
+from .scripts.weather import Weather
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -40,7 +40,6 @@ def main_page(request):
             print('reg form login work')
             auth.login(request, user)
             return redirect('/look_choice/')
-
     return render(request, 'main.html',  {'log_form': log_form, 'reg_form':reg_form})
 
 
@@ -51,15 +50,7 @@ def main_page(request):
 def logout(request):
     logout(request)
 
-'''    if request.method == 'POST':
-        prof_form = User_Profile_Form(request.POST, request.FILES)
-        if prof_form.is_valid():
-            user = prof_form.save()
-            auth.login(request, user)
-    else:
-        prof_form = User_Profile_Form(None, instance=request.user)
 
-    return render(request, 'look_choice.html', {'prof_form':prof_form})'''
 
 
 @login_required
@@ -73,7 +64,10 @@ def look_choice(request):
         #TODO user= auth.authenticate(user)
         if user:# and user.is_active:
             auth.login(request, user)
-    return render(request, 'look_choice.html', {'prof_form':prof_form})
+
+    weather = Weather().weather_dictionary(request.user.city)
+    print(weather)
+    return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
 
 
 
@@ -137,6 +131,9 @@ def get_item_window(request):
              })
     return TemplateResponse(request, 'item.html', {'item_form':item_form})
 
+
+
+
 @login_required
 def set_item(request):
     item_id=request.POST.get('item_id')
@@ -153,6 +150,8 @@ def set_item(request):
     return HttpResponse(serializers.serialize('json', item, ), content_type = "application/json")
 
 
+
+
 @login_required
 def delete_item(request):
     item_id = request.POST.get('item_id')
@@ -165,6 +164,8 @@ def delete_item(request):
         return HttpResponseForbidden()
     item.delete()
     return JsonResponse({'status': 'ok',})
+
+
 
 
 @login_required
@@ -190,6 +191,8 @@ def like_look(request):
         look.set_like(up)
     return JsonResponse({'status': 'ok', 'look_id':lid,})
 
+
+
 @login_required
 def set_event(request):
     etype = request.POST.get('etype')
@@ -204,13 +207,27 @@ def set_event(request):
     event = Event.objects.filter(pk=event.id)
     return HttpResponse(serializers.serialize('json', event, fields=('event_type', 'date')), content_type = "application/json")
 
+
+
 @login_required
 def delete_event(request):
     pass
+
+
+
 
 @login_required
 def get_calendar(request):
     if not request.method == 'GET':
         return HttpResponseForbidden()
     calendar = Event.objects.filter(user=request.user)
-    return HttpResponse(serializers.serialize('json', calendar, fields=('event_type', 'date')), content_type = "application/json")
+    r = {'calendar':json.loads(serializers.serialize('json', calendar, fields=('event_type', 'date'))), 'styles': STYLE_LIST}
+    return JsonResponse(r)
+
+
+
+
+
+
+
+#e

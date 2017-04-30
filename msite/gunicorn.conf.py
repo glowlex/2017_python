@@ -1,7 +1,7 @@
 import multiprocessing
 import os
 
-bind = "localhost:8020"
+bind = "localhost:8000"
 name='pestyle'
 workers = multiprocessing.cpu_count() * 2 + 1
 max_requests = 1000

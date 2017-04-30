@@ -5,6 +5,7 @@
       this.date = new Date(year, month, day);
       this.now = new Date();
       this.calendar = [];
+      this.styles=[];
       this.SHORT_DAY_NAMES = new Array(
         'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс');
 
@@ -90,10 +91,12 @@
             $.ajax({
               url: "/api/get_calendar/",
               success: function(result) {
-                for(let i in result){
-                  result[i].fields.date = this.make_date(result[i].fields.date);
-                  this.calendar.push(result[i]);
+                this.styles = result.styles;
+                for(let i in result.calendar){
+                  result.calendar[i].fields.date = this.make_date(result.calendar[i].fields.date);
+                  this.calendar.push(result.calendar[i]);
                 }
+                this.make_styles_template();
               }.bind(this)
             }).done(resolve).fail(reject)}.bind(this));
         }
@@ -116,15 +119,15 @@
             }
             this.refresh();
           }else{
-            let ev = $('#event-window');
-            $(ev[0]).css({'left':e.target.offsetLeft, 'top':e.target.offsetTop+e.target.offsetHeight*2});
+            let ev = $('#event-window')[0];
+            $(ev).css({'left':e.target.offsetLeft, 'top':e.target.offsetTop+e.target.offsetHeight*2});
             let s = this.get_style(e.target.innerText);
             if(s){
-            $(ev[0]).find('select').val(s.fields.event_type);
+            $(ev).find('select').val(s.fields.event_type);
           }else{
-            $(ev[0]).find('select').val('');
+            $(ev).find('select').val('');
           }
-            $(ev[0]).show();
+            $(ev).show();
           }
           this.date.setDate(e.target.innerText);
         }
@@ -190,10 +193,10 @@
         }
 
         get_style(d){
-          let y = this.date.getYear(), m = this.date.getDate();
+          let y = this.date.getYear(), m = this.date.getMonth();
           for(let i in this.calendar){
             let date = this.calendar[i].fields.date;
-            if(date.getYear()==y && date.getMonth()==m, date.getDate()==d){
+            if(date.getYear()==y && date.getMonth()==m && date.getDate()==d){
               return this.calendar[i];
             }
           }
@@ -219,9 +222,23 @@
           }
         }
 
+        make_styles_template(){
+          let sel =  $('#event-window_id_style')[0];
+          let tmp = document.createElement('option');
+          $(tmp).val('');
+          tmp.innerText='-------';
+          sel.appendChild(tmp);
+          for(let i in this.styles){
+            tmp = document.createElement('option');
+            $(tmp).val(this.styles[i][0]);
+            tmp.innerText=this.styles[i][1];
+            sel.appendChild(tmp);
+          }
+        }
+
 
       }
 
-      let c = new Calendar(2017, 2, 6);
+    window.Calendar = Calendar;
 
     })();

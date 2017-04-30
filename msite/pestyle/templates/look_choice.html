@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container">
+<div class="container" id='look_choice'>
 
   <div class="tile is-ancestor is-vertical is-parent" style="height:95vmin">
     <div class="tile tile_no-round is-8">
@@ -32,40 +32,7 @@
         <div class="tile calendar" id="calendar">
           {% include "calendar.html" %}
         </div>
-        <div class="tile weather is-vertical">
-          <div class="tile">
-            <figure class="image is-64x64">
-              <img src="/other/1.png">
-            </figure>
-            <h3 class="title is-3" style="margin-left:auto; margin-right:auto; font-weight:bold; padding-top:3%">Погода на сегодня</h3>
-          </div>
-          <div class="tile">
-            <div class="tile is-5" style="margin:auto;">
-              <figure class="image is-96x96">
-                <img src="/other/1.png">
-                <div class="weather__temp">
-                  <p class="weather__temp__high">+15</p>
-                  <p class="weather__temp__low">+9</p>
-                </div>
-              </figure>
-            </div>
-            <div class="tile is-vertical is-7 weather-info">
-              <p class="weather_info">
-                вероятность осадков: 40%
-              </p>
-              <p class="weather_info">
-                влажность: 60%
-              </p>
-              <p class="weather_info">
-                ветер
-              </p>
-            </div>
-
-
-          </div>
-          <div class="tile">
-          </div>
-        </div>
+{% include "weather.html" %}
       </div>
     </div>
 
@@ -89,7 +56,7 @@
   {% include "profile.html" %}
 </div>
 <div class="event-window" id='event-window'>
-  <div class="field is-horizontal" style="width: 20vw;">
+  <div class="field is-horizontal" style="width: 20vw; max-width:200px">
     <div class="field-label is-normal">
       <label class="label">Стиль</label>
     </div>
@@ -98,16 +65,6 @@
         <p class="control">
           <span class="select" style="width:100%">
             <select name="style" required="" id="event-window_id_style">
-              <option value="" selected="">---------</option>
-
-              <option value="C">casual</option>
-
-              <option value="B">bussines</option>
-
-              <option value="S">sport</option>
-
-              <option value="P">party</option>
-
             </select>
           </span>
         </p>

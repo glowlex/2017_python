@@ -1,0 +1,37 @@
+{% block weather %}
+<div class="tile weather is-vertical">
+  <div class="tile weather__title">
+    <figure class="image is-64x64">
+      <img src="/other/1.png">
+    </figure>
+    <h3 class="title is-4" style="font-weight:bold; margin:auto">Погода на сегодня</h3>
+  </div>
+  <div class="tile">
+    <div class="tile is-5" style="margin:auto;">
+      <figure class="image is-96x96">
+        <img src="/other/1.png">
+        <div class="weather__temp">
+          <p class="weather__temp__high">{% if weather.temp_max > 0 %}+{%endif%}{{weather.temp_max}}</p>
+          <p class="weather__temp__low">{% if weather.temp_min > 0 %}+{%endif%}{{weather.temp_min}}</p>
+        </div>
+      </figure>
+    </div>
+    <div class="tile is-vertical weather-info">
+      <p >
+        осадки: {{weather.cloudiness}}%
+      </p>
+      <p >
+        влажность: {{weather.humidity}}%
+      </p>
+      <p >
+        ветер: {{weather.wind}} м/с
+      </p>
+    </div>
+
+
+  </div>
+  <div class="tile">
+  </div>
+</div>
+
+{% endblock %}

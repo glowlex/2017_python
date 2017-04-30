@@ -53,7 +53,7 @@ class User(AbstractBaseUser):
 	email = models.EmailField(max_length=64, unique=True)
 	sex = models.CharField(max_length=1, choices=SEX_LIST, default=SEX_LIST[1][1])
 	birthday = models.DateField(blank=True, null=True)
-	city = models.IntegerField(default=1)
+	city = models.IntegerField(default=524901) #москва
 	#static/images/ для отладочного серва, просто avatar/ для nginx
 	avatar = models.ImageField(upload_to=PathAndRename('avatar/'), blank=True, null=True)
 

@@ -4,7 +4,7 @@ $(document).ready(function() {
 
   if($('#look_window')==null){return;}
   window.looks_s = new Look_list('s');
-
+  let c = new window.Calendar();
   $("#select_item_window").click(function(){
     if(!window.my_items){
       window.my_items = new My_items();
@@ -34,8 +34,14 @@ $(document).ready(function() {
   });
 
   //test
-  $("#select_item_window").click();
+  //$("#select_item_window").click();
 
+//исправлние ксс, тпринудительная перестройка
+$('nav').find('figure').toggleClass('is-32x32', false);
+$('#look_choice').css('display', 'flex');
+//$('nav').find('a')[0].focus();
+$('#look_window').focus();
+$('nav').find('figure').toggleClass('is-32x32', true);
 });
 
 const clothes = {'body':['dress', 'blouse', 'tshirt'],
