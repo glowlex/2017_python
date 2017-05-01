@@ -6,7 +6,7 @@
 #sudo -s
 add-apt-repository ppa:jonathonf/python-3.6
 apt-get update
-apt-get install python3.6
+apt-get install -y python3.6
 pip3 install --upgrade pip
 pip3 install --upgrade virtualenv
 virtualenv -p python3.6 pestyle
