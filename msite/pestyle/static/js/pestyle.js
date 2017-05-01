@@ -2,7 +2,12 @@
 $(document).ready(function() {
 //TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
 
-  if($('#look_window')==null){return;}
+//исправлние ксс, принудительная перестройка
+$('nav').find('figure').hide()
+$('#look_choice').css('display', 'flex');
+setTimeout(function(){$('nav').find('figure').show();}, 1);
+
+  if($('#look_window').length==0){return;}
   window.looks_s = new Look_list('s');
   let c = new window.Calendar();
   $("#select_item_window").click(function(){
@@ -36,12 +41,6 @@ $(document).ready(function() {
   //test
   //$("#select_item_window").click();
 
-//исправлние ксс, тпринудительная перестройка
-$('nav').find('figure').toggleClass('is-32x32', false);
-$('#look_choice').css('display', 'flex');
-//$('nav').find('a')[0].focus();
-$('#look_window').focus();
-$('nav').find('figure').toggleClass('is-32x32', true);
 });
 
 const clothes = {'body':['dress', 'blouse', 'tshirt'],

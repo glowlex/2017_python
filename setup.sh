@@ -1,25 +1,25 @@
 #!/bin/bash
 
 #запускать с sudo из 2017_python
-# в конфиге нжинх поменять путь если надо
+# в конфиге нжинх поменять путь если надо или скачивать в /opt/project/
 
 #sudo -s
-add-apt-repository ppa:jonathonf/python-3.6
-apt-get update
+
+add-apt-repository -y ppa:jonathonf/python-3.6
+apt-get update -y
+apt-get install -y nginx
 apt-get install -y python3.6
+apt-get install -y python3-pip
 pip3 install --upgrade pip
 pip3 install --upgrade virtualenv
 virtualenv -p python3.6 pestyle
-source pestyle/bin/activate
-pip3 install django==1.11
-easy_install Celery
-pip3 install gunicorn
-pip3 install Pillow
+source ./pestyle/bin/activate
+#pip3 install django==1.11
+#easy_install Celery
+#pip3 install gunicorn
+#pip3 install Pillow
 #библиотека для заполнения базы
-pip3 install requests
-
-apt-get install nginx
-
+#pip3 install requests
 
 
 cp -f ./pestyle_nginx.conf /etc/nginx/sites-available/
@@ -42,3 +42,8 @@ gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 #python manage.py fill
 #python manage.py migrate --database=test_db
 #python manage.py dumpdata --database=test_db -o ./test_db.json
+
+#для locale error
+#export LC_ALL="en_US.UTF-8"
+#export LC_CTYPE="en_US.UTF-8"
+#sudo dpkg-reconfigure locales
