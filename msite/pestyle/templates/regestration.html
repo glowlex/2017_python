@@ -1,0 +1,169 @@
+{% block reg_window %}
+<form id="reg_window" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="tile is-ancestor">
+    <div class="reg">
+      <div class="label reg__label">Регистрация</div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Имя</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.name}}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Фамилия</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.last_name}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Email</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icon has-icon-right">
+              {{reg_form.email}}
+              <span class="icon is-small">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+            {% if reg_form.email.errors %}
+            <p class="help is-danger error-messege">{{reg_form.email.errors.as_text}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Город</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.city}}
+            </p>
+            {% if reg_form.city.errors %}
+            <p class="help is-danger error-messege">{{reg_form.city.errors.as_text}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">Дата рождения</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control is-expanded has-icon has-icon-right">
+              {{reg_form.birthday}}
+              <span class="icon is-small">
+                <i class="fa fa-check"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+          <label class="label">sex?</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-narrow">
+            <div class="control">
+              {% for sex in reg_form.sex %}
+<label class="radio">
+    {{sex.tag}}
+    {{sex.choice_label}}
+</label>
+{% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Аватар</label>
+        </div>
+        <div class="field-body">
+          <div class="field is-grouped">
+            <p class="control is-expanded">
+              {{reg_form.avatar}}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Пароль</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control has-icon">
+              {{reg_form.password}}
+              <span class="icon is-small">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <label class="label">Повторите пароль</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <p class="control has-icon">
+              {{reg_form.password2}}
+              <span class="icon is-small">
+                <i class="fa fa-lock"></i>
+              </span>
+            </p>
+            {% if  reg_form.password2.errors %}
+            <p class="help is-danger error-messege">{{reg_form.password2.errors.as_text}}</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label">
+        </div>
+
+        <div class="field-body">
+          <div class="field is-grouped">
+            <div class="control">
+              <button class="button is-success" type="submit">
+                Зарегистрироваться
+              </button>
+            </div>
+            <div class="control">
+              <a class="button is-light" href="">
+                отмена
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

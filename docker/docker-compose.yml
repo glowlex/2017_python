@@ -1,0 +1,13 @@
+project:
+  build: ./
+  env_file: .env
+  working_dir: /opt/project/
+  command: bash -c "/etc/init.d/ssh start && cd ./msite && cd /opt/project/ && python manage.py runserver"
+  volumes:
+    - ./src/pestyle_nginx.conf:/etc/nginx/sites-available/pestyle_nginx.conf
+    - /var/www/static:/var/www/static
+
+  ports:
+    - "2225:22"
+    - "8000:8000"
+  tty: true

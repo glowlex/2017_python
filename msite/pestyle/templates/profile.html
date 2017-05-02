@@ -1,0 +1,190 @@
+{% block profile_window %}
+  <form id="profile_window" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+  <div class="tile is-ancestor">
+    <div class="profile notification">
+      <a class="delete" href='#'></a>
+    <div class="label reg__label">Настройки</div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Email</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control is-expanded ">
+            {{prof_form.email}}
+          </p>
+          {% if prof_form.email.errors %}
+          <p class="help is-danger error-messege">{{prof_form.email.errors.as_text}}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Имя</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control is-expanded ">
+            {{prof_form.name}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Фамилия</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control is-expanded ">
+            {{prof_form.last_name}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">День рождения</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control is-expanded ">
+            {{prof_form.birthday}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+        <label class="label">Пол</label>
+      </div>
+      <div class="field-body">
+        <div class="field is-narrow">
+          <div class="control">
+            {% for sex in prof_form.sex %}
+<label class="radio">
+  {{sex.tag}}
+  {{sex.choice_label}}
+</label>
+{% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Город</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control">
+            {{prof_form.city}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Аватар</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control">
+            {{prof_form.avatar}}
+          </p>
+        </div>
+      </div>
+    </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Пароль</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control has-icon">
+                {{prof_form.password}}
+                <span class="icon is-small">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </p>
+              {% if prof_form.password.errors %}
+              <p class="help is-danger error-messege">{{prof_form.password.errors.as_text}}</p>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Новый пароль</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control has-icon">
+          {{prof_form.password2}}
+            <span class="icon is-small">
+              <i class="fa fa-lock"></i>
+            </span>
+          </p>
+          {% if prof_form.password2.errors %}
+          <p class="help is-danger error-messege">{{prof_form.password2.errors.as_text}}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <label class="label">Повторите пароль</label>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control has-icon">
+            {{prof_form.password3}}
+            <span class="icon is-small">
+              <i class="fa fa-lock"></i>
+            </span>
+          </p>
+          {% if prof_form.password3.errors %}
+          <p class="help is-danger error-messege">{{prof_form.password3.errors.as_text}}</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label">
+      </div>
+
+      <div class="field-body">
+        <div class="field is-grouped">
+          <div class="field-label">
+          </div>
+
+          <div class="control">
+            <a class="button is-light" href="#">
+              Отмена
+            </a>
+          </div>
+          <div class="control">
+            <button class="button is-success" type="submit">
+              Изменить
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+{% endblock %}

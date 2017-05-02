@@ -1,0 +1,15 @@
+/msite/pestyle/static/admin/
+/pestyle/
+*.log
+*.pot
+__pycache__/
+*.py[cod]
+**/test_images/
+
+
+**//sass
+**/.sass-cache
+**.css.map
+**bulma.css
+**bulma.sass
+/msite/pestyle/static/css/static

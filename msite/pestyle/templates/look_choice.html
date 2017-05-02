@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container" id='look_choice'>
+
+  <div class="tile is-ancestor is-vertical is-parent" style="height:95vmin">
+    <div class="tile tile_no-round is-8">
+      <div class="choice-menu">
+        <a class="choice-menu__item" id="select_item_window">
+          <figure class="image is-64x64 choice-menu__item__image">
+            <img src="/other/1.png">
+          </figure>
+          <div>Гардероб</div>
+        </a>
+        <a class="choice-menu__item" id="select_look_window_c">
+          <figure class="image is-64x64 choice-menu__item__image">
+            <img src="/other/1.png">
+          </figure>
+          <div>Избранное</div>
+        </a>
+        <a class="choice-menu__item" id="select_look_window_s">
+          <figure class="image is-64x64 choice-menu__item__image">
+            <img src="/other/1.png">
+          </figure>
+          <div>Подбор</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="tile" id="windows">
+      {% include "look.html" %}
+      <div class="tile tile_no-round is-4 calendar-weather is-vertical">
+        <div class="tile calendar" id="calendar">
+          {% include "calendar.html" %}
+        </div>
+{% include "weather.html" %}
+      </div>
+    </div>
+
+    <div class="tile tile_no-round is-8 like">
+      <div class="like__choice-menu">
+        <div class="like__choice-menu__item" id="choice_prev">
+          <span class="like__choice-menu__item__image"><i class="fa fa-chevron-left"></i></span>
+        </div>
+        <div class="like__choice-menu__item" id="choice_like">
+          <span class="like__choice-menu__item__image heart"><i class="fa fa-heart-o"></i></span>
+        </div>
+        <div class="like__choice-menu__item" id="choice_next">
+          <span class="like__choice-menu__item__image"><i class="fa fa-chevron-right" ></i></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="container">
+  {% include "profile.html" %}
+</div>
+<div class="event-window" id='event-window'>
+  <div class="field is-horizontal" style="width: 20vw; max-width:200px">
+    <div class="field-label is-normal">
+      <label class="label">Стиль</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <span class="select" style="width:100%">
+            <select name="style" required="" id="event-window_id_style">
+            </select>
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

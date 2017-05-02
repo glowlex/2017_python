@@ -1,0 +1,150 @@
+{% block item_window %}
+<div class="tile tile_no-round choice-window is-vertical" id="item_window">
+  <div class="tile" style="flex:0">
+    <div class="tile is-6 choice-window__item type" id="item_type">
+      <div class="choice-window__item__image ">
+        <div class="choice-window__item__previous" id="item_type_prev">
+          <i class="fa fa-angle-left"></i>
+        </div>
+        <div class="choice-window__item__next" id="item_type_next">
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+    <div class="tile">
+      <div class="control" style="margin:auto">
+        <label class="file_upload" >
+          <a class="button is-medium is-light" >Выбрать фото</a>
+<form method="post" enctype="multipart/form-data" id="image_form">
+            {{item_form.photo}}
+</form>
+
+
+      </label>
+    </div>
+    </div>
+  </div>
+  <div class="tile">
+    <div class="tile is-6 is-vertical">
+      <div class="tile" style="flex:6">
+        <div class="tile  choice-window__item dress" id="item">
+          <div class="choice-window__item__image ">
+            <div class="choice-window__item__previous" id="item_prev">
+              <i class="fa fa-angle-left"></i>
+            </div>
+            <div class="choice-window__item__next" id="item_next">
+              <i class="fa fa-angle-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="tile is-6 is-vertical">
+      <form class="choice-window__item-params" id="item_selects" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Категория</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.item_type}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Цвет</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.color}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Стиль</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.style}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Сезон</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.season}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Температура</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.temperature}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Погода</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <p class="control">
+                <span class="select" style="width:100%">
+                  {{item_form.sky}}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="field is-horizontal">
+        <div class="control choice-window__item-params__button">
+  <button class="button is-medium is-success is-outlined" type="submit" id="item_submit_button">
+    Отправить
+  </button>
+</div>
+<div class="control choice-window__item-params__button" >
+<a class="button is-medium is-danger is-outlined" id="item_delete_button">
+Удалить
+</a>
+</div>
+
+</div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
