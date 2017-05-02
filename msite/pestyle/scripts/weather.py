@@ -42,7 +42,8 @@ class Weather():
             wind=raw_api_dict.get('wind').get('speed'),
             wind_deg=raw_api_dict.get('deg'),
             dt=self.__time_converter(raw_api_dict.get('dt')),
-            cloudiness=raw_api_dict.get('clouds').get('all')
+            cloudiness=raw_api_dict.get('clouds').get('all'),
+            rain=raw_api_dict.get('rain',{}).get('3h', 0)
         )
 # def data_output(city_id):
 #     data = Weather().weather_dictionary(city_id)

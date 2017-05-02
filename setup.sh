@@ -14,6 +14,7 @@ pip3 install --upgrade pip
 pip3 install --upgrade virtualenv
 virtualenv -p python3.6 pestyle
 source ./pestyle/bin/activate
+pip3 install -r ./requirements.txt
 #pip3 install django==1.11
 #easy_install Celery
 #pip3 install gunicorn

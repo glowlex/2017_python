@@ -1,5 +1,0 @@
-django==1.11
-Celery
-gunicorn
-Pillow
-requests
