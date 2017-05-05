@@ -85,7 +85,7 @@ def get_looks(request):
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user)[last:last+7]
+        ).filter(user=request.user).filter(like=False)[last:last+7]
         elif rtype == 'c':
             looks = Look.objects.prefetch_related(Prefetch(
         'items',

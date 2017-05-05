@@ -110,12 +110,22 @@ class Look_list{
 
   change_look(val){
     if(this.list.length<=val || val<0){return;}
+    $('#pants').hide();
+    let items = $('.choice-window').find('.choice-window__item__image');
+    items.each(function(index, elem) {
+      $(elem).css('background-image', '');
+    });
+
     let tmp;
-    let items =this.list[val].items;
+    items =this.list[val].items;
     for(let i in items){
+      if(this.get_field_id(items[i].fields.item_type)=='#pants'){
+        $('#pants').show();
+      }
       tmp = $(this.get_field_id(items[i].fields.item_type)).find('.choice-window__item__image');
       $(tmp).css('background-image', 'url(/'+items[i].fields.photo+')');
     }
+
 
     if(this.list[val].like && $('#choice_like').find('i.fa').hasClass('fa-heart-o')){
       $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
