@@ -169,10 +169,8 @@ def delete_item(request):
 
 @login_required
 def like_look(request):
-    if not request.method == 'POST' or request.user.id != look.user.id:
-        return HttpResponseForbidden()
     lid = int(request.POST.get('look_id', None))
-    up = request.POST.get('up', False)
+    up = request.POST.get('up', True)
     if up =='false':
         up = False
     else:
@@ -189,6 +187,8 @@ def like_look(request):
             look.delete()
         except ObjectDoesNotExist:
             return HttpResponseForbidden()
+    if not request.method == 'POST' or request.user != look.user:
+        return HttpResponseForbidden()
     #TODO поправить nl и отдавать объект
     if request.user.id==look.user.id and isinstance(look, Look_suggestions):
         nl = Look.create_look(look.user, look.style, look.items.all())

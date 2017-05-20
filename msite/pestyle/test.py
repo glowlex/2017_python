@@ -38,7 +38,7 @@ class MyTestCase(TestCase):
         c.login(email=self.user.email, password='1')
         #объект другого юзера
         r = c.post(reverse('like_look'), {'look_id': Look.objects.exclude(user=self.user).order_by('?').first().pk,})
-        self.assertEqual(r.status_code, 403)
+        self.assertEqual(r.status_code, 403 )
         #объекта нет
         r = c.post(reverse('like_look'), {'look_id': nexist_id,})
         self.assertEqual(r.status_code, 403)
@@ -128,8 +128,9 @@ class MyTestCase(TestCase):
     def test_get_items(self):
         c = Client()
         c.login(email=self.user.email, password='1')
-        qu = Q(item_type=ITEM_TYPE_LIST[1][0]) | Q(item_type=ITEM_TYPE_LIST[4][0])
-        items = Item.objects.filter(Q(user=self.user.id) & qu).order_by('-pk')
+        #qu = Q(item_type=ITEM_TYPE_LIST[1][0]) | Q(item_type=ITEM_TYPE_LIST[4][0])
+        #items = Item.objects.filter(Q(user=self.user.id) & qu).order_by('-pk')
+        items = Item.objects.filter(user=self.user.id).order_by('-pk')
         l = list()
         l.append(ITEM_TYPE_LIST[1][0])
         l.append(ITEM_TYPE_LIST[4][0])
