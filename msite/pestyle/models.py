@@ -160,14 +160,14 @@ class Item(models.Model):
 
 
 
-
+#TODO разобраться в наследовании в разные таблицы, или перенести предложеные хранение в оперативке
 class Look(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	style= models.CharField(max_length=1, choices=STYLE_LIST,)
 	items = models.ManyToManyField(Item)
 	class Meta:
 		db_table = 'Look_like'
-		ordering = ['pk']
+		ordering = ['-pk']
 
 	@classmethod
 	def create_look(cls, user, style, items):
@@ -175,23 +175,43 @@ class Look(models.Model):
 			raise ValueError('not enough items')
 		look =cls(user=user, style=style)
 		look.save()
-		for i in items:
-			item = Item.objects.get(pk=i.pk)
-			look.items.add(item)
+		if isinstance(items[0], Item):
+			for i in items:
+				item = Item.objects.get(pk=i.pk)
+				look.items.add(item)
+		else:
+			for i in items:
+				item = Item.objects.get(pk=i)
+				look.items.add(item)
 		return look
 
 	def __str__(self):
 		return u'%s' % self.user.email
 
 
-#TODO убрать наследование, чтобы была другая таблица или не убрать
-class Look_suggestions(Look):
+class Look_suggestions(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	style= models.CharField(max_length=1, choices=STYLE_LIST,)
+	items = models.ManyToManyField(Item)
 	like = models.BooleanField(default=False)
 	class Meta:
 		db_table = 'Look_suggestions'
+		ordering = ['-pk']
 	@classmethod
-	def create_look(self, user, style, items, like=False):
-		super(Look_suggestions, self).create_look(user=user, style=style, items =items)
+	def create_look(cls, user, style, items, like=False):
+		if len(items)<1:
+			raise ValueError('not enough items')
+		look =cls(user=user, style=style)
+		look.save()
+		if isinstance(items[0], Item):
+			for i in items:
+				item = Item.objects.get(pk=i.pk)
+				look.items.add(item)
+		else:
+			for i in items:
+				item = Item.objects.get(pk=i)
+				look.items.add(item)
+		return look
 
 	def set_like(self, up=True):
 		self.like = True if up else False

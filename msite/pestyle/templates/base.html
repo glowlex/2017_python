@@ -50,10 +50,11 @@
 {% block content %}
 {% endblock %}
 </body>
-<link rel="stylesheet" href="/static/css/yourcss.css"/>
+<link rel="stylesheet" href="/static/css/yourcss.css"</script>
 <link rel="stylesheet" href="/static/css/font-awesome.css"/>
 <script  src="http://code.jquery.com/jquery-3.2.1.min.js" type="text/javascript"></script>
-<script  src="/static/js/ajax_csrf.js" type="text/javascript"></script>
-<script  src="/static/js/calendar.js" type="text/javascript"></script>
-<script  src="/static/js/pestyle.js" type="text/javascript"></script>
-<html>
+<script src="/static/js/ajax_csrf.js?<?=filemtime( '/static/js/ajax_csrf.js' )?>" type="text/javascript"> </script>
+<script src="/static/js/calendar.js?<?=filemtime( '/static/js/calendar.js' )?>" type="text/javascript"> </script>
+<script src="/static/js/pestyle.js?<?=filemtime( '/static/js/pestyle.js' )?>" type="text/javascript"> </script>
+
+</html>

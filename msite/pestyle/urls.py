@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^api/get_looks/$', get_looks, name='get_looks'),
     url(r'^api/like_look/$', like_look, name='like_look'),
+    url(r'^api/new_look/$',new_look, name='new_look'),
     url(r'^api/get_items/$', get_items, name='get_items'),
     url(r'^api/get_item_window/$', get_item_window, name='item_window'),
     url(r'^api/set_item/$', set_item, name='set_item'),
