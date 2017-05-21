@@ -1,14 +1,14 @@
 'use strict';
 $(document).ready(function() {
-//TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
+  //TODO проверяется на странице лука или нет, иначе с главной идёт запрос на серв с получением луков
 
-//исправлние ксс, принудительная перестройка
-$('nav').find('figure').hide()
-$('#look_choice').css('display', 'flex');
-setTimeout(function(){$('nav').find('figure').show();}, 1);
+  //исправлние ксс, принудительная перестройка
+  $('nav').find('figure').hide()
+  $('#look_choice').css('display', 'flex');
+  setTimeout(function(){$('nav').find('figure').show();}, 1);
 
-//TODO пока так
-window.my_items = new My_items();
+  //TODO пока так
+  window.my_items = new My_items();
 
   if($('#look_window').length==0){return;}
   window.looks_s = new Look_list('s');
@@ -101,62 +101,61 @@ class Look_list{
     }.bind(this));
 
     $("#choice_like").unbind();
-    $("#choice_like").click(function(){
-      if(this.new_look){
-        this.list[this.current_look]=this.new_look;
-        let ar = [];
-        for(let i in this.new_look.items){
-          ar.push(this.new_look.items[i].pk);
-        }
-        $.ajax({
-          url: "/api/new_look/",
-          type:'POST',
-          data: {ids:JSON.stringify(ar),},
-          success: function(result){
-              $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
-              $('#choice_like').find('span').toggleClass('heart_red');
-              this.list[this.current_look].like=!this.like;
-              this.new_look = undefined;
-              this.list.splice(this.current_look, 1);
-              this.change_look();
-              //TODO пиздец
-              if(window.looks_c){
-              window.looks_c.list = result.concat(window.looks_c.list);
-            }
-          }.bind(this)
-        });
-      } else {
-      $.ajax({
-        url: "/api/like_look/",
-        type:'POST',
-        data: {
-          up: !this.list[this.current_look].like,
-          look_id:this.list[this.current_look].pk
-        },
-        success: function(result){
-            $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
-            $('#choice_like').find('span').toggleClass('heart_red');
-            this.list[this.current_look].like=!this.like;
-            this.list.splice(this.current_look, 1);
-            this.change_look();
-        }.bind(this)
-      });
-    }
-    }.bind(this));
+    $("#choice_like").click(this.click_choice_like.bind(this));
+
     if(this.list.length>0){this.change_look(this.current_look);}
     if(this.type =='s'){this.s_init();}
+  }
+
+  click_choice_like(){
+    if(this.list.length==0 && !this.new_look){return;}
+    //тут, чтобы было видно при нажатии
+    $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
+    $('#choice_like').find('span').toggleClass('heart_red');
+
+    let url, data;
+    if(this.new_look){
+      this.list[this.current_look]=this.new_look;
+      let ar = [];
+      for(let i in this.new_look.items){
+        ar.push(this.new_look.items[i].pk);
+      }
+      url = "/api/new_look/";
+      data = {ids:JSON.stringify(ar),};
+    }else{
+      url = "/api/like_look/";
+      data = {
+        up: !this.list[this.current_look].like,
+        look_id:this.list[this.current_look].pk
+      };
+    }
+
+    $.ajax({
+      url: url,
+      type:'POST',
+      data: data,
+      success: function(result){
+        this.new_look = undefined;
+        this.list.splice(this.current_look, 1);
+        this.change_look();
+        //TODO пиздец
+        if(window.looks_c && result.length>0){
+          window.looks_c.list = result.concat(window.looks_c.list);
+        }
+      }.bind(this)
+    });
   }
 
   s_init(){
     let items = $('#look_window').find('.choice-window__item');
     items.each(function(index, elem){
       $(elem).find('.choice-window__item__next').click(function(){
-      this.items.change_item(1, elem.id, elem);
-      this.change_new_look(elem.id);
+        this.items.change_item(1, elem.id, elem);
+        this.change_new_look(elem.id);
       }.bind(this));
       $(elem).find('.choice-window__item__previous').click(function(){
-      this.items.change_item(-1, elem.id, elem);
-      this.change_new_look(elem.id);
+        this.items.change_item(-1, elem.id, elem);
+        this.change_new_look(elem.id);
       }.bind(this));
     }.bind(this));
   }
@@ -369,8 +368,8 @@ class My_items{
       let obj = this.dict[type];
       if(obj.items.length==0 && obj.empty ==false){
         this.get_items().then(function(result){this.change_item();}.bind(this));
-         $(dom).find('.choice-window__item__image').css('background-image', 'url(/)');
-       }
+        $(dom).find('.choice-window__item__image').css('background-image', 'url(/)');
+      }
       if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
       obj.current+=val;
       let item = obj.items[obj.current];
@@ -390,7 +389,7 @@ class My_items{
           $('#windows').prepend(result);
           this.get_items().then(function(result){this.change_item();}.bind(this));
           this.init();
-              $('#item_window').hide();
+          $('#item_window').hide();
         }.bind(this)
       });
     }
@@ -407,16 +406,16 @@ class My_items{
             for(let i=0; i<result.length; i++){
               let t = this.get_category(result[i].fields.item_type);
               if(t != undefined){
-              this.dict[t].items.push(result[i]);
-            }
+                this.dict[t].items.push(result[i]);
+              }
             }
             //this.items = this.items.concat(result);
             //для борьбы с многократной загрузкой если нет итемов
             for(let i in this.dict){
-            if(this.dict[i].items.length==0){
-              this.dict[i].empty = true;
+              if(this.dict[i].items.length==0){
+                this.dict[i].empty = true;
+              }
             }
-          }
           }.bind(this)
         }).done(resolve).fail(reject)}.bind(this));
       }

@@ -194,10 +194,17 @@ def like_look(request):
     if not request.method == 'POST' or request.user != look.user:
         return HttpResponseForbidden()
     #TODO поправить nl и отдавать объект
+    tmp = []
     if request.user.id==look.user.id and isinstance(look, Look_suggestions):
         nl = Look.create_look(look.user, look.style, look.items.all())
         look.delete()
-    return JsonResponse({'status': 'ok', 'look_id':lid,})
+        l = Look.objects.prefetch_related(Prefetch(
+        'items',
+         queryset=Item.objects.all(),
+         to_attr='tp')
+        ).get(pk=nl.pk)
+        tmp.append({"pk":l.pk, 'like': True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
+    return HttpResponse(json.dumps(tmp), content_type = "application/json")
 
 @login_required
 def new_look(request):
