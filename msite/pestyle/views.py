@@ -85,7 +85,7 @@ def get_looks(request):
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user)[last:last+7]
+        ).filter(user=request.user).filter(like=False)[last:last+7]
         elif rtype == 'c':
             looks = Look.objects.prefetch_related(Prefetch(
         'items',
@@ -106,12 +106,12 @@ def get_looks(request):
 def get_items(request):
     if not request.method == 'GET':
         return HttpResponseForbidden()
-    itype = json.loads(request.GET.get('itype', None))
-    queries = [Q(item_type=i) for i in itype]
-    query = queries.pop()
-    for item in queries:
-        query |= item
-    items = Item.objects.filter(Q(user=request.user.id) & query).order_by('-pk')
+    #itype = json.loads(request.GET.get('itype', None))
+    #queries = [Q(item_type=i) for i in itype]
+    #query = queries.pop()
+    #for item in queries:
+        #query |= item  '''& query'''
+    items = Item.objects.filter(Q(user=request.user.id)).order_by('-pk')
     return HttpResponse(serializers.serialize('json', items,), content_type = "application/json")
 
 
@@ -170,25 +170,47 @@ def delete_item(request):
 @login_required
 def like_look(request):
     lid = int(request.POST.get('look_id', None))
-    #TODO переделать. так, чтобы работало удаление избранных
-    try:
-        look = Look_suggestions.objects.get(pk=lid)
-    except ObjectDoesNotExist:
+    up = request.POST.get('up', True)
+    if up =='false':
+        up = False
+    else:
+        up= True
+    #TODO переделать. так, как в 2 таблицах ищет ид из одной из них
+    if up:
+        try:
+            look = Look_suggestions.objects.get(pk=lid)
+        except ObjectDoesNotExist:
+            return HttpResponseForbidden()
+    else:
         try:
             look = Look.objects.get(pk=lid)
             look.delete()
         except ObjectDoesNotExist:
             return HttpResponseForbidden()
-    if not request.method == 'POST' or request.user.id != look.user.id:
+    if not request.method == 'POST' or request.user != look.user:
         return HttpResponseForbidden()
-    up = request.POST.get('up', False)
-    if up =='false':
-        up = False
-    else:
-        up= True
+    #TODO поправить nl и отдавать объект
     if request.user.id==look.user.id and isinstance(look, Look_suggestions):
-        look.set_like(up)
+        nl = Look.create_look(look.user, look.style, look.items.all())
+        look.delete()
     return JsonResponse({'status': 'ok', 'look_id':lid,})
+
+@login_required
+def new_look(request):
+    ids = json.loads(request.POST.get('ids', None))
+    for i in ids:
+        if Item.objects.get(id=int(i)).user != request.user:
+            return HttpResponseForbidden()
+    #TODO пока так стиль
+    look = Look.create_look(request.user, STYLE_LIST[0][0], ids)
+    l = Look.objects.prefetch_related(Prefetch(
+    'items',
+     queryset=Item.objects.all(),
+     to_attr='tp')
+    ).get(pk=look.pk)
+    tmp = []
+    tmp.append({"pk":l.pk, 'like': True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
+    return HttpResponse(json.dumps(tmp), content_type = "application/json")
 
 
 

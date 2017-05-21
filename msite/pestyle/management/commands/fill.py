@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
 
     def items(self, *args, **options):
-        for _ in range(options.get('items', 1000)):
+        for _ in range(options.get('items', 200)):
             user = User.objects.get(id=randint(1, User.objects.all().count()))
             item_type = ITEM_TYPE_LIST[randint(0, len(ITEM_TYPE_LIST)-1)][0]
             style = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]
@@ -97,7 +97,7 @@ class Command(BaseCommand):
             if len(item_dict.values())<2:
                 continue
 
-            Look.create_look(user, style, item_dict.values())
+            Look.create_look(user, style, list(item_dict.values()))
 
 
 
@@ -137,7 +137,7 @@ class Command(BaseCommand):
             if len(item_dict.values())<2:
                 continue
 
-            Look_suggestions.create_look(user, style, item_dict.values())
+            Look_suggestions.create_look(user, style, list(item_dict.values()))
 
 
 
