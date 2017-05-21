@@ -85,12 +85,12 @@ class Look(models.Model):
             f.close()
             if self.dress == False:
                 for i in range(0, 2):
-                    self.list_of_pants.append(Find(self.pants_item, matching_colors, self.list_of_pants))
+                    self.list_of_pants.append(self.Find(self.pants_item, matching_colors, self.list_of_pants))
 
             for i in range(0, 2):
-                self.list_of_shoes.append(Find(self.shoes_item, matching_colors, self.list_of_shoes))
-                self.list_of_accessory.append(Find(self.accessory_item, matching_colors, self.list_of_accessory))
-                self.list_of_outerwear.append(Find(self.outerwear_item, matching_colors, self.list_of_outerwear))
+                self.list_of_shoes.append(self.Find(self.shoes_item, matching_colors, self.list_of_shoes))
+                self.list_of_accessory.append(self.Find(self.accessory_item, matching_colors, self.list_of_accessory))
+                self.list_of_outerwear.append(self.Find(self.outerwear_item, matching_colors, self.list_of_outerwear))
                 # Тут происходит компоновка 5-ти элементов и запись в БД
 
 

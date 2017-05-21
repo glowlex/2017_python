@@ -14,6 +14,9 @@ from .lists import *
 from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
 import datetime
 from .scripts.weather import Weather
+from .scripts.gen_looks import Looks
+
+
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -64,7 +67,8 @@ def look_choice(request):
         #TODO user= auth.authenticate(user)
         if user:# and user.is_active:
             auth.login(request, user)
-
+    ll = Looks(request.user)
+    ll.generate_looks()
     weather = Weather().weather_dictionary(request.user.city)
     return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
 
