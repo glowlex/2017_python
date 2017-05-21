@@ -37,7 +37,7 @@ class MyTestCase(TestCase):
         c = Client()
         c.login(email=self.user.email, password='1')
         #объект другого юзера
-        r = c.post(reverse('like_look'), {'look_id': Look.objects.exclude(user=self.user).order_by('?').first().pk,})
+        r = c.post(reverse('like_look'), {'look_id': Look.objects.exclude(user=self.user).order_by('?').first().pk, 'up':'false'})
         self.assertEqual(r.status_code, 403 )
         #объекта нет
         r = c.post(reverse('like_look'), {'look_id': nexist_id,})

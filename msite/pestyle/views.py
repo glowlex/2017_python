@@ -175,7 +175,7 @@ def like_look(request):
         up = False
     else:
         up= True
-    #TODO переделать. так, чтобы работало удаление избранных
+    #TODO переделать. так, как в 2 таблицах ищет ид из одной из них
     if up:
         try:
             look = Look_suggestions.objects.get(pk=lid)
