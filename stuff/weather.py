@@ -37,6 +37,7 @@ class Weather():
             humidity=raw_api_dict.get('main').get('humidity'),
             pressure=raw_api_dict.get('main').get('pressure'),
             sky=raw_api_dict['weather'][0]['main'],
+            weather_id=raw_api_dict['weather'][0]['id'],
             sunrise=self.__time_converter(raw_api_dict.get('sys').get('sunrise')),
             sunset=self.__time_converter(raw_api_dict.get('sys').get('sunset')),
             wind=raw_api_dict.get('wind').get('speed'),
@@ -44,24 +45,24 @@ class Weather():
             dt=self.__time_converter(raw_api_dict.get('dt')),
             cloudiness=raw_api_dict.get('clouds').get('all')
         )
-# def data_output(city_id):
-#     data = Weather().weather_dictionary(city_id)
-#
-#     m_symbol = '\xb0' + 'C'
-#     print('---------------------------------------')
-#     print('Current weather in: {}, {}:'.format(data['city'], data['country']))
-#     print(data['temp'], m_symbol, data['sky'])
-#     print('Max: {}, Min: {}'.format(data['temp_max'], data['temp_min']))
-#     print('')
-#     print('Wind Speed: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
-#     print('Humidity: {}'.format(data['humidity']))
-#     print('Cloud: {}'.format(data['cloudiness']))
-#     print('Pressure: {}'.format(data['pressure']))
-#     print('Sunrise at: {}'.format(data['sunrise']))
-#     print('Sunset at: {}'.format(data['sunset']))
-#     print('')
-#     print('Last update from the server: {}'.format(data['dt']))
-#     print('---------------------------------------')
+    def data_output(self, city_id):
+        data = Weather().weather_dictionary(city_id)
+
+        m_symbol = '\xb0' + 'C'
+        print('---------------------------------------')
+        print('Current weather in: {}, {}:'.format(data['city'], data['country']))
+        print(data['temp'], m_symbol, data['sky'])
+        print('Max: {}, Min: {}'.format(data['temp_max'], data['temp_min']))
+        print('')
+        print('Wind Speed: {}, Degree: {}'.format(data['wind'], data['wind_deg']))
+        print('Humidity: {}'.format(data['humidity']))
+        print('Cloud: {}'.format(data['cloudiness']))
+        print('Pressure: {}'.format(data['pressure']))
+        print('Sunrise at: {}'.format(data['sunrise']))
+        print('Sunset at: {}'.format(data['sunset']))
+        print('')
+        print('Last update from the server: {}'.format(data['dt']))
+        print('---------------------------------------')
 
 
-# moscow_id = 524901
+# moscow_id = 524894
