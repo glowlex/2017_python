@@ -106,6 +106,9 @@ class Event(models.Model):
 
 	class Meta:
 		db_table = 'Calendar'
+		ordering = ['-pk']
+
+
 
 	@classmethod
 	def create_event(cls, user, date, event_type, name='blank', description=None):

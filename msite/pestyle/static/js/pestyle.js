@@ -332,7 +332,6 @@ class My_items{
     if(ph.length==0){
       data.append('item_id', obj.items[obj.current].pk);
     }
-    let sel = $('#item_selects').find('select');
     data.append('photo', ph[0])
 
     this.send_item(data).then(function(result){

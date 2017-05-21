@@ -2,13 +2,14 @@ import datetime
 import json
 import urllib.request
 
+
 class Weather():
     def __time_converter(self, time):
         converted_time = datetime.datetime.fromtimestamp(int(time)).strftime('%I:%M %p')
         return converted_time
 
     def __url_builder(self, city_id):
-        with open('./pestyle/scripts/config.json') as file_config:
+        with open('pestyle/scripts/config.json') as file_config:
             config = json.load(file_config)
         user_api = config['user_api']
         unit = 'metric'
@@ -37,14 +38,14 @@ class Weather():
             humidity=raw_api_dict.get('main').get('humidity'),
             pressure=raw_api_dict.get('main').get('pressure'),
             sky=raw_api_dict['weather'][0]['main'],
+            weather_id=raw_api_dict['weather'][0]['id'],
             sunrise=self.__time_converter(raw_api_dict.get('sys').get('sunrise')),
             sunset=self.__time_converter(raw_api_dict.get('sys').get('sunset')),
             wind=raw_api_dict.get('wind').get('speed'),
             wind_deg=raw_api_dict.get('deg'),
             dt=self.__time_converter(raw_api_dict.get('dt')),
-            cloudiness=raw_api_dict.get('clouds').get('all'),
-            rain=raw_api_dict.get('rain',{}).get('3h', 0)
-        )
+            cloudiness=raw_api_dict.get('clouds').get('all')
+)
 # def data_output(city_id):
 #     data = Weather().weather_dictionary(city_id)
 #
