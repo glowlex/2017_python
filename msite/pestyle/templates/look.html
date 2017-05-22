@@ -13,7 +13,11 @@
     </div>
     <div class="tile" style="flex:6">
             <div class="tile  is-vertical">
-      <div class="tile  choice-window__item dress" id="body">
+              {% if request.user.sex == "M" %}
+              <div class="tile  choice-window__item shirt" id="body">
+              {% else %}
+              <div class="tile  choice-window__item dress" id="body">
+              {% endif %}
         <div class="choice-window__item__image">
           <div class="choice-window__item__previous">
             <i class="fa fa-angle-left"></i>
@@ -23,7 +27,11 @@
           </div>
         </div>
       </div>
-      <div class="tile  choice-window__item dress" id="pants" style="display:none">
+      {% if request.user.sex == "M" %}
+        <div class="tile  choice-window__item pants" id="pants">
+      {% else %}
+        <div class="tile  choice-window__item pants" id="pants" style="display:none">
+      {% endif %}
         <div class="choice-window__item__image">
           <div class="choice-window__item__previous">
             <i class="fa fa-angle-left"></i>

@@ -19,6 +19,7 @@ $(document).ready(function() {
     }
     $('#look_window').hide();
     $('#item_window').show();
+    window.my_items.change_item();
     $('.like__choice-menu').css("opacity", '0')
   });
 
@@ -103,7 +104,7 @@ class Look_list{
     $("#choice_like").unbind();
     $("#choice_like").click(this.click_choice_like.bind(this));
 
-    if(this.list.length>0){this.change_look(this.current_look);}
+    this.change_look(this.current_look);
     if(this.type =='s'){this.s_init();}
   }
 
@@ -275,7 +276,6 @@ class My_items{
 
     $("#item_type_next").click(function(){
       if(this.selected_type<this.keys.length-1){
-
         this.selected_type++;
         this.change_item();
       }
@@ -286,6 +286,12 @@ class My_items{
         this.change_item();
       }
     }.bind(this));
+  }
+
+  change_item_type(type=this.keys[this.selected_type]){
+    let t = $('#item_type').find('.choice-window__item__image');
+    t.css('background-image', 'url(/other/'+type+'.png)');
+
   }
 
   get_category(type){
@@ -365,6 +371,7 @@ class My_items{
     }
 
     change_item(val=0, type=this.keys[this.selected_type], dom='#item'){
+      this.change_item_type();
       let obj = this.dict[type];
       if(obj.items.length==0 && obj.empty ==false){
         this.get_items().then(function(result){this.change_item();}.bind(this));

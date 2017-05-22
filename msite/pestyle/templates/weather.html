@@ -2,14 +2,14 @@
 <div class="tile weather is-vertical">
   <div class="tile weather__title">
     <figure class="image is-64x64">
-      <img src="/other/1.png">
+      <img src="/other/weather.png">
     </figure>
     <h3 class="title is-4" style="font-weight:bold; margin:auto">Погода на сегодня</h3>
   </div>
   <div class="tile">
     <div class="tile is-5" style="margin:auto;margin-right: 2rem;">
       <figure class="image is-96x96">
-        <img src="/other/1.png">
+        <img src="/other/{{weather.weather_id}}.png">
         <div class="weather__temp">
           <p class="weather__temp__high">{% if weather.temp_max > 0 %}+{%endif%}{{weather.temp_max}}</p>
           <p class="weather__temp__low">{% if weather.temp_min > 0 %}+{%endif%}{{weather.temp_min}}</p>

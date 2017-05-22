@@ -7,7 +7,7 @@ from django.test import Client
 from django.urls import reverse
 from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
 from django.core import serializers
-from django.db.models import Q
+from django.db.models import Prefetch, Q
 import json
 
 #замена print(), django так крут, что не даёт выводить инфу в тесте принтом, написание тестов превращается в еблю
@@ -24,6 +24,8 @@ class MyTestCase(TestCase):
         call_command('fill_test')
 
 
+
+
     def setUp(self):
         self.user = User.objects.get(email='test@test.ru')
 
@@ -31,6 +33,8 @@ class MyTestCase(TestCase):
         c = Client()
         r = c.post(reverse('like_look'), {'look_id': 1,})
         self.assertRedirects(r, '/login_window/?next=/api/like_look/', target_status_code=302)
+
+
 
 
     def test_like_look_wrong_data(self):
@@ -43,15 +47,29 @@ class MyTestCase(TestCase):
         r = c.post(reverse('like_look'), {'look_id': nexist_id,})
         self.assertEqual(r.status_code, 403)
 
+
+
+
     def test_like_look(self):
         c = Client()
         c.login(email=self.user.email, password='1')
         lid = Look_suggestions.objects.filter(user=self.user).order_by('?').first()
-        r = c.post(reverse('like_look'), { 'look_id': lid.pk if lid else 0,})
+        r = c.post(reverse('like_look'), { 'look_id': lid.pk,})
+        lid = Look.objects.filter(user=self.user).order_by('pk').last()
+        l = Look.objects.prefetch_related(Prefetch(
+        'items',
+         queryset=Item.objects.all(),
+         to_attr='tp')
+        ).get(pk=lid.pk)
+        tmp=[]
+        tmp.append({"pk":l.pk, 'like': True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
         self.assertJSONEqual(
             str(r.content, encoding='utf8'),
-            {'status': 'ok', 'look_id': lid.pk if lid else 0,}
+            json.dumps(tmp)
         )
+
+
+
 
     def test_logged_in_uses_correct_template(self):
         c = Client()
@@ -64,6 +82,9 @@ class MyTestCase(TestCase):
         #Check we used correct template
         self.assertTemplateUsed(resp, 'look_choice.html')
 
+
+
+
     def test_delete_item(self):
         c = Client()
         c.login(email=self.user.email, password='1')
@@ -75,6 +96,9 @@ class MyTestCase(TestCase):
         )
         self.assertEqual(Item.objects.filter(pk=item.pk).count(), 0)
 
+
+
+
     def test_delete_item_wrong_data(self):
         c = Client()
         c.login(email=self.user.email, password='1')
@@ -84,6 +108,9 @@ class MyTestCase(TestCase):
         #объекта нет
         r = c.post(reverse('delete_item'), {'item_id': nexist_id,})
         self.assertEqual(r.status_code, 403)
+
+
+
 
     def test_set_item(self):
         c = Client()
@@ -105,6 +132,9 @@ class MyTestCase(TestCase):
         )
         self.assertEqual(item.first().item_type, item_type)
 
+
+
+
     def test_set_item_wrong_data(self):
         c = Client()
         c.login(email=self.user.email, password='1')
@@ -124,6 +154,9 @@ class MyTestCase(TestCase):
         r = c.post(reverse('delete_item'), {'item_id': nexist_id, 'item_type':item_type, 'style': style, 'color':color, 'season':season,
         'temperature':temperature, 'sky':sky})
         self.assertEqual(r.status_code, 403)
+
+
+
 
     def test_get_items(self):
         c = Client()
