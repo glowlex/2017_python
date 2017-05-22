@@ -70,14 +70,14 @@ class User(AbstractBaseUser):
 		return self.name
 
 	def has_perm(self, perm, obj=None):
-		return True
+		return False
 
 	def has_module_perms(self, app_label):
-		return True
+		return False
 
 	@property
 	def is_staff(self):
-		return True
+		return False
 
 	def get_full_name(self):
 		return self.name

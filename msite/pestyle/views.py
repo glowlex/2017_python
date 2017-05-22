@@ -67,8 +67,8 @@ def look_choice(request):
         #TODO user= auth.authenticate(user)
         if user:# and user.is_active:
             auth.login(request, user)
-    ll = Looks(request.user)
-    ll.generate_looks()
+    #ll = Looks(request.user)
+    #ll.generate_looks()
     weather = Weather().weather_dictionary(request.user.city)
     weather['weather_id'] = str(weather['weather_id'] // 100) + 'xx'
     return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
@@ -90,13 +90,13 @@ def get_looks(request):
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user).filter(like=False)[last:last+7]
+        ).filter(user=request.user).filter(like=False)[last:last+20]
         elif rtype == 'c':
             looks = Look.objects.prefetch_related(Prefetch(
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user)[last:last+7]
+        ).filter(user=request.user)[last:last+20]
     except DoesNotExist:
         return JsonResponse({'status': 'ok',})
 

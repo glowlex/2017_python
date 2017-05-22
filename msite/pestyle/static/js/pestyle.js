@@ -7,10 +7,11 @@ $(document).ready(function() {
   $('#look_choice').css('display', 'flex');
   setTimeout(function(){$('nav').find('figure').show();}, 1);
 
+  if($('#look_window').length==0){return;}
+
   //TODO пока так
   window.my_items = new My_items();
 
-  if($('#look_window').length==0){return;}
   window.looks_s = new Look_list('s');
   let c = new window.Calendar();
   $("#select_item_window").click(function(){
@@ -109,7 +110,7 @@ class Look_list{
   }
 
   click_choice_like(){
-    if(this.list.length==0 && !this.new_look){return;}
+    if(this.list.length==0 && (!this.new_look || this.new_look.items.length<2)){return;}
     //тут, чтобы было видно при нажатии
     $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
     $('#choice_like').find('span').toggleClass('heart_red');
@@ -140,9 +141,13 @@ class Look_list{
         this.list.splice(this.current_look, 1);
         this.change_look();
         //TODO пиздец
-        if(window.looks_c && result.length>0){
-          window.looks_c.list = result.concat(window.looks_c.list);
+        if(result.length>0){
+        //$('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
+        //$('#choice_like').find('span').toggleClass('heart_red');
+        if(window.looks_c){
+            window.looks_c.list = result.concat(window.looks_c.list);
         }
+      }
       }.bind(this)
     });
   }
@@ -172,7 +177,12 @@ class Look_list{
 
   change_new_look(id){
     if(!this.new_look){
+      if(this.list.length==0){
+        this.new_look={};
+        this.new_look.items = [];
+      }else{
       this.new_look = JSON.parse(JSON.stringify(this.list[this.current_look]));
+    }
     }
     for(let i in this.new_look.items){
       if(this.get_category(this.new_look.items[i].fields.item_type)==id){
@@ -180,10 +190,17 @@ class Look_list{
         return;
       }
     }
+    if(this.items.dict[id].items.length>0){
     this.new_look.items.push(this.items.dict[id].items[this.items.dict[id].current]);
+  }
   }
 
   change_look(val=this.current_look){
+    if(this.type=='s' && this.list.length==0 && $('#choice_like').find('i.fa').hasClass('fa-heart')){
+      $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
+      $('#choice_like').find('span').toggleClass('heart_red');
+    }
+
     if((this.list.length>val && val>=0)||this.list.length==0){
       $('#pants').hide();
       let items = $('.choice-window').find('.choice-window__item__image');
@@ -202,6 +219,7 @@ class Look_list{
       tmp = $(this.get_field_id(items[i].fields.item_type)).find('.choice-window__item__image');
       $(tmp).css('background-image', 'url(/'+items[i].fields.photo+')');
     }
+
 
     if(this.list[val].like && $('#choice_like').find('i.fa').hasClass('fa-heart-o')){
       $('#choice_like').find('i.fa').toggleClass('fa-heart fa-heart-o');
@@ -307,6 +325,7 @@ class My_items{
     //выкл кнопку
     $(e.target).prop('disabled', true);
     let obj = this.dict[this.keys[this.selected_type]];
+    if(obj.items.length==0){return;}
     this.item_to_change = obj.current;
     this.item_to_change_arr = obj.items;
     let d = obj.items[obj.current].pk;
@@ -327,29 +346,21 @@ class My_items{
   }
 
   click_item_submit(){
+    this.item_to_change_arr = [];
     //выкл кнопку
     $("#item_submit_button").prop('disabled', true);
     let ph = $('#item_photo_button')[0].files;
     let data=new FormData($('#item_selects')[0]);
     let obj = this.dict[this.keys[this.selected_type]];
-    this.item_to_change = obj.current;
-    this.item_to_change_arr = obj.items;
     if(ph.length==0){
+      this.item_to_change = obj.current;
+      this.item_to_change_arr = obj.items;
+      if(obj.items.length==0){return;}
       data.append('item_id', obj.items[obj.current].pk);
     }
     data.append('photo', ph[0])
 
     this.send_item(data).then(function(result){
-
-      let category = this.get_category(result[0].fields.item_type);
-      if(this.item_to_change_arr.length>0 && this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
-        this.item_to_change_arr[this.item_to_change] = result[0];
-      }else{
-        this.item_to_change_arr.splice(this.item_to_change, 1);
-        this.dict[category].items.push(result[0]);
-        this.dict[category].current = this.dict[category].items.length-1;
-        this.selected_type = $.inArray(category, this.keys)
-      }
       //вкл кнопку
       $("#item_submit_button").prop('disabled', false);
       this.change_item();
@@ -366,6 +377,15 @@ class My_items{
         url: "/api/set_item/",
         data: data,
         success: function(result) {
+                let category = this.get_category(result[0].fields.item_type);
+                if(this.item_to_change_arr.length>0 && this.get_category(this.item_to_change_arr[this.item_to_change].fields.item_type)==category){
+                  this.item_to_change_arr[this.item_to_change] = result[0];
+                }else{
+                  this.item_to_change_arr.splice(this.item_to_change, 1);
+                  this.dict[category].items.unshift(result[0]);
+                  this.dict[category].current = 0;
+                  this.selected_type = $.inArray(category, this.keys)
+                }
         }.bind(this)
       }).done(resolve).fail(reject)}.bind(this));
     }
@@ -373,9 +393,9 @@ class My_items{
     change_item(val=0, type=this.keys[this.selected_type], dom='#item'){
       this.change_item_type();
       let obj = this.dict[type];
-      if(obj.items.length==0 && obj.empty ==false){
-        this.get_items().then(function(result){this.change_item();}.bind(this));
-        $(dom).find('.choice-window__item__image').css('background-image', 'url(/)');
+      if(obj.items.length==0 && obj.empty ==true){
+        //this.get_items().then(function(result){this.change_item();}.bind(this));
+        $(dom).find('.choice-window__item__image').css('background-image', 'url(/other/'+type+'.png)');
       }
       if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
       obj.current+=val;
