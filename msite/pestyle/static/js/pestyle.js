@@ -45,8 +45,26 @@ $(document).ready(function() {
 
   //test
   //$("#select_item_window").click();
-
+  window. first_toasty = true;
 });
+
+function toasty(){
+  if(!(window.first_toasty || Math.floor(Math.random() * 20)==6)){return;}
+  window. first_toasty = false;
+  let t = document.createElement('div');
+  $(t).addClass('toasty');
+  let aud = document.getElementsByTagName('audio')[0];
+
+  $(aud).on('ended', function(e) {
+  $('body')[0].removeChild(($('.toasty')[0]));
+  $(e.target).off();
+});
+
+  let body = $('body')[0];
+  body.appendChild(t);
+  aud.play();
+
+}
 
 const clothes = {'body':['dress', 'blouse', 'tshirt'],
 'pants':['pants', 'skirt'],
@@ -137,6 +155,9 @@ class Look_list{
       type:'POST',
       data: data,
       success: function(result){
+        if(this.new_look){
+          toasty();
+        }
         this.new_look = undefined;
         this.list.splice(this.current_look, 1);
         this.change_look();
