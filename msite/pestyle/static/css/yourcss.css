@@ -4086,7 +4086,7 @@ a.nav-item_adjusted {
     padding-top: 20%;
     flex: 2; }
     .choice-window__item.outerwear > .choice-window__item__image {
-      background-image: url(../images/other/outwear.png); }
+      background-image: url(../images/other/outerwear.png); }
   .choice-window__item.type {
     padding-left: 10%;
     padding-right: 10%; }
@@ -4239,7 +4239,7 @@ a.nav-item_adjusted {
   border-style: solid;
   border-radius: 10px;
   padding: 1%;
-  background-color: rgba(221, 221, 221, 0.9);
+  background-color: rgba(221, 221, 221, 0.96);
   width: 50%; }
   .reg label, .login label, .profile label {
     color: black;
