@@ -7,13 +7,16 @@ from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.http import JsonResponse, HttpResponseForbidden, HttpResponse
-from django.db.models import Prefetch, prefetch_related_objects, Q
+from django.db.models import Prefetch, Q
 from django.template.response import TemplateResponse
 import json
 from .lists import *
-from django.core.exceptions import EmptyResultSet, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 from .scripts.weather import Weather
+from .scripts.gen_looks import Looks
+
+
 
 def main_page(request):
     if request.user.is_authenticated:
@@ -64,9 +67,11 @@ def look_choice(request):
         #TODO user= auth.authenticate(user)
         if user:# and user.is_active:
             auth.login(request, user)
-
-    weather = Weather().weather_dictionary(request.user.city)
-    return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
+    #ll = Looks(request.user)
+    #ll.generate_looks()
+    #weather = Weather().weather_dictionary(request.user.city)
+    #weather['weather_id'] = str(weather['weather_id'] // 100) + 'xx'
+    return render(request, 'look_choice.html', {'prof_form':prof_form, })
 
 
 
@@ -85,13 +90,13 @@ def get_looks(request):
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user).filter(like=False)[last:last+7]
+        ).filter(user=request.user).filter(like=False)[last:last+100]
         elif rtype == 'c':
             looks = Look.objects.prefetch_related(Prefetch(
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user)[last:last+7]
+        ).filter(user=request.user)[last:last+100]
     except DoesNotExist:
         return JsonResponse({'status': 'ok',})
 
@@ -190,10 +195,17 @@ def like_look(request):
     if not request.method == 'POST' or request.user != look.user:
         return HttpResponseForbidden()
     #TODO поправить nl и отдавать объект
+    tmp = []
     if request.user.id==look.user.id and isinstance(look, Look_suggestions):
         nl = Look.create_look(look.user, look.style, look.items.all())
         look.delete()
-    return JsonResponse({'status': 'ok', 'look_id':lid,})
+        l = Look.objects.prefetch_related(Prefetch(
+        'items',
+         queryset=Item.objects.all(),
+         to_attr='tp')
+        ).get(pk=nl.pk)
+        tmp.append({"pk":l.pk, 'like': True, "items": json.loads(serializers.serialize('json', l.tp, fields=('item_type', 'photo')))})
+    return HttpResponse(json.dumps(tmp), content_type = "application/json")
 
 @login_required
 def new_look(request):

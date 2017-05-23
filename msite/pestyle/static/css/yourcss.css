@@ -4002,9 +4002,9 @@ a.nav-item_adjusted {
   display: flex;
   flex-direction: column;
   position: absolute;
-  right: -2.6rem;
+  right: -3rem;
   top: 0px;
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: #EB3B2B;
   font-weight: bold; }
 
@@ -4021,7 +4021,7 @@ a.nav-item_adjusted {
   display: flex;
   flex-direction: column;
   margin: auto;
-  font-size: 1.05rem; }
+  font-size: 0.95rem; }
   .weather-info > p {
     margin-bottom: 5px; }
 
@@ -4064,25 +4064,29 @@ a.nav-item_adjusted {
     margin-left: 15%;
     margin-right: 15%; }
     .choice-window__item.glasses > .choice-window__item__image {
-      background-image: url(../images/other/glass.jpg); }
+      background-image: url(../images/other/glasses.png); }
   .choice-window__item.dress > .choice-window__item__image {
-    background-image: url(../images/other/dress.jpg); }
+    background-image: url(../images/other/dress.png); }
+  .choice-window__item.shirt > .choice-window__item__image {
+    background-image: url(../images/other/shirt.png); }
+  .choice-window__item.pants > .choice-window__item__image {
+    background-image: url(../images/other/pants.png); }
   .choice-window__item.bag {
     margin: 15%;
     padding-top: 3vh; }
     .choice-window__item.bag > .choice-window__item__image {
-      background-image: url(../images/other/bag.jpg); }
+      background-image: url(../images/other/bag.png); }
   .choice-window__item.shoes {
     margin: 15%;
     position: relative;
     left: 40%; }
     .choice-window__item.shoes > .choice-window__item__image {
-      background-image: url(../images/other/shoes.jpg); }
+      background-image: url(../images/other/shoes.png); }
   .choice-window__item.outerwear {
     padding-top: 20%;
     flex: 2; }
     .choice-window__item.outerwear > .choice-window__item__image {
-      background-image: url(../images/other/outwear.jpg); }
+      background-image: url(../images/other/outerwear.png); }
   .choice-window__item.type {
     padding-left: 10%;
     padding-right: 10%; }
@@ -4235,7 +4239,7 @@ a.nav-item_adjusted {
   border-style: solid;
   border-radius: 10px;
   padding: 1%;
-  background-color: rgba(221, 221, 221, 0.7);
+  background-color: rgba(221, 221, 221, 0.96);
   width: 50%; }
   .reg label, .login label, .profile label {
     color: black;
@@ -4339,5 +4343,33 @@ a.nav-item_adjusted {
     border-color: #fafafa; }
   100% {
     border-color: rgba(173, 255, 47, 0.7); } }
+.toasty {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  background-image: url(../images/other/toasty.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top left;
+  animation-name: toasty-animation;
+  animation-duration: 1.5s;
+  animation-iteration-count: 1;
+  animation-timing-function: linear; }
+@keyframes toasty-animation {
+  0% {
+    height: 0;
+    width: 0; }
+  5% {
+    height: 0;
+    width: 0; }
+  15% {
+    height: 20vmax;
+    width: 20vmax; }
+  97% {
+    height: 20vmax;
+    width: 20vmax; }
+  100% {
+    height: 0;
+    width: 0; } }
 
 /*# sourceMappingURL=yourcss.css.map */

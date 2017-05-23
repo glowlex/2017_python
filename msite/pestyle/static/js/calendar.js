@@ -52,7 +52,7 @@
               this.send_event(e.target.value).then(
                 function(result){$('#event-window').toggleClass('event-window_ok', true);
                 setTimeout(function(){$('#event-window').toggleClass('event-window_ok', false);}, 1000);
-                this.refresh();   debugger;}.bind(this),
+                this.refresh();}.bind(this),
 
                 function(result){$('#event-window').toggleClass('event-window_error', true);
                 $('#event-window').find('select').val('');

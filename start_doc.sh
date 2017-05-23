@@ -2,7 +2,7 @@
 
 #docker build -t python/pestyle -f ./docker/Dockerfile .
 #docker run -v /home/nv/2017_python/msite/pestyle/static:/var/www/static -v /home/nv/2017_python/msite:/var/www/sql/  -t -p 8080:8080 -p 22333:8000 python/pestyle
-docker run -v /opt/project/2017_python/msite/pestyle/static:/var/www/static -v /opt/project/2017_python/msite/:/var/www/sql/  -t -p 80:80 glowlex/pestyle
+docker run -v /opt/project/2017_python/msite/pestyle/static:/var/www/static -v /opt/project/2017_python/prod_db.sqlite3:/var/www/sql/db.sqlite3  -t -p 80:80 glowlex/pestyle
 
 #sudo docker exec -i -t  nifty_mestorf bash
 #docker run -it -d 71f7beea52aa
