@@ -1,27 +1,26 @@
 
 STYLE_LIST = (
-('C', 'casual'),
-('B', 'bussines'),
-('S', 'sport'),
-('P', 'party'),
+('C', 'повседневный'),
+('B', 'деловой'),
+('S', 'спорт'),
+('P', 'вечеринка'),
 )
 
 ITEM_TYPE_LIST =(
-('', 'type'),
-('dress', 'dress'),
-('blouse', 'blouse'),
-('pants', 'pants'),
-('footwear', 'footwear'),
-('outerwear', 'outerwear'),
-('umbrella', 'umbrella'),
-('glasses', 'glasses'),
-('bag', 'bag'),
-('skirt', 'skirt'),
-('cap', 'cap'),
-('tshirt', 'Tshirt'),
-('sneakers', 'Sneakers'),
-('shoes', 'Shoes'),
-('boots', 'Boots'),
+('', 'тип'),
+('dress', 'платье'),
+('blouse', 'блузка'),
+('pants', 'брюки'),
+('outerwear', 'верхняя одежда'),
+('umbrella', 'зонт'),
+('glasses', 'очки'),
+('bag', 'сумка'),
+('skirt', 'юбка'),
+('cap', 'головной убор'),
+('tshirt', 'футболка'),
+('sneakers', 'кроссовки'),
+('shoes', 'туфли'),
+('boots', 'ботинки'),
 )
 
 #справочная инфа для фронта
@@ -33,51 +32,51 @@ shoes = ('sneakers', 'shoes', 'boots', 'footwear')
 bag = ('bag',)
 
 COLOR_LIST = (
-('black', 'black'),
-('white','white'),
-('milk','milk'),
-('beige','beige'),
-('deep_blue','deep_blue'),
-('olivaceous','olivaceous'),
-('deep_green','deep_green'),
-('vinous','vinous'),
-('chocolate','chocolate'),
-('blue','blue'),
-('pink','pink'),
-('coral','coral'),
-('red','red'),
-('yellow','yellow'),
-('purple','purple'),
-('gray','gray'),
+('black', 'чёрный'),
+('white','белый'),
+('milk','молочный'),
+('beige','бежевый'),
+('deep_blue','синий'),
+('olivaceous','оливковый'),
+('deep_green','зелёный'),
+('vinous','бордовый'),
+('chocolate','шоколадный'),
+('blue','голубой'),
+('pink','розовый'),
+('coral','коралловый'),
+('red','красный'),
+('yellow','жёлтый'),
+('purple','фиолетовый'),
+('gray','серый'),
 )
 
 SEASON_LIST = (
-('Wn', 'winter'),
-('Sp', 'spring'),
-('Sm', 'summer'),
-('At', 'autumn'),
-('SS', 'spring-summer'),
-('AW', 'autumn-winter'),
-('WY', 'whole-year'),
+('Wn', 'зима'),
+('Sp', 'весна'),
+('Sm', 'лето'),
+('At', 'осень'),
+('SS', 'весна-лето'),
+('AW', 'осень-зима'),
+('WY', 'круглый год'),
 )
 
 TEMPERATURE_LIST =(
-('all', 'all'),
-('dubak', "-35_+5"),
-('prohladno', "+5_+15"),
-('zaebok', "+15_+20"),
-('szara', "+20_+35"),
+('all', 'любая'),
+('dubak', "от -35 до +5"),
+('prohladno', "от +5 до +15"),
+('zaebok', "от +15 до +20"),
+('szara', "от +20 до +35"),
 )
 
 SKY_LIST = (
-('clouds', 'Clouds'),
-('rain', 'Rain'),
-('clear', 'Clear'),
+('clouds', 'облачно'),
+('rain', 'дождь'),
+('clear', 'ясно'),
 )
 
 SEX_LIST = (
-('M', 'male'),
-('F', 'female')
+('M', 'М'),
+('F', 'Ж')
 )
 
 LIST_OF_TYPES = ['body', 'pants', 'shoes', 'outerwear', 'accessory', 'bag']
@@ -115,6 +114,7 @@ SEASONS = {
         'At': [9, 10, 11],
         'SS': [3, 4, 5, 6, 7, 8],
         'AW': [9, 10, 11, 12, 1, 2],
+        'WY': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
 }
 
 WEATHER_ID = {

@@ -6,7 +6,6 @@ function weather(){
   });
 
 function set_weather(result){
-  debugger;
   let tmp = $('.weather');
   $(tmp).find('.weather__temp__high')[0].innerText= (result.main.temp_max>0 ? '+':' ') + result.main.temp_max;
   $(tmp).find('.weather__temp__low')[0].innerText = (result.main.temp_min>0 ? '+':' ') + result.main.temp_min;

@@ -88,6 +88,7 @@ class Look_list{
     //TODO пиздец пиздец
     this.items = window.my_items;
     this.new_look = undefined;
+    if(this.type =='s'){this.s_init();}
   }
   get current_look(){
     if(this._current_look<0){this._current_look=0;}
@@ -95,29 +96,46 @@ class Look_list{
     return this._current_look;
   }
   set current_look(val){
-    if(val<0){this._current_look=0;}
-    if(val>=this.list.length){this._current_look=this.list.length-1;}
-    if(val+2>this.list.length){
+    debugger;
+    this._current_look =val;
+    if(this._current_look+2>this.list.length){
       this.get_looks(this.list.length);
     }
-    if(val<this.list.length && val>=0){
-      this._current_look=val;
+
+    if(this._current_look<0){
+      this._current_look= this.list.length + this._current_look%this.list.length;
     }
+    if(this._current_look>=this.list.length){
+      this._current_look=this._current_look%this.list.length;
+    }
+    /*if(val<this.list.length && val>=0){
+      this._current_look=val;
+    }*/
   }
 
 
   init(){
+    Look_list.look_window_type = this.type;
+    if(this.type=='c'){
+      $('#look_window').find('.choice-window__item__next').css("opacity", '0')
+      $('#look_window').find('.choice-window__item__previous').css("opacity", '0')
+    }else{
+      $('#look_window').find('.choice-window__item__next').css("opacity", '')
+      $('#look_window').find('.choice-window__item__previous').css("opacity", '')
+    }
     $("#choice_prev").unbind();
     $("#choice_prev").click(function(){
       if(this.list.length>0){
-        this.change_look(--this.current_look);
+        this.current_look--;
+        this.change_look(this.current_look);
       }
     }.bind(this));
 
     $("#choice_next").unbind();
     $("#choice_next").click(function(){
       if(this.list.length>0){
-        this.change_look(++this.current_look);
+        ++this.current_look;
+        this.change_look(this.current_look);
       }
     }.bind(this));
 
@@ -125,7 +143,6 @@ class Look_list{
     $("#choice_like").click(this.click_choice_like.bind(this));
 
     this.change_look(this.current_look);
-    if(this.type =='s'){this.s_init();}
   }
 
   click_choice_like(){
@@ -178,10 +195,12 @@ class Look_list{
     let items = $('#look_window').find('.choice-window__item');
     items.each(function(index, elem){
       $(elem).find('.choice-window__item__next').click(function(){
+        if(Look_list.look_window_type=='c'){return;}
         this.items.change_item(1, elem.id, elem);
         this.change_new_look(elem.id);
       }.bind(this));
       $(elem).find('.choice-window__item__previous').click(function(){
+        if(Look_list.look_window_type=='c'){return;}
         this.items.change_item(-1, elem.id, elem);
         this.change_new_look(elem.id);
       }.bind(this));
@@ -415,12 +434,18 @@ class My_items{
     change_item(val=0, type=this.keys[this.selected_type], dom='#item'){
       this.change_item_type();
       let obj = this.dict[type];
-      if(obj.items.length==0 && obj.empty ==true){
+      if(obj.items.length==0 || obj.empty ==true){
         //this.get_items().then(function(result){this.change_item();}.bind(this));
         $(dom).find('.choice-window__item__image').css('background-image', 'url(/static/images/other/'+type+'.png)');
       }
-      if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
+      if(obj.items.length==1 && obj.current==0){val=0;};
+      if(obj.items.length==0){return;}
       obj.current+=val;
+      if(obj.items.length<= obj.current){
+        obj.current= obj.current%obj.items.length;
+      }else if (obj.current<0) {
+        obj.current = obj.items.length + obj.current%obj.items.length;
+      }
       let item = obj.items[obj.current];
       let tmp = $(dom).find('.choice-window__item__image');
       $(tmp).css('background-image', 'url(/'+item.fields['photo']+')');

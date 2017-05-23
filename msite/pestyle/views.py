@@ -90,13 +90,13 @@ def get_looks(request):
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user).filter(like=False)[last:last+20]
+        ).filter(user=request.user).filter(like=False)[last:last+100]
         elif rtype == 'c':
             looks = Look.objects.prefetch_related(Prefetch(
         'items',
          queryset=Item.objects.all(),
          to_attr='tp')
-        ).filter(user=request.user)[last:last+20]
+        ).filter(user=request.user)[last:last+100]
     except DoesNotExist:
         return JsonResponse({'status': 'ok',})
 
