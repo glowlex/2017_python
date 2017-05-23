@@ -46,6 +46,7 @@ $(document).ready(function() {
   //test
   //$("#select_item_window").click();
   window. first_toasty = true;
+  weather();
 });
 
 function toasty(){
@@ -329,7 +330,7 @@ class My_items{
 
   change_item_type(type=this.keys[this.selected_type]){
     let t = $('#item_type').find('.choice-window__item__image');
-    t.css('background-image', 'url(/other/'+type+'.png)');
+    t.css('background-image', 'url(/static/images/other/'+type+'.png)');
 
   }
 
@@ -416,7 +417,7 @@ class My_items{
       let obj = this.dict[type];
       if(obj.items.length==0 && obj.empty ==true){
         //this.get_items().then(function(result){this.change_item();}.bind(this));
-        $(dom).find('.choice-window__item__image').css('background-image', 'url(/other/'+type+'.png)');
+        $(dom).find('.choice-window__item__image').css('background-image', 'url(/static/images/other/'+type+'.png)');
       }
       if(obj.items.length<= obj.current + val || obj.current + val<0){return;}
       obj.current+=val;

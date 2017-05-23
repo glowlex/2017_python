@@ -69,9 +69,9 @@ def look_choice(request):
             auth.login(request, user)
     #ll = Looks(request.user)
     #ll.generate_looks()
-    weather = Weather().weather_dictionary(request.user.city)
-    weather['weather_id'] = str(weather['weather_id'] // 100) + 'xx'
-    return render(request, 'look_choice.html', {'prof_form':prof_form, 'weather':weather})
+    #weather = Weather().weather_dictionary(request.user.city)
+    #weather['weather_id'] = str(weather['weather_id'] // 100) + 'xx'
+    return render(request, 'look_choice.html', {'prof_form':prof_form, })
 
 
 

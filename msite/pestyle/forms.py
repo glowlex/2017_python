@@ -58,7 +58,7 @@ class User_Registration_Form(forms.ModelForm):
         'birthday': forms.TextInput(attrs={'type':'date', 'class':'input', 'id':'reg_birthday', 'placeholder':'birthday'}),
         'sex': forms.RadioSelect(attrs={}, choices=SEX_LIST,),
         'avatar': forms.FileInput(attrs={'type':'file', 'class':'input', 'id':'reg_avatar', 'placeholder':'avatar'}),
-        'city': forms.TextInput(attrs={'type':'text', 'class':'input','required':'required', 'id':'reg_city', 'placeholder':'city'})
+        'city': forms.TextInput(attrs={'type':'text', 'class':'input', 'id':'reg_city', 'placeholder':'city'})
         }
 
     def save(self, commit=True):
