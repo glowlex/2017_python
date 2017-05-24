@@ -1,5 +1,5 @@
 django==1.11
-Celery
+celery[redis]
 gunicorn
 Pillow
 requests

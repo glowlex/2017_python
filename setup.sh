@@ -8,6 +8,7 @@
 add-apt-repository -y ppa:jonathonf/python-3.6
 apt-get update -y
 apt-get install -y nginx
+apt-get install redis-server
 apt-get install -y python3.6
 apt-get install -y python3-pip
 pip3 install --upgrade pip
@@ -48,3 +49,6 @@ gunicorn msite.wsgi:application -c ./gunicorn.conf.py
 #export LC_ALL="en_US.UTF-8"
 #export LC_CTYPE="en_US.UTF-8"
 #sudo dpkg-reconfigure locales
+
+#celery -A msite worker -l info
+#celery -A msite beat -l info

@@ -31,7 +31,7 @@ class Command(BaseCommand):
 
     def users(self, *args, **options):
         uscount = User.objects.all().count()
-        for i in range(uscount, uscount+options.get('users', 3)):
+        for i in range(uscount, uscount+options.get('users', 0)):
             name = "UserN_"+str(i)+get_random_string(length=3)
             last_name = None if randint(1, 2) == 1 else get_random_string(length=24)
             email = "a" + str(i) + "@aaaa.go"
@@ -62,7 +62,7 @@ class Command(BaseCommand):
 
 
     def looks(self, *args, **options):
-        for _ in range(options.get('looks', 30)):
+        for _ in range(options.get('looks', 0)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
@@ -102,7 +102,7 @@ class Command(BaseCommand):
 
 
     def looks_s(self, *args, **options):
-        for _ in range(options.get('looks_suggestions', 30)):
+        for _ in range(options.get('looks_suggestions', 0)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
@@ -142,7 +142,7 @@ class Command(BaseCommand):
 
 
     def events(self, *args, **options):
-        for _ in range(options.get('events', User.objects.all().count()*30)):
+        for _ in range(options.get('events', User.objects.all().count()*0)):
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             date = datetime.now() + timedelta(days=randint(0, 10))
             event_type = STYLE_LIST[randint(0, len(STYLE_LIST)-1)][0]

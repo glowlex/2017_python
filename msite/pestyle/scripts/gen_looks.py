@@ -123,9 +123,5 @@ class Looks():
         if (self.num_of_look == 0) and (self.cur_event != 'C'):
             self.cur_event = 'C'
             self.generate_looks()
+        return self.num_of_look
 # Запись в БД сгенерированных луков_____________________________________________________________________________________
-
-
-
-
-
