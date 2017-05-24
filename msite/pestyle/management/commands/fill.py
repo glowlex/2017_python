@@ -102,7 +102,7 @@ class Command(BaseCommand):
 
 
     def looks_s(self, *args, **options):
-        for _ in range(options.get('looks_suggestions', 0)):
+        for _ in range(options.get('looks_s', 0)):
             #сделать переопределение в листах, что к чему
             user = User.objects.get(pk=randint(1, User.objects.all().count()))
             style = ('C','B','S','P',)[randint(0,3)]
