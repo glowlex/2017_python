@@ -89,7 +89,7 @@ def get_looks(request):
             #TODO для демонстрации
             gl = Looks(request.user)
             gl.generate_looks()
-            
+
             looks = Look_suggestions.objects.prefetch_related(Prefetch(
         'items',
          queryset=Item.objects.all(),
@@ -101,7 +101,7 @@ def get_looks(request):
          queryset=Item.objects.all(),
          to_attr='tp')
         ).filter(user=request.user)[last:last+100]
-    except DoesNotExist:
+    except ObjectDoesNotExist:
         return JsonResponse({'status': 'ok',})
 
     for l in looks:

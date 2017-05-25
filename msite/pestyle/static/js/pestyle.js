@@ -38,7 +38,7 @@ $(document).ready(function() {
       window.looks_s = new Look_list('s');
     }
     //TODO: для демонстрации
-    window.looks_s.get_looks();
+    window.looks_s.get_looks(window.looks_s.list.length);
 
     $('#look_window').show();
     $('#item_window').hide();
