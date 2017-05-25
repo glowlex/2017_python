@@ -262,6 +262,7 @@ class Look_list{
     this.new_look=undefined;
 
   }
+  }
 
   change_look(val=this.current_look){
     if(this.type=='s' && this.list.length==0 && $('#choice_like').find('i.fa').hasClass('fa-heart')){

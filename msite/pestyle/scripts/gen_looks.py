@@ -25,7 +25,7 @@ class Looks():
                  queryset=Item.objects.all(),
                  to_attr='tp')
                 ).filter(user=current_user)
-        self.exists_looks+= [i for i in l]     
+        self.exists_looks+= [i for i in l]
 
     def is_look_unique(self, look):
         for i in self.exists_looks:
