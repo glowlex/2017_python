@@ -3,7 +3,7 @@ import datetime
 from pestyle.models import *
 from pestyle.lists import *
 import random
-from django.db.models import Q
+from django.db.models import Prefetch, Q
 
 
 class Looks():
@@ -14,6 +14,23 @@ class Looks():
         self.dict_of_items = {}
         self.num_of_look = 0
         self.cur_event = self.get_event()
+        l = Look_suggestions.objects.prefetch_related(Prefetch(
+                'items',
+                 queryset=Item.objects.all(),
+                 to_attr='tp')
+                ).filter(user=current_user).filter(like=False)
+        self.exists_looks = [i for i in l]
+
+    def is_look_unique(self, look):
+        for i in self.exists_looks:
+            n_items = [j.id for j in look]
+            e_items = [j.id for j in i.items.all()]
+            if len(set(n_items) - set(e_items))==0:
+                return False
+        return True
+
+
+
 
 
     def prep_dict(self):
@@ -110,9 +127,11 @@ class Looks():
             mas_of_other_items = self.get_other_items(main_body.color, num)
             if mas_of_other_items:
                 mas_of_other_items.insert(0, main_body)
-                print(mas_of_other_items)
-                Look_suggestions.create_look(self.current_user, self.cur_event, mas_of_other_items)
-                self.num_of_look += 1
+                if self.is_look_unique(mas_of_other_items):
+                    print('ssssave')
+                    crl = Look_suggestions.create_look(self.current_user, self.cur_event, mas_of_other_items)
+                    self.exists_looks.append(crl)
+                    self.num_of_look += 1
         return mas_of_other_items
 
     def generate_looks(self):

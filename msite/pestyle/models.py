@@ -207,10 +207,12 @@ class Look_suggestions(models.Model):
 		look =cls(user=user, style=style)
 		look.save()
 		if isinstance(items[0], Item):
+			items.sort(key=lambda i: i.id)
 			for i in items:
 				item = Item.objects.get(pk=i.pk)
 				look.items.add(item)
 		else:
+			items.sort()
 			for i in items:
 				item = Item.objects.get(pk=i)
 				look.items.add(item)

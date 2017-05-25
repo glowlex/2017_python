@@ -8,7 +8,7 @@ logger = get_task_logger(__name__)
 from .models import *
 from .scripts.gen_looks import Looks
 
-@periodic_task(run_every = timedelta(seconds = 300))
+@periodic_task(run_every = timedelta(hours = 8))
 def test():
     users = User.objects.all();
     for us in users:

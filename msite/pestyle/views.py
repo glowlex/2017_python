@@ -86,6 +86,10 @@ def get_looks(request):
     tmp=[]
     try:
         if rtype == 's':
+            #TODO для демонстрации
+            gl = Looks(request.user)
+            gl.generate_looks()
+            
             looks = Look_suggestions.objects.prefetch_related(Prefetch(
         'items',
          queryset=Item.objects.all(),

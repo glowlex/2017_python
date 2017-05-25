@@ -34,13 +34,16 @@ $(document).ready(function() {
     $('.like__choice-menu').css("opacity", 'inherit')
   });
   $("#select_look_window_s").click(function(){
-    if(!window.looks_c){
-      window.looks_c = new Look_list('s');
+    if(!window.looks_s){
+      window.looks_s = new Look_list('s');
     }
+    //TODO: для демонстрации
+    window.looks_s.get_looks();
+
     $('#look_window').show();
     $('#item_window').hide();
     window.looks_s.init();
-    $('.like__choice-menu').css("opacity", 'inherit')
+    $('.like__choice-menu').css("opacity", 'inherit');
   });
 
   //test
@@ -96,7 +99,6 @@ class Look_list{
     return this._current_look;
   }
   set current_look(val){
-    debugger;
     this._current_look =val;
     if(this._current_look+2>this.list.length){
       this.get_looks(this.list.length);
@@ -127,6 +129,7 @@ class Look_list{
     $("#choice_prev").click(function(){
       if(this.list.length>0){
         this.current_look--;
+        this.new_look = undefined;
         this.change_look(this.current_look);
       }
     }.bind(this));
@@ -135,6 +138,7 @@ class Look_list{
     $("#choice_next").click(function(){
       if(this.list.length>0){
         ++this.current_look;
+        this.new_look = undefined;
         this.change_look(this.current_look);
       }
     }.bind(this));
@@ -217,6 +221,7 @@ class Look_list{
   }
 
   change_new_look(id){
+    if(this.items.dict[id].items.length==0){return;}
     if(!this.new_look){
       if(this.list.length==0){
         this.new_look={};
@@ -225,15 +230,37 @@ class Look_list{
       this.new_look = JSON.parse(JSON.stringify(this.list[this.current_look]));
     }
     }
+    let ex_cl = false;
+    if(this.list.length!=0){
+    for(let i in this.list[this.current_look].items){
+      if(this.get_category(this.list[this.current_look].items[i].fields.item_type)==id){
+        ex_cl = true;
+        break;
+      }
+    }
+  }
+
     for(let i in this.new_look.items){
-      if(this.get_category(this.new_look.items[i].fields.item_type)==id){
+      if(this.get_category(this.new_look.items[i].fields.item_type)==id && (this.items.dict[id].items.length!=1 || ex_cl != true)){
+        debugger;
         this.new_look.items[i] = this.items.dict[id].items[this.items.dict[id].current];
+        break;
+      }
+    }
+  if(this.new_look.pk){
+    if(this.new_look.items.length != this.list[this.current_look].items.length){return;}
+    for(let i in this.new_look.items){
+      if(this.new_look.items[i].pk !=this.list[this.current_look].items[i].pk){
         return;
       }
     }
-    if(this.items.dict[id].items.length>0){
+  }else{
     this.new_look.items.push(this.items.dict[id].items[this.items.dict[id].current]);
+    return;
   }
+  debugger;
+    this.new_look=undefined;
+
   }
 
   change_look(val=this.current_look){
