@@ -242,7 +242,6 @@ class Look_list{
 
     for(let i in this.new_look.items){
       if(this.get_category(this.new_look.items[i].fields.item_type)==id && (this.items.dict[id].items.length!=1 || ex_cl != true)){
-        debugger;
         this.new_look.items[i] = this.items.dict[id].items[this.items.dict[id].current];
         break;
       }
@@ -258,7 +257,6 @@ class Look_list{
     this.new_look.items.push(this.items.dict[id].items[this.items.dict[id].current]);
     return;
   }
-  debugger;
     this.new_look=undefined;
 
   }
@@ -376,7 +374,7 @@ class My_items{
 
   change_item_type(type=this.keys[this.selected_type]){
     let t = $('#item_type').find('.choice-window__item__image');
-    t.css('background-image', 'url(/static/images/other/'+type+'.png)');
+    t.css('background-image', 'url(/other/'+type+'.png)');
 
   }
 
@@ -463,7 +461,7 @@ class My_items{
       let obj = this.dict[type];
       if(obj.items.length==0 || obj.empty ==true){
         //this.get_items().then(function(result){this.change_item();}.bind(this));
-        $(dom).find('.choice-window__item__image').css('background-image', 'url(/static/images/other/'+type+'.png)');
+        $(dom).find('.choice-window__item__image').css('background-image', 'url(/other/'+type+'.png)');
       }
       if(obj.items.length==1 && obj.current==0){val=0;};
       if(obj.items.length==0){return;}
